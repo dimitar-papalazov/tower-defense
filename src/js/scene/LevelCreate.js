@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import PathCreator from '../component/PathCreator'
 import LevelCreateGui from './gui/LevelCreateGui'
 
 export default class LevelCreate extends Phaser.Scene {
@@ -10,11 +11,16 @@ export default class LevelCreate extends Phaser.Scene {
   }
 
   create () {
+    this.pathCreator = new PathCreator(this)
     this.createGui()
   }
 
   createGui () {
-    const gui = new LevelCreateGui(this.game)
+    const gui = new LevelCreateGui({
+      game: this.game,
+      pathCreator: this.pathCreator
+    })
+
     this.gui = this.game.scene.add(gui.key, gui, true)
   }
 }

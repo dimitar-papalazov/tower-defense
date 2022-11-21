@@ -9,6 +9,7 @@ export default class PathCreator {
   constructor (scene) {
     this.scene = scene
     this.enabled = false
+    this.pointImages = []
     this.createPathPointer()
   }
 
@@ -16,8 +17,8 @@ export default class PathCreator {
     if (!this.scene.textures.exists('pathPointer')) {
       const graphics = this.scene.add.graphics()
       graphics.fillStyle(color.PRIMARY.NUMBER)
-      graphics.fillCircle(0, 0, 100)
-      graphics.generateTexture('pathPointer', 100, 100)
+      graphics.fillCircle(32, 32, 32)
+      graphics.generateTexture('pathPointer', 64, 64)
       graphics.destroy()
     }
   }
@@ -31,13 +32,23 @@ export default class PathCreator {
   disable (callback, context) {
     this.enabled = false
     callback.apply(context)
+
+    this.points = this.pointImages.map(p => {
+      return {
+        x: p.x,
+        y: p.y
+      }
+    })
+
+    // this.points.forEach(p => p.destroy())
+    console.log(this.points)
   }
 
   init () {
     this.scene.input.on(Phaser.Input.Events.POINTER_MOVE, pointer => {
-      if (!pointer.isDown) return
+      if (!pointer.isDown || !this.enabled) return
 
-      this.scene.add.image(pointer.x, pointer.y, 'pathPointer')
+      this.pointImages.push(this.scene.add.image(pointer.x, pointer.y, 'pathPointer'))
     })
   }
 }
