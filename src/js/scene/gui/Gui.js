@@ -21,6 +21,8 @@ export default class Gui extends Phaser.Scene {
   }
 
   create () {
+    this.components = []
+
     if (this.hasBackButton) this.createBackButton()
   }
 
@@ -39,5 +41,31 @@ export default class Gui extends Phaser.Scene {
       size: '32px',
       color: color.PRIMARY.NUMBER
     })
+
+    this.components.push(this.backButton)
+  }
+
+  hideAllComponents () {
+    this.components.forEach(c => {
+      if (c && c.setVisible) c.setVisible(false)
+    })
+  }
+
+  showAllComponents () {
+    this.components.forEach(c => {
+      if (c && c.setVisible) c.setVisible(true)
+    })
+  }
+
+  hideComponent (name) {
+    if (this[name] && this[name].setVisible) {
+      this[name].setVisible(false)
+    }
+  }
+
+  showComponent (name) {
+    if (this[name] && this[name].setVisible) {
+      this[name].setVisible(true)
+    }
   }
 }
