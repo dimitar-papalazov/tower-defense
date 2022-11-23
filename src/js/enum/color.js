@@ -20,5 +20,17 @@ export default {
   BLACK: {
     NUMBER: 0x000000,
     STRING: '#000000'
+  },
+  MAGENTA: {
+    NUMBER: 0xfd00b4,
+    STRING: '#fd00b4'
+  },
+  YELLOW: {
+    NUMBER: 0xfdc800,
+    STRING: '#fdc800'
+  },
+  TURQUOISE: {
+    NUMBER: 0x00fdc8,
+    STRING: '#00fdc8'
   }
 }

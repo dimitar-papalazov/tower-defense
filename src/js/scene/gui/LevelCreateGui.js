@@ -3,7 +3,7 @@ import color from '../../enum/color'
 import Gui from './Gui'
 // eslint-disable-next-line no-unused-vars
 import PathCreator from '../../component/creators/PathCreator'
-import EnemyCreator from '../../component/creators/EnemyCreator'
+import EnemyCreator from '../../component/creators/enemy-creator/EnemyCreator'
 
 export default class LevelCreateGui extends Gui {
   /**
