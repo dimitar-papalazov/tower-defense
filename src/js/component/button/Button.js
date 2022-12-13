@@ -28,4 +28,14 @@ export default class Button extends Phaser.GameObjects.Container {
     this.removeInteractive()
     this.setInteractive(new Phaser.Geom.Rectangle(this.positionX, this.positionY, this.width, this.height), Phaser.Geom.Rectangle.Contains)
   }
+
+  setVisible (value) {
+    if (value && !this.input.enabled) {
+      this.setInteractive()
+    } else if (!value && this.input.enabled) {
+      this.disableInteractive()
+    }
+
+    super.setVisible(value)
+  }
 }

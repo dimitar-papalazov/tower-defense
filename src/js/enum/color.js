@@ -32,5 +32,9 @@ export default {
   TURQUOISE: {
     NUMBER: 0x00fdc8,
     STRING: '#00fdc8'
+  },
+  GRAY: {
+    NUMBER: 0x8e8e93,
+    STRING: '#8e8e93'
   }
 }

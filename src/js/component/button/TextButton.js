@@ -18,7 +18,7 @@ export default class TextButton extends Button {
    */
   constructor (config) {
     super(config.scene, config.x, config.y, config.callback, config.context)
-    this.key = `${config.text}-button`
+    this.key = `${config.text}-text-button`
     this.addText(config.text, config.size)
     this.addBackground(config.color)
     this.on(Phaser.Input.Events.POINTER_OUT, this.onPointerOut, this)

@@ -12,18 +12,11 @@ export default class Gui extends Phaser.Scene {
    * @param {boolean} config.backButton
    */
   constructor (config) {
-    super({
-      game: config.game,
-      key: 'Gui'
-    })
-
-    this.hasBackButton = config.components.backButton
+    super({ game: config.game, key: 'Gui' })
   }
 
   create () {
     this.components = []
-
-    if (this.hasBackButton) this.createBackButton()
   }
 
   createBackButton () {
