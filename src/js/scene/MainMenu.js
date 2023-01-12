@@ -3,6 +3,7 @@ import TextButton from '../component/button/TextButton'
 import color from '../enum/color'
 import fontStyle from '../enum/fontStyle'
 import LevelCreate from './LevelCreate'
+import LevelSelect from './LevelSelect'
 
 export default class MainMenu extends Phaser.Scene {
   constructor (game) {
@@ -28,7 +29,10 @@ export default class MainMenu extends Phaser.Scene {
       scene: this,
       x: this.game.scale.width * 0.5,
       y: this.game.scale.height * 0.5,
-      callback: () => { console.log('Level Select Clicked') },
+      callback: () => {
+        this.game.scene.add('LevelSelect', new LevelSelect(), true)
+        this.game.scene.remove(this)
+      },
       context: this,
       text: 'Level Select',
       size: '64px',

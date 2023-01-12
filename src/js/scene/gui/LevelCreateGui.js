@@ -62,12 +62,15 @@ export default class LevelCreateGui extends Gui {
       x: this.game.scale.width * 0.5,
       y: this.game.scale.height * 0.9,
       callback: () => {
-        console.log({
+        const result = {
           path: this.pathCreator.points,
           enemies: this.enemyCreator.enemies,
           specials: this.specials
-        })
+        }
 
+        if (!this.game.levels) this.game.levels = []
+        this.game.levels.push(result)
+        console.log(result)
         const mainMenu = new MainMenu(this.game)
         this.game.scene.add(mainMenu.key, mainMenu, true)
         this.game.scene.remove(this)
