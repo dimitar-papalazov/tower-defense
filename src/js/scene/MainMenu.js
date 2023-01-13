@@ -30,7 +30,13 @@ export default class MainMenu extends Phaser.Scene {
       x: this.game.scale.width * 0.5,
       y: this.game.scale.height * 0.5,
       callback: () => {
-        this.game.scene.add('LevelSelect', new LevelSelect(), true)
+        if (this.game.scene.getScene('LevelSelect')) {
+          this.game.scene.start('LevelSelect')
+        } else {
+          const levelSelect = new LevelSelect(this.game)
+          this.game.scene.add('LevelSelect', levelSelect, true)
+        }
+
         this.game.scene.remove(this)
       },
       context: this,

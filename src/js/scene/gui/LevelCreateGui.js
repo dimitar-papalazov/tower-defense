@@ -68,9 +68,7 @@ export default class LevelCreateGui extends Gui {
           specials: this.specials
         }
 
-        if (!this.game.levels) this.game.levels = []
         this.game.levels.push(result)
-        console.log(result)
         const mainMenu = new MainMenu(this.game)
         this.game.scene.add(mainMenu.key, mainMenu, true)
         this.game.scene.remove(this)

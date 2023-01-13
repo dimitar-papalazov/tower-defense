@@ -17,6 +17,16 @@ export default {
   /**
    * @type {Phaser.GameObjects.TextStyle}
   */
+  SMALL_TITLE: {
+    fontFamily: FONT_FAMILY,
+    fontSize: '64px',
+    color: color.PRIMARY.STRING,
+    stroke: color.WHITE.STRING,
+    strokeThickness: 4
+  },
+  /**
+   * @type {Phaser.GameObjects.TextStyle}
+  */
   BUTTON: {
     color: color.WHITE.STRING,
     fontFamily: FONT_FAMILY

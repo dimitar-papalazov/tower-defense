@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import MainMenu from './scene/MainMenu'
+import MainMenu from '../scene/MainMenu'
 
 export default class TowerDefenseGame extends Phaser.Game {
   constructor () {
@@ -14,6 +14,7 @@ export default class TowerDefenseGame extends Phaser.Game {
 
     window.game = this
     const mainMenu = new MainMenu(this)
+    this.levels = []
     this.scene.add(mainMenu.key, mainMenu, true)
   }
 }
