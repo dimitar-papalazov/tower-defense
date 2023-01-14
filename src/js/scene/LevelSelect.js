@@ -1,5 +1,7 @@
 import Phaser from 'phaser'
 import TextButton from '../component/button/TextButton'
+import LevelButton from '../component/button/LevelButton'
+import Slider from '../component/Slider'
 import color from '../enum/color'
 import constants from '../enum/constants'
 import fontStyle from '../enum/fontStyle'
@@ -28,6 +30,7 @@ export default class LevelSelect extends Phaser.Scene {
   create () {
     this.createTitle()
     this.createBackButton()
+    this.createSlider()
   }
 
   createTitle () {
@@ -50,5 +53,34 @@ export default class LevelSelect extends Phaser.Scene {
       size: '32px',
       color: color.PRIMARY.NUMBER
     })
+  }
+
+  createSlider () {
+    this.slider = new Slider({
+      scene: this,
+      width: this.game.scale.width * 0.6,
+      height: this.game.scale.height * 0.8,
+      spaceBetween: 100,
+      x: this.game.scale.width * 0.2,
+      y: this.game.scale.height * 0.2
+    })
+
+    this.addButtons()
+  }
+
+  addButtons () {
+    for (let i = 1; i <= constants.LEVELS_IN_JSONS * 2; i++) {
+      this.slider.addItem(new LevelButton({
+        scene: this,
+        callback: () => { },
+        context: this,
+        color: color.PRIMARY.NUMBER,
+        size: '32px',
+        success: 0,
+        text: `Level ${i}`,
+        x: 0,
+        y: 0
+      }))
+    }
   }
 }
