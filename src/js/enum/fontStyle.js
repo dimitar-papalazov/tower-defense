@@ -46,5 +46,32 @@ export default {
     fontFamily: FONT_FAMILY,
     fontSize: '32px',
     color: color.BLACK.STRING
+  },
+  /**
+   * @type {Phaser.GameObjects.TextStyle}
+  */
+  POP_UP_TEXT: {
+    fontFamily: FONT_FAMILY,
+    fontSize: '32px',
+    color: color.WHITE.STRING,
+    align: 'center'
+  },
+  /**
+   * @type {Phaser.GameObjects.TextStyle}
+  */
+  COUNTDOWN: {
+    fontFamily: FONT_FAMILY,
+    fontSize: '32px',
+    color: color.WHITE.STRING,
+    align: 'center'
+  },
+  /**
+   * @type {Phaser.GameObjects.TextStyle}
+  */
+  RESOURCE_UI: {
+    fontFamily: FONT_FAMILY,
+    fontSize: '32px',
+    color: color.WHITE.STRING,
+    align: 'center'
   }
 }

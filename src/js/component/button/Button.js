@@ -9,7 +9,6 @@ export default class Button extends Phaser.GameObjects.Container {
     this.height = 0
     this.callback = callback
     this.context = context
-
     this.setInteractive(new Phaser.Geom.Rectangle(0, 0, this.width, this.height), Phaser.Geom.Rectangle.Contains)
     this.on(Phaser.Input.Events.POINTER_DOWN, this.onPointerDown, this)
     this.on(Phaser.Input.Events.POINTER_UP, this.onPointerUp, this)

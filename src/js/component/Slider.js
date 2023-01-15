@@ -31,7 +31,8 @@ export default class Slider extends Phaser.GameObjects.Container {
       const graphics = this.scene.make.graphics()
       graphics.fillStyle(0xffffff)
       graphics.fillRect(0, 0, this.width, this.height)
-      graphics.generateTexture(key)
+      graphics.generateTexture(key, this.width, this.height)
+      graphics.destroy()
     }
 
     const image = this.scene.add.image(this.positionX, this.positionY, key)

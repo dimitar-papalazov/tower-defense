@@ -8,6 +8,8 @@ import fontStyle from '../enum/fontStyle'
 // eslint-disable-next-line no-unused-vars
 import TowerDefenseGame from '../game/TowerDefenseGame'
 import MainMenu from './MainMenu'
+import Level from './Level'
+import LevelGui from './gui/LevelGui'
 
 export default class LevelSelect extends Phaser.Scene {
   /**
@@ -15,19 +17,22 @@ export default class LevelSelect extends Phaser.Scene {
    */
   constructor (game) {
     super({ game, key: 'LevelSelect' })
+    this.key = 'LevelSelect'
     this.levels = []
   }
 
   preload () {
     for (let i = 1; i <= constants.LEVELS_IN_JSONS; i++) {
       this.load.json(`level${i}`, `src/assets/json/levels/level${i}.json`)
+    }
+  }
+
+  create () {
+    for (let i = 1; i <= constants.LEVELS_IN_JSONS; i++) {
       this.levels.push(this.cache.json.get(`level${i}`))
     }
 
     this.levels.push(...this.game.levels)
-  }
-
-  create () {
     this.createTitle()
     this.createBackButton()
     this.createSlider()
@@ -74,7 +79,14 @@ export default class LevelSelect extends Phaser.Scene {
     for (let i = 1; i <= this.levels.length; i++) {
       items.push(new LevelButton({
         scene: this,
-        callback: () => { },
+        callback: () => {
+          const levelGui = new LevelGui(this.game)
+          this.game.scene.add(levelGui.key, levelGui, true)
+          const level = new Level(this.game, levelGui, this.levels[i - 1])
+          this.game.scene.add(level.key, level, true)
+          this.game.scene.bringToTop(levelGui)
+          this.game.scene.remove(this)
+        },
         context: this,
         color: color.PRIMARY.NUMBER,
         size: '32px',

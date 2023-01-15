@@ -1,5 +1,7 @@
 import Phaser from 'phaser'
+import ResourceManager from '../component/resource/ResourceManager'
 import MainMenu from '../scene/MainMenu'
+import resources from '../enum/resources'
 
 export default class TowerDefenseGame extends Phaser.Game {
   constructor () {
@@ -15,6 +17,7 @@ export default class TowerDefenseGame extends Phaser.Game {
     window.game = this
     const mainMenu = new MainMenu(this)
     this.levels = []
+    this.resourceManager = new ResourceManager(this, resources)
     this.scene.add(mainMenu.key, mainMenu, true)
   }
 }

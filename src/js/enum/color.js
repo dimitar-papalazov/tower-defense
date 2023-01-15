@@ -36,5 +36,9 @@ export default {
   GRAY: {
     NUMBER: 0x8e8e93,
     STRING: '#8e8e93'
+  },
+  GREEN: {
+    NUMBER: 0x30d158,
+    STRING: '#30d158'
   }
 }
