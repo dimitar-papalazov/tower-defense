@@ -69,8 +69,10 @@ export default class LevelSelect extends Phaser.Scene {
   }
 
   addButtons () {
-    for (let i = 1; i <= constants.LEVELS_IN_JSONS * 2; i++) {
-      this.slider.addItem(new LevelButton({
+    const items = []
+
+    for (let i = 1; i <= this.levels.length; i++) {
+      items.push(new LevelButton({
         scene: this,
         callback: () => { },
         context: this,
@@ -82,5 +84,7 @@ export default class LevelSelect extends Phaser.Scene {
         y: 0
       }))
     }
+
+    this.slider.addItems(items)
   }
 }

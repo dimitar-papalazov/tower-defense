@@ -18,26 +18,30 @@ export default class Slider extends Phaser.GameObjects.Container {
     this.width = config.width
     this.height = config.height
     this.spaceBetween = config.spaceBetween
-    this.nextItemPosition = this.positionY + this.spaceBetween
+    this.nextItemPosition = this.positionY
     this.addMask()
-    this.addInput()
     this.on(Phaser.Input.Events.GAMEOBJECT_DRAG, this.onDrag, this)
     this.scene.add.existing(this)
-    this.scene.input.enableDebug(this)
   }
 
   addMask () {
-    const rectangle = this.scene.add.rectangle(this.positionX + this.width / 2, this.positionY + this.height / 2, this.width, this.height, 0xffffff)
-    const mask = rectangle.createBitmapMask()
-    this.setMask(mask)
-  }
+    const key = 'slider-mask'
 
-  addInput (rectangle = null) {
-    if (!rectangle) {
-      rectangle = new Phaser.Geom.Rectangle(this.positionX + this.width / 2, this.positionY + this.height / 2, this.width, this.height)
+    if (!this.scene.textures.exists(key)) {
+      const graphics = this.scene.make.graphics()
+      graphics.fillStyle(0xffffff)
+      graphics.fillRect(0, 0, this.width, this.height)
+      graphics.generateTexture(key)
     }
 
-    this.setInteractive(rectangle, Phaser.Geom.Rectangle.Contains)
+    const image = this.scene.add.image(this.positionX, this.positionY, key)
+      .setOrigin(0)
+      .setVisible(false)
+    this.setMask(image.createBitmapMask())
+  }
+
+  addInput () {
+    this.setInteractive(new Phaser.Geom.Rectangle(this.positionX + this.width / 2, this.positionY + this.height / 2, this.width, this.height), Phaser.Geom.Rectangle.Contains)
     this.scene.input.setDraggable(this)
     this.dragMax = 0
     this.dragMin = this.scene.game.scale.height - (this.positionY + this.height)
@@ -54,6 +58,11 @@ export default class Slider extends Phaser.GameObjects.Container {
     else this.y = dragY
   }
 
+  addItems (items) {
+    items.forEach(i => this.addItem(i))
+    this.updateSize()
+  }
+
   /**
    * @param {Phaser.GameObjects.GameObject} item
    */
@@ -63,16 +72,14 @@ export default class Slider extends Phaser.GameObjects.Container {
     if (!item || isNaN(item.y)) throw new Error('Provided item has no y property!')
     this.add(item)
     item.x = this.positionX + this.width / 2
-    item.y = this.nextItemPosition + item.height / 2
-    this.nextItemPosition += item.height / 2 + this.spaceBetween
-    this.updateSize()
+    this.nextItemPosition += item.height / 2
+    item.y = this.nextItemPosition
+    this.nextItemPosition += this.spaceBetween
   }
 
   updateSize () {
-    // this.removeInteractive()
-    if (this.nextItemPosition < this.height) return
-    this.height = this.nextItemPosition
-    console.log(this.positionX, this.positionY, this.width, this.height)
-    this.addInput(new Phaser.Geom.Rectangle(this.positionX, this.positionY, this.width, this.height))
+    if (this.nextItemPosition - this.spaceBetween * 2 < this.height) return
+    this.height = this.nextItemPosition - this.spaceBetween * 2
+    this.addInput()
   }
 }
