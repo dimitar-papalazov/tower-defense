@@ -12,6 +12,7 @@ export default class Building extends Phaser.GameObjects.Sprite {
     this.damage = 0
     this.penetration = 0
     this.magic = 0
+    this.range = 200
     this.fireTexture = 'fireTexture'
     this.color = color.WHITE.NUMBER
     this.generateFireTexture()
