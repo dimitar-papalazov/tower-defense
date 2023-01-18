@@ -6,6 +6,7 @@ import color from '../../enum/color'
 import Gui from './Gui'
 // eslint-disable-next-line no-unused-vars
 import ResourceManager from '../../component/resource/ResourceManager'
+import TowerPicker from '../../component/TowerPicker'
 
 export default class LevelGui extends Gui {
   constructor (game) {
@@ -21,6 +22,7 @@ export default class LevelGui extends Gui {
     this.createExitButton()
     this.countdown = new Countdown(this, this.game.scale.width * 0.5, this.game.scale.height * 0.5, 5)
     this.createResourcesUI()
+    this.towerPicker = new TowerPicker(this)
   }
 
   createExitButton () {

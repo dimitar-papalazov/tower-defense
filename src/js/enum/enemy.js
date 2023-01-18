@@ -1,6 +1,6 @@
-import AbsorberCreep from '../component/units/AbsorberCreep'
-import ArmoredCreep from '../component/units/ArmoredCreep'
-import Creep from '../component/units/Creep'
+import AbsorberCreep from '../component/units/enemies/AbsorberCreep'
+import ArmoredCreep from '../component/units/enemies/ArmoredCreep'
+import Creep from '../component/units/enemies/Creep'
 
 export default {
   CREEP: {
