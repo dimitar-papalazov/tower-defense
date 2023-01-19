@@ -42,7 +42,7 @@ export default class EnemyService {
   }
 
   onEnemyKilled (id) {
-    this.resourceManager.updateResource('coin', 50)
+    this.resourceManager.updateResource('coin', 10)
     this.enemiesKilled++
     let toSplice = -1
 

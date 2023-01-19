@@ -7,9 +7,6 @@ export default class CannonTower extends Building {
   constructor (scene, x, y, texture, frame) {
     super(scene, x, y, texture, frame)
     this.type = CannonTower.TYPE
-    this.damage = 10
-    this.penetration = 60
-    this.magic = 0
     this.color = color.TURQUOISE.NUMBER
     this.setTint(this.color)
   }

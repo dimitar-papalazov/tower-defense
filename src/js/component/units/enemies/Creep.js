@@ -6,8 +6,5 @@ export default class Creep extends Enemy {
   constructor (scene, x, y, texture, frame) {
     super(scene, x, y, texture, frame)
     this.type = Creep.TYPE
-    this.health = 100
-    this.armor = 20
-    this.magicResistance = 20
   }
 }
