@@ -9,7 +9,7 @@ export default class MagicTower extends Building {
     this.type = MagicTower.TYPE
     this.damage = 10
     this.penetration = 0
-    this.magic = 160
+    this.magic = 60
     this.color = color.YELLOW.NUMBER
     this.setTint(this.color)
   }

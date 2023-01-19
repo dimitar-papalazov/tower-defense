@@ -11,7 +11,8 @@ export default class TowerDefenseGame extends Phaser.Game {
       height: 1000,
       scale: {
         mode: Phaser.Scale.FIT
-      }
+      },
+      seed: 1618
     })
 
     window.game = this
@@ -19,5 +20,6 @@ export default class TowerDefenseGame extends Phaser.Game {
     this.levels = []
     this.resourceManager = new ResourceManager(this, resources)
     this.scene.add(mainMenu.key, mainMenu, true)
+    this.emitter = new Phaser.Events.EventEmitter()
   }
 }

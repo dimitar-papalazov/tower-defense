@@ -62,8 +62,9 @@ export default class ResourceUI extends Phaser.GameObjects.Container {
   }
 
   updateValue (result) {
-    if (!result || !result.id) return
+    if (!result || result.id === undefined) return
     if (result.id !== this.resource.id) return
+    if (result.newValue === result.oldValue) return
 
     const tween = this.scene.tweens.addCounter({
       from: result.oldValue,

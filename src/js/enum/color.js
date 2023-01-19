@@ -40,5 +40,9 @@ export default {
   GREEN: {
     NUMBER: 0x30d158,
     STRING: '#30d158'
+  },
+  RED: {
+    NUMBER: 0xff453a,
+    STRING: '#ff453a'
   }
 }

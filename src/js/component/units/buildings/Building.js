@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import color from '../../../enum/color'
+import events from '../../../enum/events'
 
 export default class Building extends Phaser.GameObjects.Sprite {
   static TYPE = 'Building'
@@ -19,7 +20,26 @@ export default class Building extends Phaser.GameObjects.Sprite {
     this.placed = false
     this.moving = false
     this.clicks = 0
+    this.fireStarted = false
+    this.emitter = this.scene.game.emitter
     this.enableInput()
+    this.setupEvents()
+    this.scene.add.existing(this)
+  }
+
+  setupEvents () {
+    this.emitter.on(events.ENEMY_MOVED, this.fireAnimation, this)
+    this.emitter.on(events.BUILDING_START_MOVING, this.onBuildingStartMoving, this)
+    this.emitter.on(events.BUILDING_PLACED, this.onBuildingPlaced, this)
+  }
+
+  onBuildingStartMoving () {
+    if (this.placed) return
+    if (!this.moving) this.setVisible(false)
+  }
+
+  onBuildingPlaced () {
+    if (!this.moving) this.setVisible(true)
   }
 
   enableInput () {
@@ -35,13 +55,14 @@ export default class Building extends Phaser.GameObjects.Sprite {
       this.moving = true
       this.setX(pointer.x)
       this.setY(pointer.y)
+      this.emitter.emit(events.BUILDING_START_MOVING)
     }
 
     if (this.moving && this.clicks === 2) {
       this.setX(this.startingX)
       this.setY(this.startingY)
       this.moving = false
-      this.scene.game.events.emit('buildingPlaced', Math.round(pointer.x), Math.round(pointer.y), this.type)
+      this.emitter.emit(events.BUILDING_PLACED, Math.round(pointer.x), Math.round(pointer.y), this.type)
       this.clicks = 0
     }
   }
@@ -62,29 +83,39 @@ export default class Building extends Phaser.GameObjects.Sprite {
   }
 
   fireAnimation (gameObject) {
-    const fire = this.scene.add.image(this.x, this.y, this.fireTexture)
+    if (!this.placed) return
+    if (Phaser.Math.Distance.Between(this.x, this.y, gameObject.x, gameObject.y) > this.range) return
+    if (this.fireStarted) return
+    this.fireStarted = true
+    const fire = this.scene.add.image(this.x, this.y - this.height * 0.5, this.fireTexture)
     fire.setTint(this.color)
 
     this.scene.tweens.add({
       targets: [fire],
-      duration: 300,
+      duration: 50,
       ease: Phaser.Math.Easing.Linear,
       x: gameObject.x,
       y: gameObject.y,
       onComplete: () => {
+        this.fireStarted = false
+        this.emitter.emit(events.ENEMY_ATTACKED, gameObject.id, this.damage, this.penetration, this.magic)
         fire.destroy()
-        // ovde mozi nekogas ke treba event da se emitira
       }
     })
   }
 
   generateFireTexture () {
     if (this.scene.textures.exists(this.fireTexture)) return
-
     const graphics = this.scene.add.graphics()
     graphics.fillStyle(color.WHITE.NUMBER)
-    graphics.fillCircle(0, 0, 30)
-    graphics.generateTexture(this.fireTexture, 60, 60)
+    graphics.fillCircle(10, 10, 10)
+    graphics.generateTexture(this.fireTexture, 20, 20)
     graphics.destroy()
+  }
+
+  destroy () {
+    this.emitter.off(events.ENEMY_MOVED, this.fireAnimation, this)
+    this.emitter.off(events.BUILDING_START_MOVING, this.onBuildingStartMoving, this)
+    this.emitter.off(events.BUILDING_PLACED, this.onBuildingPlaced, this)
   }
 }

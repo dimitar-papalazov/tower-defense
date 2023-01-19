@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import color from '../enum/color'
+import CancelButton from './button/CancelButton'
 import CannonTower from './units/buildings/CannonTower'
 import MagicTower from './units/buildings/MagicTower'
 import Tower from './units/buildings/Tower'
@@ -11,7 +12,9 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
     this.startingY = this.scene.game.scale.height * 0.9
     this.buildingTexture = 'building'
     this.buildingBackgroundTexture = 'buildingBackground'
+    this.xTexture = 'cancel'
     this.createBuildings()
+    this.createCancel()
     this.scene.add.existing(this)
   }
 
@@ -44,5 +47,10 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
     graphics.fillRoundedRect(0, 0, 100, 100)
     graphics.generateTexture(this.buildingBackgroundTexture, 100, 100)
     graphics.destroy()
+  }
+
+  createCancel () {
+    this.cancel = new CancelButton(this.scene, this.startingX + 480, this.startingY)
+    this.cancel.setVisible(false)
   }
 }
