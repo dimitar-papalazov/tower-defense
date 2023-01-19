@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import events from '../../../enum/events'
+import damageCalculator from '../../damageCalculator'
 
 export default class Enemy extends Phaser.GameObjects.Sprite {
   static TYPE = 'Enemy'
@@ -17,10 +18,10 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this)
   }
 
-  getHit (id, damage, penetration, magic) {
+  getHit (id, type) {
     if (this.id !== id) return
-    console.log(damage, penetration, magic, damage + (penetration - this.armor) + (magic - this.magicResistance))
-    this.health -= damage + (penetration - this.armor) + (magic - this.magicResistance)
+    this.health -= damageCalculator(type, this.type)
+
     if (this.health <= 0) {
       this.dead = true
       this.emitter.emit(events.ENEMY_KILLED)

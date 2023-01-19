@@ -98,7 +98,7 @@ export default class Building extends Phaser.GameObjects.Sprite {
       y: gameObject.y,
       onComplete: () => {
         this.fireStarted = false
-        this.emitter.emit(events.ENEMY_ATTACKED, gameObject.id, this.damage, this.penetration, this.magic)
+        this.emitter.emit(events.ENEMY_ATTACKED, gameObject.id, this.type)
         fire.destroy()
       }
     })
