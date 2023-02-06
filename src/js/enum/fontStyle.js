@@ -61,9 +61,11 @@ export default {
   */
   COUNTDOWN: {
     fontFamily: FONT_FAMILY,
-    fontSize: '32px',
+    fontSize: '64px',
     color: color.WHITE.STRING,
-    align: 'center'
+    align: 'center',
+    stroke: color.PRIMARY.STRING,
+    strokeThickness: 6
   },
   /**
    * @type {Phaser.GameObjects.TextStyle}

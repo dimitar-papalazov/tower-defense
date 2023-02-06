@@ -7,10 +7,12 @@ import Gui from './Gui'
 // eslint-disable-next-line no-unused-vars
 import ResourceManager from '../../component/resource/ResourceManager'
 import TowerPicker from '../../component/TowerPicker'
+import events from '../../enum/events'
 
 export default class LevelGui extends Gui {
   constructor (game) {
     super({ game })
+    this.level = null
   }
 
   preload () {
@@ -19,10 +21,35 @@ export default class LevelGui extends Gui {
   }
 
   create () {
+    this.resetResources()
     this.createExitButton()
-    this.countdown = new Countdown(this, this.game.scale.width * 0.5, this.game.scale.height * 0.5, 5)
+    this.countdown = new Countdown(this, this.game.scale.width * 0.5, this.game.scale.height * 0.5, 10)
+    this.countdown.start(this.startRow, this)
     this.createResourcesUI()
     this.towerPicker = new TowerPicker(this)
+    this.setupEvents()
+  }
+
+  resetResources () {
+    this.game.resourceManager.replaceResourceValue('coin', 1000)
+    this.game.resourceManager.replaceResourceValue('heart', 3)
+  }
+
+  setLevel (level) {
+    this.level = level
+  }
+
+  setupEvents () {
+    this.game.emitter.on(events.ROW_FINISHED, this.onRowFinished, this)
+  }
+
+  onRowFinished () {
+    if (this.level.enemies.length) this.countdown.start(this.startRow, this)
+    else this.game.emitter.emit(events.LEVEL_FINISHED)
+  }
+
+  startRow () {
+    this.game.emitter.emit(events.ROW_START)
   }
 
   createExitButton () {
@@ -48,5 +75,10 @@ export default class LevelGui extends Gui {
     const resourceManager = this.game.resourceManager
     this.heartsUI = new ResourceUI(this, resourceManager.getResource(0), this.game.scale.width * 0.2, this.game.scale.height * 0.1)
     this.coinsUI = new ResourceUI(this, resourceManager.getResource(1), this.game.scale.width * 0.5, this.game.scale.height * 0.1)
+  }
+
+  remove () {
+    this.game.emitter.off(events.ROW_FINISHED, this.startRow, this)
+    this.game.scene.remove(this)
   }
 }

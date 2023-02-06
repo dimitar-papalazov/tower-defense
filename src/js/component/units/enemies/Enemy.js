@@ -9,7 +9,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     super(scene, x, y, texture, frame)
     this.emitter = this.scene.game.emitter
     this.type = Enemy.TYPE
-    this.health = 800
+    this.health = 400
     this.id = -1
     this.dead = false
     this.emitter.on(events.ENEMY_ATTACKED, this.getHit, this)
@@ -19,7 +19,6 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   getHit (id, type) {
     if (this.id !== id) return
     this.health -= damageCalculator(type, this.type)
-    this.setScale((this.health / 800) * 0.5)
 
     if (this.health <= 0) {
       this.dead = true

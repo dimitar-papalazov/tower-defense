@@ -9,6 +9,7 @@ export default class Level extends Phaser.Scene {
   constructor (game, gui, config) {
     super({ game, key: 'Level' })
     this.gui = gui
+    this.gui.setLevel(this)
     this.path = config.path
     this.enemies = config.enemies
     this.specials = config.specials
@@ -23,7 +24,7 @@ export default class Level extends Phaser.Scene {
   remove () {
     this.towerService.destroy()
     this.enemyService.destroy()
-    this.game.scene.remove(this.gui)
+    this.gui.remove()
     this.game.scene.remove(this)
   }
 }

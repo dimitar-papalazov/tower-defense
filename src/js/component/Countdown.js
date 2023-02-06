@@ -6,6 +6,7 @@ export default class Countdown extends Phaser.GameObjects.Text {
     super(scene, x, y, 'Wave starts in', fontStyle.COUNTDOWN)
     this.startingValue = startsIn
     this.startsIn = startsIn
+    this.animating = false
     this.setOrigin(0.5)
     this.setVisible(false)
     this.scene.add.existing(this)
@@ -21,6 +22,8 @@ export default class Countdown extends Phaser.GameObjects.Text {
   }
 
   startTween () {
+    this.animating = true
+
     this.scene.tweens.add({
       targets: [this],
       alpha: 1,
@@ -43,6 +46,7 @@ export default class Countdown extends Phaser.GameObjects.Text {
               this.setVisible(false)
               this.text = 'Wave starts in'
               this.startsIn = this.startingValue
+              this.animating = false
             }
           }
         })

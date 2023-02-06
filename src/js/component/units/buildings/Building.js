@@ -89,7 +89,7 @@ export default class Building extends Phaser.GameObjects.Sprite {
 
     this.scene.tweens.add({
       targets: [fire],
-      duration: 50,
+      duration: 100,
       ease: Phaser.Math.Easing.Linear,
       x: gameObject.x,
       y: gameObject.y,

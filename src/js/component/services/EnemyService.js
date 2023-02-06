@@ -54,6 +54,7 @@ export default class EnemyService {
     }
 
     this.currentRow.splice(toSplice, 1)
+    if (!this.currentRow.length) this.emitter.emit(events.ROW_FINISHED)
   }
 
   startRow () {
