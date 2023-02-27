@@ -75,5 +75,14 @@ export default {
     fontSize: '32px',
     color: color.WHITE.STRING,
     align: 'center'
+  },
+  /**
+   * @type {Phaser.GameObjects.TextStyle}
+  */
+  SIGN: {
+    fontFamily: FONT_FAMILY,
+    fontSize: '64px',
+    color: color.WHITE.STRING,
+    align: 'center'
   }
 }

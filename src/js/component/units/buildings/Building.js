@@ -53,6 +53,7 @@ export default class Building extends Phaser.GameObjects.Sprite {
       this.setX(pointer.x)
       this.setY(pointer.y)
       this.emitter.emit(events.BUILDING_START_MOVING)
+      this.emitter.emit(events.HIDE_TOWER_PICKER)
     }
 
     if (this.moving && this.clicks === 2) {
@@ -61,6 +62,7 @@ export default class Building extends Phaser.GameObjects.Sprite {
       this.moving = false
       this.emitter.emit(events.BUILDING_PLACED, Math.round(pointer.x), Math.round(pointer.y), this.type)
       this.clicks = 0
+      this.emitter.emit(events.SHOW_TOWER_PICKER)
     }
   }
 
@@ -114,5 +116,6 @@ export default class Building extends Phaser.GameObjects.Sprite {
     this.emitter.off(events.ENEMY_MOVED, this.fireAnimation, this)
     this.emitter.off(events.BUILDING_START_MOVING, this.onBuildingStartMoving, this)
     this.emitter.off(events.BUILDING_PLACED, this.onBuildingPlaced, this)
+    super.destroy()
   }
 }

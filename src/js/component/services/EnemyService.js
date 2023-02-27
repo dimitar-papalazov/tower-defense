@@ -37,6 +37,12 @@ export default class EnemyService {
 
   onEnemyFinished () {
     this.resourceManager.updateResource('heart', -1)
+
+    if (this.resourceManager.getResource('heart').value === 0) {
+      this.emitter.emit(events.LEVEL_FINISHED, false)
+      return
+    }
+
     this.enemiesFinished++
     if (this.enemiesKilled + this.enemiesKilled === this.enemiesInCurrentRow) this.emitter.emit(events.ROW_FINISHED)
   }
@@ -58,11 +64,12 @@ export default class EnemyService {
   }
 
   startRow () {
+    this.scene.removeSigns()
     this.enemiesKilled = 0
     const row = this.enemies.shift()
 
     if (!row) {
-      this.emitter.emit(events.LEVEL_FINISHED)
+      this.emitter.emit(events.LEVEL_FINISHED, true)
       return
     }
 

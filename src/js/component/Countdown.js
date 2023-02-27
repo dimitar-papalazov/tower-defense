@@ -22,6 +22,7 @@ export default class Countdown extends Phaser.GameObjects.Text {
   }
 
   startTween () {
+    if (!this.scene) return
     this.animating = true
 
     this.scene.tweens.add({

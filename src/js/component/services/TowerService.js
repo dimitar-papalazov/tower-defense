@@ -14,7 +14,7 @@ export default class TowerService {
   }
 
   setupEvents () {
-    this.emitter.on(events.BUILDING_PLACED, this.placeBuilding, this)
+    this.emitter.on(events.BUILDING_BUILT, this.placeBuilding, this)
   }
 
   placeBuilding (x, y, type) {
@@ -35,6 +35,6 @@ export default class TowerService {
   }
 
   destroy () {
-    this.emitter.off(events.BUILDING_PLACED, this.placeBuilding, this)
+    this.emitter.off(events.BUILDING_BUILT, this.placeBuilding, this)
   }
 }

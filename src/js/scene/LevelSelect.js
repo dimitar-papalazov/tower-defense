@@ -82,9 +82,9 @@ export default class LevelSelect extends Phaser.Scene {
         callback: () => {
           this.levels[i - 1].level = i
           const levelGui = new LevelGui(this.game)
-          this.game.scene.add(levelGui.key, levelGui, true)
           const level = new Level(this.game, levelGui, this.levels[i - 1])
           this.game.scene.add(level.key, level, true)
+          this.game.scene.add(levelGui.key, levelGui, true)
           this.game.scene.bringToTop(levelGui)
           this.game.scene.remove(this)
         },

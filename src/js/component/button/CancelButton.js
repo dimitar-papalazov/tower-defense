@@ -14,7 +14,7 @@ export default class CancelButton extends Button {
     this.removeInteractive()
     this.createBackground()
     this.createX()
-    this.rectangle = new Phaser.Geom.Rectangle(this.positionX - 50, this.positionY - 50, 100, 100)
+    this.rectangle = this.scene.add.rectangle(this.positionX - 50, this.positionY - 50, 100, 100)
     this.emitter.on(events.BUILDING_PLACED, this.onBuildingPlaced, this)
     this.emitter.on(events.BUILDING_START_MOVING, () => { this.setVisible(true) })
   }
@@ -50,8 +50,9 @@ export default class CancelButton extends Button {
     graphics.destroy()
   }
 
-  onBuildingPlaced (x, y) {
+  onBuildingPlaced (x, y, type) {
     if (Phaser.Geom.Rectangle.Contains(this.rectangle, x, y)) this.emitter.emit(events.BUILDING_CANCELED)
+    else this.emitter.emit(events.BUILDING_BUILT, x, y, type)
     this.setVisible(false)
   }
 

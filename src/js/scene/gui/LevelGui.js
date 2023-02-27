@@ -8,6 +8,9 @@ import Gui from './Gui'
 import ResourceManager from '../../component/resource/ResourceManager'
 import TowerPicker from '../../component/TowerPicker'
 import events from '../../enum/events'
+import IntroPopUp from '../../component/popup/introPopUp'
+import LevelFinishPopUp from '../../component/popup/levelFinishPopUp'
+import LevelSelect from '../LevelSelect'
 
 export default class LevelGui extends Gui {
   constructor (game) {
@@ -23,11 +26,17 @@ export default class LevelGui extends Gui {
   create () {
     this.resetResources()
     this.createExitButton()
+    this.towerPicker = new TowerPicker(this)
+    // eslint-disable-next-line no-new
+    if (IntroPopUp.shouldShow(this.level.level)) new IntroPopUp(this, this.createCountdown, this)
+    else this.createCountdown()
+    this.createResourcesUI()
+    this.setupEvents()
+  }
+
+  createCountdown () {
     this.countdown = new Countdown(this, this.game.scale.width * 0.5, this.game.scale.height * 0.5, 10)
     this.countdown.start(this.startRow, this)
-    this.createResourcesUI()
-    this.towerPicker = new TowerPicker(this)
-    this.setupEvents()
   }
 
   resetResources () {
@@ -41,11 +50,22 @@ export default class LevelGui extends Gui {
 
   setupEvents () {
     this.game.emitter.on(events.ROW_FINISHED, this.onRowFinished, this)
+    this.game.emitter.on(events.LEVEL_FINISHED, this.onLevelFinished, this)
+  }
+
+  onLevelFinished (win) {
+    if (this.levelFinishPopUp) return
+    this.levelFinishPopUp = new LevelFinishPopUp(this, win, () => {
+      const levelSelect = new LevelSelect(this.game)
+      this.game.scene.add(levelSelect.key, levelSelect, true)
+      this.level.remove()
+    }, this)
+    this.level.sys.pause()
   }
 
   onRowFinished () {
     if (this.level.enemies.length) this.countdown.start(this.startRow, this)
-    else this.game.emitter.emit(events.LEVEL_FINISHED)
+    else this.game.emitter.emit(events.LEVEL_FINISHED, true)
   }
 
   startRow () {
