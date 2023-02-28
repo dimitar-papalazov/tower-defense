@@ -35,14 +35,21 @@ export default class Building extends Phaser.GameObjects.Sprite {
     if (!this.moving) this.setVisible(false)
   }
 
-  onBuildingPlaced () {
+  onBuildingPlaced (x, y, type) {
     if (!this.moving) this.setVisible(true)
+
+    if (this.placed) {
+      if (Phaser.Geom.Intersects.TriangleToTriangle(
+        new Phaser.Geom.Triangle(this.x - 40, this.y + 40, this.x + 40, this.y + 40, this.x, this.y - 40),
+        new Phaser.Geom.Triangle(x - 40, y + 40, x + 40, y + 40, x, y - 40))) this.emitter.emit(events.BUILDING_CANCELED, x, y, type)
+      else this.emitter.emit(events.CAN_BE_BUILT, x, y, type)
+    }
   }
 
   enableInput () {
     this.setInteractive()
     this.on(Phaser.Input.Events.POINTER_DOWN, this.onPointerDown, this)
-    this.on(Phaser.Input.Events.POINTER_MOVE, this.onPointerMove, this)
+    this.scene.input.on(Phaser.Input.Events.POINTER_MOVE, this.onPointerMove, this)
   }
 
   onPointerDown (pointer) {

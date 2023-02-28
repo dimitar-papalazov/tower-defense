@@ -51,8 +51,8 @@ export default class CancelButton extends Button {
   }
 
   onBuildingPlaced (x, y, type) {
-    if (Phaser.Geom.Rectangle.Contains(this.rectangle, x, y)) this.emitter.emit(events.BUILDING_CANCELED)
-    else this.emitter.emit(events.BUILDING_BUILT, x, y, type)
+    if (Phaser.Geom.Rectangle.Contains(this.rectangle, x, y)) this.emitter.emit(events.BUILDING_CANCELED, x, y, type)
+    else this.emitter.emit(events.CAN_BE_BUILT, x, y, type)
     this.setVisible(false)
   }
 

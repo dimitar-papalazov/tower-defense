@@ -67,11 +67,7 @@ export default class EnemyService {
     this.scene.removeSigns()
     this.enemiesKilled = 0
     const row = this.enemies.shift()
-
-    if (!row) {
-      this.emitter.emit(events.LEVEL_FINISHED, true)
-      return
-    }
+    if (!row) return
 
     const enemies = row.map(item => {
       const array = []

@@ -3,6 +3,7 @@ export default {
   BUILDING_START_MOVING: 'buildingstartmoving',
   BUILDING_CANCELED: 'buildingcanceled',
   BUILDING_BUILT: 'buildingbuilt',
+  CAN_BE_BUILT: 'canbebuilt',
   ENEMY_FINISHED: 'enemyfinished',
   ENEMY_MOVED: 'enemymoved',
   ENEMY_ATTACKED: 'enemyattacked',

@@ -75,8 +75,6 @@ export default class ResourceManager extends Phaser.Events.EventEmitter {
   }
 
   updateResource (value, amount) {
-    const verb = amount === 1 ? 'has' : 'have'
-    console.log(`${value}: ${amount} ${verb} been registered`)
     const resource = this.getResource(value)
     if (resource === null) return resource
     const oldValue = resource.value

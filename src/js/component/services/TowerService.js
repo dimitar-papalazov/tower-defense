@@ -9,15 +9,36 @@ export default class TowerService {
     this.resourceManager = this.scene.game.resourceManager
     this.emitter = this.scene.game.emitter
     this.buildingTexture = 'building'
+    this.cancelCounter = 0
+    this.canBeBuiltCounter = 0
     this.buildings = []
+    this.limit = this.buildings.length + 2
     this.setupEvents()
   }
 
   setupEvents () {
-    this.emitter.on(events.BUILDING_BUILT, this.placeBuilding, this)
+    this.emitter.on(events.BUILDING_BUILT, this.buildBuilding, this)
+    this.emitter.on(events.BUILDING_CANCELED, this.onCanceled, this)
+    this.emitter.on(events.CAN_BE_BUILT, this.onCanBeBuilt, this)
   }
 
-  placeBuilding (x, y, type) {
+  onCanBeBuilt (x, y, type) {
+    this.canBeBuiltCounter++
+    if (this.canBeBuiltCounter + this.cancelCounter === this.limit) this.buildBuilding(x, y, type)
+  }
+
+  onCanceled (x, y, type) {
+    this.cancelCounter++
+    if (this.canBeBuiltCounter + this.cancelCounter === this.limit) this.buildBuilding(x, y, type)
+  }
+
+  buildBuilding (x, y, type) {
+    if (this.cancelCounter) {
+      this.cancelCounter = 0
+      this.canBeBuiltCounter = 0
+      return
+    }
+
     if (this.resourceManager.getResource('coin').value - 100 < 0) return
     let building = null
 
@@ -30,11 +51,16 @@ export default class TowerService {
     }
 
     building.placed = true
+    this.cancelCounter = 0
+    this.canBeBuiltCounter = 0
     this.resourceManager.updateResource('coin', -100)
     this.buildings.push(building)
+    this.limit = this.buildings.length + 2
   }
 
   destroy () {
-    this.emitter.off(events.BUILDING_BUILT, this.placeBuilding, this)
+    this.emitter.off(events.BUILDING_BUILT, this.buildBuilding, this)
+    this.emitter.off(events.BUILDING_CANCELED, this.onCanceled, this)
+    this.emitter.off(events.CAN_BE_BUILT, this.onCanBeBuilt, this)
   }
 }

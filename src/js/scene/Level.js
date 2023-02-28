@@ -12,7 +12,7 @@ export default class Level extends Phaser.Scene {
     this.gui = gui
     this.gui.setLevel(this)
     this.path = config.path
-    this.enemies = config.enemies
+    this.enemies = [...config.enemies]
     this.specials = config.specials
     this.level = config.level
   }
