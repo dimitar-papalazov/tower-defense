@@ -60,14 +60,14 @@ export default class Level extends TowerDefenseScene {
    * @param {Number} y
    */
   calculateOrigin (x, y) {
-    let isHorizontal = false
+    let isVertical = true
     let originX = 0.5
     let originY = 0.5
     if (x < 100) originX = 0
     else if (x > 900) originX = 1
-    if (originX !== 0.5) isHorizontal = true
+    if (originX !== 0.5) isVertical = false
 
-    if (!isHorizontal) {
+    if (isVertical) {
       if (y < 100) originY = 0
       else if (y > 900) originY = 1
     }
