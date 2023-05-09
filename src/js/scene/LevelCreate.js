@@ -1,5 +1,5 @@
 import LevelCreateGui from './gui/LevelCreateGui'
-import TowerDefenseScene from './TowerDefenseScene.js'
+import TowerDefenseScene from './towerDefenseScene.js'
 
 export default class LevelCreate extends TowerDefenseScene {
   static key = 'LevelCreate'

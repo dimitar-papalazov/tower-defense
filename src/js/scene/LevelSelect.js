@@ -7,7 +7,7 @@ import fontStyle from '../enum/fontStyle'
 import MainMenu from './mainMenu'
 import Level from './level'
 import LevelGui from './gui/LevelGui'
-import TowerDefenseScene from './TowerDefenseScene.js'
+import TowerDefenseScene from './towerDefenseScene.js'
 
 export default class LevelSelect extends TowerDefenseScene {
   static key = 'LevelSelect'

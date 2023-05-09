@@ -4,7 +4,7 @@ import TowerService from '../component/services/TowerService'
 import fontStyle from '../enum/fontStyle'
 // eslint-disable-next-line no-unused-vars
 import LevelConfig from '../configs/level.config.js'
-import TowerDefenseScene from './TowerDefenseScene.js'
+import TowerDefenseScene from './towerDefenseScene.js'
 
 export default class Level extends TowerDefenseScene {
   static key = 'Level'

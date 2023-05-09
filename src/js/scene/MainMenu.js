@@ -3,7 +3,7 @@ import color from '../enum/color'
 import fontStyle from '../enum/fontStyle'
 import LevelCreate from './levelCreate'
 import LevelSelect from './levelSelect'
-import TowerDefenseScene from './TowerDefenseScene.js'
+import TowerDefenseScene from './towerDefenseScene.js'
 
 export default class MainMenu extends TowerDefenseScene {
   static key = 'MainMenu'
