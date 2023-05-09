@@ -42,7 +42,9 @@ export default class Slider extends Phaser.GameObjects.Container {
   }
 
   addInput () {
-    this.setInteractive(new Phaser.Geom.Rectangle(this.positionX + this.width / 2, this.positionY + this.height / 2, this.width, this.height), Phaser.Geom.Rectangle.Contains)
+    const x = this.positionX + this.width / 2
+    const y = this.positionY + this.height / 2
+    this.setInteractive(new Phaser.Geom.Rectangle(x, y, this.width, this.height), Phaser.Geom.Rectangle.Contains)
     this.scene.input.setDraggable(this)
     this.dragMax = 0
     this.dragMin = this.scene.game.scale.height - (this.positionY + this.height)

@@ -21,7 +21,9 @@ export default class PopUp extends Phaser.GameObjects.Container {
   }
 
   setInteractive () {
-    super.setInteractive(new Phaser.Geom.Rectangle(this.gameWidth / 4, this.gameHeight / 4, this.gameWidth, this.gameHeight), Phaser.Geom.Rectangle.Contains)
+    const x = this.gameWidth / 4
+    const y = this.gameHeight / 4
+    super.setInteractive(new Phaser.Geom.Rectangle(x, y, this.gameWidth, this.gameHeight), Phaser.Geom.Rectangle.Contains)
     this.once(Phaser.Input.Events.POINTER_DOWN, this.tweenOut, this)
   }
 

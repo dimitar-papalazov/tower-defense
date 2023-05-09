@@ -3,7 +3,7 @@ import ArmoredCreep from '../units/enemies/ArmoredCreep'
 import Creep from '../units/enemies/Creep'
 import Phaser from 'phaser'
 // eslint-disable-next-line no-unused-vars
-import Level from '../../scene/Level'
+import Level from '../../scene/level'
 import enemy from '../../enum/enemy'
 import events from '../../enum/events'
 import color from '../../enum/color'

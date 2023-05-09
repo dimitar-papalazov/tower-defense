@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import TextButton from '../../component/button/TextButton'
 import color from '../../enum/color'
-import MainMenu from '../MainMenu'
+import MainMenu from '../mainMenu'
 
 export default class Gui extends Phaser.Scene {
   /**

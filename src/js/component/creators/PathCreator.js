@@ -29,24 +29,23 @@ export default class PathCreator extends Phaser.GameObjects.Container {
   enable () {
     this.reset()
     this.enabled = true
-
     if (this.enableCallback && this.enableContext) this.enableCallback.apply(this.enableContext)
-
     this.init()
   }
 
   disable () {
     this.enabled = false
     this.clicked = false
-
     if (this.disableCallback && this.disableContext) this.disableCallback.apply(this.disableContext)
 
-    this.points = this.pointImages.map(p => {
-      return {
-        x: p.x,
-        y: p.y
-      }
-    })
+    this.points = this.pointImages.map(p => this.mapPointToPosition(p))
+  }
+
+  mapPointToPosition (point) {
+    return {
+      x: point.x,
+      y: point.y
+    }
   }
 
   init () {

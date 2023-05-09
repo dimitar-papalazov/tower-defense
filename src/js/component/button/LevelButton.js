@@ -13,6 +13,7 @@ export default class LevelButton extends TextButton {
    * @param {Number} config.y
    * @param {Function} config.callback
    * @param {Object} config.context
+   * @param {Object[]} config.params
    * @param {String} config.text
    * @param {String} config.size
    * @param {Number} config.color

@@ -1,14 +1,20 @@
-import Phaser from 'phaser'
 import PathUI from '../component/PathUI'
 import EnemyService from '../component/services/EnemyService'
 import TowerService from '../component/services/TowerService'
 import fontStyle from '../enum/fontStyle'
 // eslint-disable-next-line no-unused-vars
-import LevelGui from './gui/LevelGui'
+import LevelConfig from '../configs/level.config.js'
+import TowerDefenseScene from './TowerDefenseScene.js'
 
-export default class Level extends Phaser.Scene {
-  constructor (game, gui, config) {
-    super({ game, key: 'Level' })
+export default class Level extends TowerDefenseScene {
+  static key = 'Level'
+
+  /**
+   * @param {Gui} gui delete after gui refactor
+   * @param {LevelConfig} config
+   */
+  constructor (gui, config) {
+    super({ key: Level.key })
     this.gui = gui
     this.gui.setLevel(this)
     this.path = config.path
@@ -17,6 +23,10 @@ export default class Level extends Phaser.Scene {
     this.level = config.level
   }
 
+  /**
+   * @override
+   * Creates this Scene's GameObjects.
+   */
   create () {
     this.pathUI = new PathUI(this, this.path)
     this.createPathSigns()
@@ -24,16 +34,31 @@ export default class Level extends Phaser.Scene {
     this.towerService = new TowerService(this)
   }
 
+  /**
+   * Creates startSign and endSign properties, that are Text, representing start and end of the path.
+   */
   createPathSigns () {
     this.startSign = this.createSign(this.path[0], 'START')
     this.endSign = this.createSign(this.path[this.path.length - 1], 'END')
   }
 
+  /**
+   * Creates a Text on the provided point, with provided text.
+   * @param {PointConfig} point
+   * @param {String} text
+   */
   createSign (point, text) {
     const { originX, originY } = this.calculateOrigin(point.x, point.y)
-    return this.add.text(point.x, point.y, text, fontStyle.SIGN).setOrigin(originX, originY)
+    return this.add
+      .text(point.x, point.y, text, fontStyle.SIGN)
+      .setOrigin(originX, originY)
   }
 
+  /**
+   * Calculates the origin of a text from the provided x and y values.
+   * @param {Number} x
+   * @param {Number} y
+   */
   calculateOrigin (x, y) {
     let isHorizontal = false
     let originX = 0.5
@@ -50,6 +75,9 @@ export default class Level extends Phaser.Scene {
     return { originX, originY }
   }
 
+  /**
+   * Removes the start & end Text signs.
+   */
   removeSigns () {
     if (this.signsRemoved) return
     this.signsRemoved = true
@@ -57,6 +85,9 @@ export default class Level extends Phaser.Scene {
     this.endSign.destroy()
   }
 
+  /**
+   * Removes this Scene, while destroying the Scene's GameObjects. Remove after Gui refactor.
+   */
   remove () {
     this.towerService.destroy()
     this.enemyService.destroy()
@@ -64,3 +95,11 @@ export default class Level extends Phaser.Scene {
     this.game.scene.remove(this)
   }
 }
+
+/**
+ * @typedef {Object} LevelConfig
+ * @property {EnemyConfig[]} enemies
+ * @property {Number} level
+ * @property {PointConfig[]} path
+ * @property {SpecialsConfig} specials
+ */

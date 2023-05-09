@@ -12,12 +12,13 @@ export default class TextButton extends Button {
    * @param {number} config.y
    * @param {function} config.callback
    * @param {object} config.context
+   * @param {object[]} config.params
    * @param {string} config.text
    * @param {string} config.size
    * @param {number} config.color
    */
   constructor (config) {
-    super(config.scene, config.x, config.y, config.callback, config.context)
+    super(config.scene, config.x, config.y, config.callback, config.context, config.params)
     this.key = `${config.text}-text-button`
     this.addText(config.text, config.size)
     this.addBackground(config.color)

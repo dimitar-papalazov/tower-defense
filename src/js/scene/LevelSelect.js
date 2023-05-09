@@ -1,32 +1,39 @@
-import Phaser from 'phaser'
 import TextButton from '../component/button/TextButton'
 import LevelButton from '../component/button/LevelButton'
 import Slider from '../component/Slider'
 import color from '../enum/color'
 import constants from '../enum/constants'
 import fontStyle from '../enum/fontStyle'
-// eslint-disable-next-line no-unused-vars
-import TowerDefenseGame from '../game/TowerDefenseGame'
-import MainMenu from './MainMenu'
-import Level from './Level'
+import MainMenu from './mainMenu'
+import Level from './level'
 import LevelGui from './gui/LevelGui'
+import TowerDefenseScene from './TowerDefenseScene.js'
 
-export default class LevelSelect extends Phaser.Scene {
+export default class LevelSelect extends TowerDefenseScene {
+  static key = 'LevelSelect'
+
   /**
-   * @param {TowerDefenseGame} game
+   * @override
    */
-  constructor (game) {
-    super({ game, key: 'LevelSelect' })
-    this.key = 'LevelSelect'
+  constructor () {
+    super({ key: LevelSelect.key })
     this.levels = []
   }
 
+  /**
+   * @override
+   * Loads all levels' JSONs.
+   */
   preload () {
     for (let i = 1; i <= constants.LEVELS_IN_JSONS; i++) {
       this.load.json(`level${i}`, `src/assets/json/levels/level${i}.json`)
     }
   }
 
+  /**
+   * @override
+   * Creates the game objects in this Scene, also gets the loaded levels' JSONs.
+   */
   create () {
     for (let i = 1; i <= constants.LEVELS_IN_JSONS; i++) {
       this.levels.push(this.cache.json.get(`level${i}`))
@@ -38,21 +45,24 @@ export default class LevelSelect extends Phaser.Scene {
     this.createSlider()
   }
 
+  /**
+   * Creates the title property, that is Text, that represents this Scene's title.
+   */
   createTitle () {
-    this.title = this.add.text(this.game.scale.width * 0.5, this.game.scale.height * 0.1, 'Level Select', fontStyle.SMALL_TITLE)
+    this.title = this.add
+      .text(this.game.scale.width * 0.5, this.game.scale.height * 0.1, 'Level Select', fontStyle.SMALL_TITLE)
       .setOrigin(0.5)
   }
 
+  /**
+   * Creates the backButton property, that is TextButton.
+   */
   createBackButton () {
     this.backButton = new TextButton({
       scene: this,
       x: this.game.scale.width * 0.1,
       y: this.game.scale.height * 0.9,
-      callback: () => {
-        const mainMenu = new MainMenu(this.game)
-        this.game.scene.add(mainMenu.key, mainMenu, true)
-        this.game.scene.remove(this)
-      },
+      callback: this.backButtonCallback,
       context: this,
       text: 'Back',
       size: '32px',
@@ -60,6 +70,17 @@ export default class LevelSelect extends Phaser.Scene {
     })
   }
 
+  /**
+   * Adds the MainMenu Scene to the SceneManager if not present and transitions to it.
+   */
+  backButtonCallback () {
+    if (!this.game.scene.getScene(MainMenu.key)) this.game.scene.add(MainMenu.key, new MainMenu(this.game))
+    this.scene.transition({ target: MainMenu.key, duration: 0, remove: true })
+  }
+
+  /**
+   * Creates the slider property, that is instance of Slider.
+   */
   createSlider () {
     this.slider = new Slider({
       scene: this,
@@ -73,21 +94,17 @@ export default class LevelSelect extends Phaser.Scene {
     this.addButtons()
   }
 
+  /**
+   * Creates and adds LevelButtons to the slider.
+   */
   addButtons () {
     const items = []
 
     for (let i = 1; i <= this.levels.length; i++) {
       items.push(new LevelButton({
         scene: this,
-        callback: () => {
-          this.levels[i - 1].level = i
-          const levelGui = new LevelGui(this.game)
-          const level = new Level(this.game, levelGui, this.levels[i - 1])
-          this.game.scene.add(level.key, level, true)
-          this.game.scene.add(levelGui.key, levelGui, true)
-          this.game.scene.bringToTop(levelGui)
-          this.game.scene.remove(this)
-        },
+        params: [i],
+        callback: this.levelButtonCallback,
         context: this,
         color: color.PRIMARY.NUMBER,
         size: '32px',
@@ -99,5 +116,20 @@ export default class LevelSelect extends Phaser.Scene {
     }
 
     this.slider.addItems(items)
+  }
+
+  /**
+   * Opens Level Scene.
+   * The config for the level will be determined by the provided index of the level.
+   * @param {Number} index
+   */
+  levelButtonCallback (index) {
+    this.levels[index - 1].level = index
+    // Delete after GUI refactor
+    const levelGui = new LevelGui(this.game)
+    this.game.scene.add(Level.key, new Level(levelGui, this.levels[index - 1]))
+    this.game.scene.add(levelGui.key, levelGui, true)
+    this.game.scene.bringToTop(levelGui)
+    this.scene.transition({ target: Level.key, duration: 0, remove: true })
   }
 }

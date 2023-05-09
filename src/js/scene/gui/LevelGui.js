@@ -10,7 +10,7 @@ import TowerPicker from '../../component/TowerPicker'
 import events from '../../enum/events'
 import IntroPopUp from '../../component/popup/introPopUp'
 import LevelFinishPopUp from '../../component/popup/levelFinishPopUp'
-import LevelSelect from '../LevelSelect'
+import LevelSelect from '../levelSelect'
 
 export default class LevelGui extends Gui {
   constructor (game) {

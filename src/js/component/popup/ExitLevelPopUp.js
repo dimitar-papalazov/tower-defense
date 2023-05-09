@@ -1,4 +1,4 @@
-import LevelSelect from '../../scene/LevelSelect'
+import LevelSelect from '../../scene/levelSelect'
 import PopUp from './PopUp'
 import Phaser from 'phaser'
 

@@ -4,7 +4,7 @@ import Gui from './Gui'
 import PathCreator from '../../component/creators/PathCreator'
 import EnemyCreator from '../../component/creators/enemy-creator/EnemyCreator'
 import ToggleButton from '../../component/button/ToggleButton'
-import MainMenu from '../MainMenu'
+import MainMenu from '../mainMenu'
 
 export default class LevelCreateGui extends Gui {
   create () {
