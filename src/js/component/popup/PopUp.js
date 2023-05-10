@@ -2,8 +2,14 @@ import Phaser from 'phaser'
 import color from '../../enum/color'
 import fontStyle from '../../enum/fontStyle'
 import TextButton from '../button/TextButton'
+import Level from '../../scene/level.js'
 
 export default class PopUp extends Phaser.GameObjects.Container {
+  /**
+   * @param {Level} scene 
+   * @param {number} width 
+   * @param {number} height 
+   */
   constructor (scene, width, height) {
     super(scene)
     this.width = width
@@ -16,8 +22,8 @@ export default class PopUp extends Phaser.GameObjects.Container {
     this.createBackground()
     this.createBackButton()
     this.setVisible(false)
-    this.scene.add.existing(this)
     this.setInteractive()
+    this.scene.add.existing(this)
   }
 
   setInteractive () {

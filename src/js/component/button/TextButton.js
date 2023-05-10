@@ -12,7 +12,7 @@ export default class TextButton extends Button {
    * @param {number} config.y
    * @param {function} config.callback
    * @param {object} config.context
-   * @param {object[]} config.params
+   * @param {object[]} [config.params]
    * @param {string} config.text
    * @param {string} config.size
    * @param {number} config.color

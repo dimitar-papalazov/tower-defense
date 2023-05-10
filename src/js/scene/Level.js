@@ -2,36 +2,30 @@ import PathUI from '../component/PathUI'
 import EnemyService from '../component/services/EnemyService'
 import TowerService from '../component/services/TowerService'
 import fontStyle from '../enum/fontStyle'
-// eslint-disable-next-line no-unused-vars
-import LevelConfig from '../configs/level.config.js'
+import LevelGui from './gui/levelGui.js'
 import TowerDefenseScene from './towerDefenseScene.js'
 
 export default class Level extends TowerDefenseScene {
   static key = 'Level'
 
   /**
-   * @param {Gui} gui delete after gui refactor
    * @param {LevelConfig} config
    */
-  constructor (gui, config) {
+  constructor (config) {
     super({ key: Level.key })
-    this.gui = gui
-    this.gui.setLevel(this)
     this.path = config.path
     this.enemies = [...config.enemies]
     this.specials = config.specials
     this.level = config.level
   }
 
-  /**
-   * @override
-   * Creates this Scene's GameObjects.
-   */
   create () {
+    this.gui = new LevelGui(this)
     this.pathUI = new PathUI(this, this.path)
     this.createPathSigns()
     this.enemyService = new EnemyService(this, this.enemies, this.path)
     this.towerService = new TowerService(this)
+    this.children.bringToTop(this.gui)
   }
 
   /**
@@ -84,22 +78,4 @@ export default class Level extends TowerDefenseScene {
     this.startSign.destroy()
     this.endSign.destroy()
   }
-
-  /**
-   * Removes this Scene, while destroying the Scene's GameObjects. Remove after Gui refactor.
-   */
-  remove () {
-    this.towerService.destroy()
-    this.enemyService.destroy()
-    this.gui.remove()
-    this.game.scene.remove(this)
-  }
 }
-
-/**
- * @typedef {Object} LevelConfig
- * @property {EnemyConfig[]} enemies
- * @property {Number} level
- * @property {PointConfig[]} path
- * @property {SpecialsConfig} specials
- */

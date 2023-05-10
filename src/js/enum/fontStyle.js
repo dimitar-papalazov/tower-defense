@@ -1,5 +1,4 @@
 import color from './color'
-// eslint-disable-next-line no-unused-vars
 import Phaser from 'phaser'
 
 const FONT_FAMILY = 'Verdana'

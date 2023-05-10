@@ -6,7 +6,7 @@ import constants from '../enum/constants'
 import fontStyle from '../enum/fontStyle'
 import MainMenu from './mainMenu'
 import Level from './level'
-import LevelGui from './gui/LevelGui'
+import LevelGui from './gui/levelGui'
 import TowerDefenseScene from './towerDefenseScene.js'
 
 export default class LevelSelect extends TowerDefenseScene {
@@ -20,20 +20,15 @@ export default class LevelSelect extends TowerDefenseScene {
     this.levels = []
   }
 
-  /**
-   * @override
-   * Loads all levels' JSONs.
-   */
   preload () {
+    this.load.image('heart', 'src/assets/images/resource/heart.png')
+    this.load.image('coin', 'src/assets/images/resource/coin.png')
+
     for (let i = 1; i <= constants.LEVELS_IN_JSONS; i++) {
       this.load.json(`level${i}`, `src/assets/json/levels/level${i}.json`)
     }
   }
 
-  /**
-   * @override
-   * Creates the game objects in this Scene, also gets the loaded levels' JSONs.
-   */
   create () {
     for (let i = 1; i <= constants.LEVELS_IN_JSONS; i++) {
       this.levels.push(this.cache.json.get(`level${i}`))
@@ -49,8 +44,10 @@ export default class LevelSelect extends TowerDefenseScene {
    * Creates the title property, that is Text, that represents this Scene's title.
    */
   createTitle () {
+    const x = this.game.scale.width * 0.5
+    const y = this.game.scale.height * 0.1
     this.title = this.add
-      .text(this.game.scale.width * 0.5, this.game.scale.height * 0.1, 'Level Select', fontStyle.SMALL_TITLE)
+      .text(x, y, 'Level Select', fontStyle.SMALL_TITLE)
       .setOrigin(0.5)
   }
 
@@ -74,7 +71,10 @@ export default class LevelSelect extends TowerDefenseScene {
    * Adds the MainMenu Scene to the SceneManager if not present and transitions to it.
    */
   backButtonCallback () {
-    if (!this.game.scene.getScene(MainMenu.key)) this.game.scene.add(MainMenu.key, new MainMenu(this.game))
+    if (!this.game.scene.getScene(MainMenu.key)) {
+      this.game.scene.add(MainMenu.key, new MainMenu())
+    }
+
     this.scene.transition({ target: MainMenu.key, duration: 0, remove: true })
   }
 
@@ -125,11 +125,7 @@ export default class LevelSelect extends TowerDefenseScene {
    */
   levelButtonCallback (index) {
     this.levels[index - 1].level = index
-    // Delete after GUI refactor
-    const levelGui = new LevelGui(this.game)
-    this.game.scene.add(Level.key, new Level(levelGui, this.levels[index - 1]))
-    this.game.scene.add(levelGui.key, levelGui, true)
-    this.game.scene.bringToTop(levelGui)
+    this.game.scene.add(Level.key, new Level(this.levels[index - 1]))
     this.scene.transition({ target: Level.key, duration: 0, remove: true })
   }
 }

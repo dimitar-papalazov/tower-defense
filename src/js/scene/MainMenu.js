@@ -15,10 +15,6 @@ export default class MainMenu extends TowerDefenseScene {
     super({ key: MainMenu.key })
   }
 
-  /**
-   * @override
-   * Creates the game objects in this Scene.
-   */
   create () {
     this.createTitle()
     this.createLevelSelect()
@@ -29,8 +25,10 @@ export default class MainMenu extends TowerDefenseScene {
    * Creates the title property, that is a Text game object, representing the game's title.
    */
   createTitle () {
+    const x = this.game.scale.width * 0.5
+    const y = this.game.scale.height * 0.25
     this.title = this.add
-      .text(this.game.scale.width * 0.5, this.game.scale.height * 0.25, 'Tower Defense', fontStyle.TITLE)
+      .text(x, y, 'Tower Defense', fontStyle.TITLE)
       .setOrigin(0.5)
   }
 
@@ -54,7 +52,10 @@ export default class MainMenu extends TowerDefenseScene {
    * Transitions to the LevelSelect Scene. Adds it to the Game's SceneManager if not present.
    */
   levelSelectCallback () {
-    if (!this.game.scene.getScene(LevelSelect.key)) this.game.scene.add(LevelSelect.key, new LevelSelect(this.game))
+    if (!this.game.scene.getScene(LevelSelect.key)) {
+      this.game.scene.add(LevelSelect.key, new LevelSelect())
+    } 
+
     this.scene.transition({ target: LevelSelect.key, duration: 0, remove: true })
   }
 
@@ -78,7 +79,10 @@ export default class MainMenu extends TowerDefenseScene {
    * Transitions to the LevelCreate Scene. Adds it to the Game's SceneManager if not present.
    */
   levelCreateCallback () {
-    if (!this.game.scene.getScene(LevelCreate.key)) this.game.scene.add(LevelCreate.key, new LevelCreate(this.game))
+    if (!this.game.scene.getScene(LevelCreate.key)) {
+      this.game.scene.add(LevelCreate.key, new LevelCreate())
+    } 
+
     this.scene.transition({ target: LevelCreate.key, duration: 0, remove: true })
   }
 }

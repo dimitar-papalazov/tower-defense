@@ -1,23 +1,7 @@
-/* eslint-disable no-unused-vars */
-import EnemyConfig from './enemy.config.js'
-import PointConfig from './point.config.js'
-import SpecialsConfig from './specials.config.js'
-
-export default class LevelConfig {
-  /**
-   * @type {EnemyConfig[][]} - Enemies array that will be generated in the level. Each subarray represent a row of enemies.
-   */
-  enemies
-  /**
-   * @type {Number} - Index of the level.
-   */
-  level
-  /**
-   * @type {PointConfig[]} - Array of points that represent the enemies' path.
-   */
-  path
-  /**
-   * @type {SpecialsConfig} - Specials configuration for the level
-   */
-  specials
-}
+/**
+ * @typedef {Object} LevelConfig
+ * @property {EnemyConfig[][]} enemies - enemies array that will be generated in the level, each subarray represent a row of enemies
+ * @property {Number} level - index of the level
+ * @property {PointConfig[]} path - array of points that represent the enemies' path
+ * @property {SpecialsConfig} specials - specials configuration for the level
+ */

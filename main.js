@@ -1,4 +1,3 @@
-import TowerDefenseGame from './src/js/game/TowerDefenseGame'
+import TowerDefenseGame from './src/js/game/towerDefenseGame'
 
-// eslint-disable-next-line no-new
 new TowerDefenseGame()

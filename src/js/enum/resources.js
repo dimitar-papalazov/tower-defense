@@ -1,5 +1,5 @@
-export default [
-  {
+export default {
+  HEART: {
     id: 0,
     name: 'heart',
     value: 3,
@@ -7,7 +7,7 @@ export default [
     minValue: 0,
     maxValue: 3
   },
-  {
+  COIN: {
     id: 1,
     name: 'coin',
     value: 1000,
@@ -15,4 +15,4 @@ export default [
     minValue: 0,
     maxValue: 1000000
   }
-]
+}

@@ -1,4 +1,4 @@
-import LevelCreateGui from './gui/LevelCreateGui'
+import LevelCreateGui from './gui/levelCreateGui'
 import TowerDefenseScene from './towerDefenseScene.js'
 
 export default class LevelCreate extends TowerDefenseScene {
@@ -11,18 +11,7 @@ export default class LevelCreate extends TowerDefenseScene {
     super({ key: LevelCreate.key })
   }
 
-  /**
-   * @override
-   */
   create () {
-    this.createGui()
-  }
-
-  /**
-   * Creates the Gui Layer.
-   */
-  createGui () {
-    const gui = new LevelCreateGui({ game: this.game })
-    this.gui = this.game.scene.add(gui.key, gui, true)
+    this.gui = new LevelCreateGui(this)
   }
 }

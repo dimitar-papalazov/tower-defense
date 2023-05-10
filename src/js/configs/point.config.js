@@ -1,10 +1,5 @@
-export default class PointConfig {
-  /**
-   * @type {Number} - horizontal position of the point
-   */
-  x
-  /**
-   * @type {Number} - vertical position of the point
-   */
-  y
-}
+/**
+ * @typedef {Object} PointConfig
+ * @property {number} x - horizontal position of the point
+ * @property {number} y - vertical position of the point
+ */

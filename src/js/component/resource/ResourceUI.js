@@ -1,9 +1,7 @@
 import Phaser from 'phaser'
 import color from '../../enum/color'
 import fontStyle from '../../enum/fontStyle'
-// eslint-disable-next-line no-unused-vars
 import Resource from './Resource'
-// eslint-disable-next-line no-unused-vars
 import ResourceManager from './ResourceManager'
 
 export default class ResourceUI extends Phaser.GameObjects.Container {

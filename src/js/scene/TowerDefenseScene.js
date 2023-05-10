@@ -1,10 +1,11 @@
-import Phaser from 'phaser'
-// eslint-disable-next-line no-unused-vars
-import TowerDefenseGame from '../game/TowerDefenseGame.js'
+import TowerDefenseGame from '../game/towerDefenseGame.js'
 
 export default class TowerDefenseScene extends Phaser.Scene {
-  /**
-   * @type {TowerDefenseGame}
-   */
-  game
+  constructor (config) {
+    super(config)
+    /**
+     * @type {TowerDefenseGame}
+     */
+    this.game
+  }
 }

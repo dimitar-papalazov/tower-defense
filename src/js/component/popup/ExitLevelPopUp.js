@@ -1,18 +1,22 @@
 import LevelSelect from '../../scene/levelSelect'
 import PopUp from './PopUp'
 import Phaser from 'phaser'
+import Level from '../../scene/level'
 
 export default class ExitLevelPopUp extends PopUp {
+  /**
+   * @param {Level} scene
+   */
   constructor (scene) {
     super(scene, 500, 500)
-    const game = this.scene.game
+    const game = scene.game
     const level = game.scene.getScene('Level')
     game.scene.pause('Level')
     this.addButton(this.gameCenterX - this.width * 0.25, this.gameCenterY + this.height * 0.5, () => {
       this.close(() => {
-        level.remove()
-        const levelSelect = new LevelSelect(game)
-        game.scene.add(levelSelect.key, levelSelect, true)
+        // level.remove()
+        const levelSelect = new LevelSelect()
+        game.scene.add(LevelSelect.key, levelSelect, true)
       }, this)
     }, this, 'Yes')
     this.addButton(this.gameCenterX + this.width * 0.25, this.gameCenterY + this.height * 0.5, this.close, this, 'No')
