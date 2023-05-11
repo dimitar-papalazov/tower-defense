@@ -4,7 +4,7 @@ import Phaser from 'phaser'
 const FONT_FAMILY = 'Verdana'
 export default {
   /**
-   * @type {Phaser.GameObjects.TextStyle}
+   * @type {Phaser.Types.GameObjects.Text.TextStyle}
   */
   TITLE: {
     fontFamily: FONT_FAMILY,
@@ -14,7 +14,7 @@ export default {
     strokeThickness: 8
   },
   /**
-   * @type {Phaser.GameObjects.TextStyle}
+   * @type {Phaser.Types.GameObjects.Text.TextStyle}
   */
   SMALL_TITLE: {
     fontFamily: FONT_FAMILY,
@@ -24,14 +24,14 @@ export default {
     strokeThickness: 4
   },
   /**
-   * @type {Phaser.GameObjects.TextStyle}
+   * @type {Phaser.Types.GameObjects.Text.TextStyle}
   */
   BUTTON: {
     color: color.WHITE.STRING,
     fontFamily: FONT_FAMILY
   },
   /**
-   * @type {Phaser.GameObjects.TextStyle}
+   * @type {Phaser.Types.GameObjects.Text.TextStyle}
   */
   COUNT: {
     fontFamily: FONT_FAMILY,
@@ -39,7 +39,7 @@ export default {
     color: color.BLACK.STRING
   },
   /**
-   * @type {Phaser.GameObjects.TextStyle}
+   * @type {Phaser.Types.GameObjects.Text.TextStyle}
   */
   ROW: {
     fontFamily: FONT_FAMILY,
@@ -47,7 +47,7 @@ export default {
     color: color.BLACK.STRING
   },
   /**
-   * @type {Phaser.GameObjects.TextStyle}
+   * @type {Phaser.Types.GameObjects.Text.TextStyle}
   */
   POP_UP_TEXT: {
     fontFamily: FONT_FAMILY,
@@ -56,7 +56,7 @@ export default {
     align: 'center'
   },
   /**
-   * @type {Phaser.GameObjects.TextStyle}
+   * @type {Phaser.Types.GameObjects.Text.TextStyle}
   */
   COUNTDOWN: {
     fontFamily: FONT_FAMILY,
@@ -67,7 +67,7 @@ export default {
     strokeThickness: 6
   },
   /**
-   * @type {Phaser.GameObjects.TextStyle}
+   * @type {Phaser.Types.GameObjects.Text.TextStyle}
   */
   RESOURCE_UI: {
     fontFamily: FONT_FAMILY,
@@ -76,7 +76,7 @@ export default {
     align: 'center'
   },
   /**
-   * @type {Phaser.GameObjects.TextStyle}
+   * @type {Phaser.Types.GameObjects.Text.TextStyle}
   */
   SIGN: {
     fontFamily: FONT_FAMILY,

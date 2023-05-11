@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import events from '../../../enum/events'
-import damageCalculator from '../../damageCalculator'
+import damageCalculator from '../../../utils/damageCalculator'
 
 export default class Enemy extends Phaser.GameObjects.Sprite {
   static TYPE = 'Enemy'

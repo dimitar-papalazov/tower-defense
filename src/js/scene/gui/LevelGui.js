@@ -1,11 +1,11 @@
 import TextButton from '../../component/button/TextButton'
-import Countdown from '../../component/Countdown'
+import Countdown from '../../component/level/Countdown'
 import ExitLevelPopUp from '../../component/popup/ExitLevelPopUp'
 import ResourceUI from '../../component/resource/ResourceUI'
 import color from '../../enum/color'
 import Gui from './gui'
 import ResourceManager from '../../component/resource/ResourceManager'
-import TowerPicker from '../../component/TowerPicker'
+import TowerPicker from '../../component/level/towerPicker'
 import events from '../../enum/events'
 import IntroPopUp from '../../component/popup/introPopUp'
 import LevelFinishPopUp from '../../component/popup/levelFinishPopUp'
@@ -62,7 +62,9 @@ export default class LevelGui extends Gui {
    */
   onLevelFinished (win) {
     if (this.levelFinishPopUp) return
-    this.levelFinishPopUp = new LevelFinishPopUp(this, win, this.onPopUpClose, this)
+    this.levelFinishPopUp = new LevelFinishPopUp(this.scene, win, this.onPopUpClose, this)
+    this.components.push(this.levelFinishPopUp)
+    this.add(this.levelFinishPopUp)
     this.scene.sys.pause()
   }
 
@@ -98,7 +100,7 @@ export default class LevelGui extends Gui {
   exitButtonCallback () {
     const exitLevelPopUp = new ExitLevelPopUp(this.scene)
     this.components.push(exitLevelPopUp)
-    this.add(exitLevelPopUp)
+    // this.add(exitLevelPopUp)
     exitLevelPopUp.open()
   }
 

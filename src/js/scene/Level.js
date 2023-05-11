@@ -1,4 +1,4 @@
-import PathUI from '../component/PathUI'
+import PathUI from '../component/level/PathUI'
 import EnemyService from '../component/services/EnemyService'
 import TowerService from '../component/services/TowerService'
 import fontStyle from '../enum/fontStyle'

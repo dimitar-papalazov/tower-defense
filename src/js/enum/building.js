@@ -1,18 +1,14 @@
-import Tower from '../component/units/buildings/Tower'
-import MagicTower from '../component/units/buildings/MagicTower'
-import CannonTower from '../component/units/buildings/CannonTower'
-
 export default {
   TOWER: {
-    TYPE: Tower.TYPE,
-    TEXTURE: `${Tower.TYPE}Building`
+    TYPE: 'Tower',
+    TEXTURE: 'TowerBuilding'
   },
   MAGIC_TOWER: {
-    TYPE: MagicTower.TYPE,
-    TEXTURE: `${MagicTower.TYPE}Building`
+    TYPE: 'MagicTower',
+    TEXTURE: 'MagicTowerBuilding'
   },
   CANNON_TOWER: {
-    TYPE: CannonTower.TYPE,
-    TEXTURE: `${CannonTower.TYPE}Building`
+    TYPE: 'CannonTower',
+    TEXTURE: 'CannonTowerBuilding'
   }
 }

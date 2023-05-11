@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
-import color from '../enum/color'
-import events from '../enum/events'
+import color from '../../enum/color.js'
+import events from '../../enum/events.js'
 
 export default class PathUI extends Phaser.GameObjects.RenderTexture {
   constructor (scene, array) {

@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import fontStyle from '../enum/fontStyle'
+import fontStyle from '../../enum/fontStyle.js'
 
 export default class Countdown extends Phaser.GameObjects.Text {
   constructor (scene, x, y, startsIn) {

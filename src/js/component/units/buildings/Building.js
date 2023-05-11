@@ -4,9 +4,11 @@ import events from '../../../enum/events'
 
 export default class Building extends Phaser.GameObjects.Sprite {
   static TYPE = 'Building'
+  static TEXTURE = 'building'
 
-  constructor (scene, x, y, texture, frame) {
-    super(scene, x, y, texture, frame)
+  constructor (scene, x, y) {
+    super(scene, x, y, Building.TEXTURE)
+    this.generateTexture()
     this.startingX = this.x
     this.startingY = this.y
     this.type = Building.TYPE
@@ -22,6 +24,16 @@ export default class Building extends Phaser.GameObjects.Sprite {
     this.enableInput()
     this.setupEvents()
     this.scene.add.existing(this)
+  }
+
+  generateTexture () {
+    if (this.scene.textures.exists(Building.TEXTURE)) return
+    const graphics = this.scene.add.graphics()
+    graphics.fillStyle(color.WHITE.NUMBER)
+    graphics.fillTriangle(0, 80, 80, 80, 40, 0)
+    graphics.generateTexture(Building.TEXTURE, 80, 80)
+    graphics.destroy()
+    this.setTexture(Building.TEXTURE)
   }
 
   setupEvents () {

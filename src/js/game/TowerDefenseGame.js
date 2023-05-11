@@ -15,6 +15,9 @@ export default class TowerDefenseGame extends Phaser.Game {
   constructor () {
     super(gameConfig)
     Object.defineProperty(window, 'game', { value: this })
+    /**
+     * @type {LevelConfig[]}
+     */
     this.levels = []
     this.resourceManager = new ResourceManager(this, Object.values(resources))
     this.scene.add(MainMenu.key, new MainMenu(), true)

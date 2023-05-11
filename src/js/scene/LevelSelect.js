@@ -1,12 +1,11 @@
 import TextButton from '../component/button/TextButton'
 import LevelButton from '../component/button/LevelButton'
-import Slider from '../component/Slider'
+import Slider from '../component/level/slider'
 import color from '../enum/color'
 import constants from '../enum/constants'
 import fontStyle from '../enum/fontStyle'
 import MainMenu from './mainMenu'
 import Level from './level'
-import LevelGui from './gui/levelGui'
 import TowerDefenseScene from './towerDefenseScene.js'
 
 export default class LevelSelect extends TowerDefenseScene {
@@ -98,6 +97,9 @@ export default class LevelSelect extends TowerDefenseScene {
    * Creates and adds LevelButtons to the slider.
    */
   addButtons () {
+    /**
+     * @type {LevelButton[]}
+     */
     const items = []
 
     for (let i = 1; i <= this.levels.length; i++) {
