@@ -2,6 +2,9 @@ import color from '../../enum/color'
 import enemy from '../../enum/enemy'
 import PopUp from './PopUp'
 import Phaser from 'phaser'
+import Creep from '../units/enemies/creep.js'
+import AbsorberCreep from '../units/enemies/absorberCreep.js'
+import ArmoredCreep from '../units/enemies/armoredCreep.js'
 
 export default class IntroPopUp extends PopUp {
   static shouldShow (level) {
@@ -25,9 +28,9 @@ export default class IntroPopUp extends PopUp {
   }
 
   initEnemies () {
-    this.addItem(this.scene.add.image(this.gameCenterX + 250, this.gameCenterY - 150, enemy.CREEP.TEXTURE).setScale(0.5))
-    this.addItem(this.scene.add.image(this.gameCenterX + 250, this.gameCenterY, enemy.ABSORBER_CREEP.TEXTURE).setScale(0.5))
-    this.addItem(this.scene.add.image(this.gameCenterX + 250, this.gameCenterY + 150, enemy.ARMORED_CREEP.TEXTURE).setScale(0.5))
+    this.addItem(new Creep(this.scene, this.gameCenterX + 250, this.gameCenterY - 150).setScale(0.5))
+    this.addItem(new AbsorberCreep(this.scene, this.gameCenterX + 250, this.gameCenterY).setScale(0.5))
+    this.addItem(new ArmoredCreep(this.scene, this.gameCenterX + 250, this.gameCenterY + 150).setScale(0.5))
   }
 
   initBuildings () {

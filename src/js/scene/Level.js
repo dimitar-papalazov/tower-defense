@@ -1,4 +1,4 @@
-import PathUI from '../component/level/PathUI'
+import PathUI from '../component/level/pathUI'
 import EnemyService from '../component/services/EnemyService'
 import TowerService from '../component/services/TowerService'
 import fontStyle from '../enum/fontStyle'
@@ -24,7 +24,7 @@ export default class Level extends TowerDefenseScene {
     this.pathUI = new PathUI(this, this.path)
     this.createPathSigns()
     this.enemyService = new EnemyService(this, this.enemies, this.path)
-    this.towerService = new TowerService(this)
+    this.towerService = new TowerService(this, this.pathUI)
     this.children.bringToTop(this.gui)
   }
 

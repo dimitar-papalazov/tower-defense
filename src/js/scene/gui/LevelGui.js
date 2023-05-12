@@ -1,5 +1,5 @@
 import TextButton from '../../component/button/TextButton'
-import Countdown from '../../component/level/Countdown'
+import Countdown from '../../component/level/countdown'
 import ExitLevelPopUp from '../../component/popup/ExitLevelPopUp'
 import ResourceUI from '../../component/resource/ResourceUI'
 import color from '../../enum/color'
@@ -64,7 +64,7 @@ export default class LevelGui extends Gui {
     if (this.levelFinishPopUp) return
     this.levelFinishPopUp = new LevelFinishPopUp(this.scene, win, this.onPopUpClose, this)
     this.components.push(this.levelFinishPopUp)
-    this.add(this.levelFinishPopUp)
+    // this.add(this.levelFinishPopUp)
     this.scene.sys.pause()
   }
 

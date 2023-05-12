@@ -1,14 +1,21 @@
+import color from './color.js'
+
 export default {
+  ENEMY: {
+    TYPE: 'Enemy',
+    TEXTURE: 'enemy',
+    COLOR: color.WHITE.NUMBER
+  },
   CREEP: {
     TYPE: 'Creep',
-    TEXTURE: 'CreepEnemy'
+    COLOR: color.MAGENTA.NUMBER
   },
   ABSORBER_CREEP: {
     TYPE: 'AbsorberCreep',
-    TEXTURE: 'AbsorberCreepEnemy'
+    COLOR: color.TURQUOISE.NUMBER
   },
   ARMORED_CREEP: {
     TYPE: 'ArmoredCreep',
-    TEXTURE: 'ArmoredCreepEnemy'
+    COLOR: color.YELLOW.NUMBER
   }
 }

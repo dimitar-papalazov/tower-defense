@@ -1,11 +1,11 @@
-import AbsorberCreep from '../units/enemies/AbsorberCreep'
-import ArmoredCreep from '../units/enemies/ArmoredCreep'
-import Creep from '../units/enemies/Creep'
+import AbsorberCreep from '../units/enemies/absorberCreep'
+import ArmoredCreep from '../units/enemies/armoredCreep'
+import Creep from '../units/enemies/creep'
 import Phaser from 'phaser'
 import Level from '../../scene/level'
-import enemy from '../../enum/enemy'
+import enemyEnum from '../../enum/enemy'
+import buildingEnum from '../../enum/building.js'
 import events from '../../enum/events'
-import color from '../../enum/color'
 
 export default class EnemyService {
   /**
@@ -24,7 +24,6 @@ export default class EnemyService {
     this.enemiesKilled = 0
     this.enemiesFinished = 0
     this.enemiesInCurrentRow = 0
-    this.createEnemyTextures()
     this.setupEvents()
   }
 
@@ -32,6 +31,7 @@ export default class EnemyService {
     this.emitter.on(events.ENEMY_FINISHED, this.onEnemyFinished, this)
     this.emitter.on(events.ENEMY_KILLED, this.onEnemyKilled, this)
     this.emitter.on(events.ROW_START, this.startRow, this)
+    this.emitter.on(events.ENEMY_ATTACKED, this.onEnemyAttacked, this)
   }
 
   onEnemyFinished () {
@@ -74,11 +74,11 @@ export default class EnemyService {
       for (let i = 0; i < item.number; i++) {
         let e = null
         if (item.type === Creep.TYPE) {
-          e = new Creep(this.scene, this.path[0].x - 100, this.path[0].y, enemy.CREEP.TEXTURE)
+          e = new Creep(this.scene, this.path[0].x - 100, this.path[0].y)
         } else if (item.type === AbsorberCreep.TYPE) {
-          e = new AbsorberCreep(this.scene, this.path[0].x - 100, this.path[0].y, enemy.ABSORBER_CREEP.TEXTURE)
+          e = new AbsorberCreep(this.scene, this.path[0].x - 100, this.path[0].y)
         } else if (item.type === ArmoredCreep.TYPE) {
-          e = new ArmoredCreep(this.scene, this.path[0].x - 100, this.path[0].y, enemy.ARMORED_CREEP.TEXTURE)
+          e = new ArmoredCreep(this.scene, this.path[0].x - 100, this.path[0].y)
         }
 
         e.setScale(0.5)
@@ -120,36 +120,50 @@ export default class EnemyService {
     this.scene.time.delayedCall(20, this.moveEnemy, [e], this)
   }
 
-  createEnemyTextures () {
-    const graphics = this.scene.add.graphics()
+  /**
+   * @param {number} id 
+   * @param {string} type 
+   */
+  onEnemyAttacked (id, type) {
+    const enemy = this.currentRow.find(enemy => enemy.id === id)
+    if (!enemy) return
+    enemy.health -= this.calculateDamage(type, enemy.type)
+    if (enemy.health > 0) return
+    enemy.dead = true
+    this.emitter.emit(events.ENEMY_KILLED)
+    enemy.destroy()
+  }
 
-    if (!this.scene.textures.exists(enemy.CREEP.TEXTURE)) {
-      graphics.fillStyle(color.MAGENTA.NUMBER)
-      graphics.fillRoundedRect(0, 0, 100, 100)
-      graphics.generateTexture(enemy.CREEP.TEXTURE, 100, 100)
-      graphics.clear()
+  /**
+   * Calculates the damage done to the provided enemy, from the provided building.
+   * @param {string} building 
+   * @param {string} enemy 
+   */
+  calculateDamage (building, enemy) {
+    if (building === buildingEnum.TOWER.TYPE) {
+      if (enemy === enemyEnum.CREEP.TYPE) return 10
+      else if (enemy === enemyEnum.ABSORBER_CREEP.TYPE) return 3
+      else if (enemy === enemyEnum.ARMORED_CREEP.TYPE) return 3
+      else throw new Error(`Enemy does not exist, ${enemy}`)
+    } else if (building === buildingEnum.MAGIC_TOWER.TYPE) {
+      if (enemy === enemyEnum.CREEP.TYPE) return 5
+      else if (enemy === enemyEnum.ABSORBER_CREEP.TYPE) return 1
+      else if (enemy === enemyEnum.ARMORED_CREEP.TYPE) return 10
+      else throw new Error(`Enemy does not exist, ${enemy}`)
+    } else if (building === buildingEnum.CANNON_TOWER.TYPE) {
+      if (enemy === enemyEnum.CREEP.TYPE) return 5
+      else if (enemy === enemyEnum.ABSORBER_CREEP.TYPE) return 10
+      else if (enemy === enemyEnum.ARMORED_CREEP.TYPE) return 1
+      else throw new Error(`Enemy does not exist, ${enemy}`)
+    } else {
+      throw new Error(`Buliding does not exist, ${building}`)
     }
-
-    if (!this.scene.textures.exists(enemy.ARMORED_CREEP.TEXTURE)) {
-      graphics.fillStyle(color.YELLOW.NUMBER)
-      graphics.fillRoundedRect(0, 0, 100, 100)
-      graphics.generateTexture(enemy.ARMORED_CREEP.TEXTURE, 100, 100)
-      graphics.clear()
-    }
-
-    if (!this.scene.textures.exists(enemy.ABSORBER_CREEP.TEXTURE)) {
-      graphics.fillStyle(color.TURQUOISE.NUMBER)
-      graphics.fillRoundedRect(0, 0, 100, 100)
-      graphics.generateTexture(enemy.ABSORBER_CREEP.TEXTURE, 100, 100)
-      graphics.clear()
-    }
-
-    graphics.destroy()
   }
 
   destroy () {
     this.emitter.off(events.ENEMY_FINISHED, this.onEnemyFinished, this)
     this.emitter.off(events.ENEMY_KILLED, this.onEnemyKilled, this)
     this.emitter.off(events.ROW_START, this.startRow, this)
+    this.emitter.off(events.ENEMY_ATTACKED, this.onEnemyAttacked, this)
   }
 }

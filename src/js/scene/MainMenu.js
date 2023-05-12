@@ -3,7 +3,7 @@ import color from '../enum/color'
 import fontStyle from '../enum/fontStyle'
 import LevelCreate from './levelCreate'
 import LevelSelect from './levelSelect'
-import TowerDefenseScene from './towerDefenseScene.js'
+import TowerDefenseScene from './towerDefenseScene'
 
 export default class MainMenu extends TowerDefenseScene {
   static key = 'MainMenu'
@@ -54,7 +54,7 @@ export default class MainMenu extends TowerDefenseScene {
   levelSelectCallback () {
     if (!this.game.scene.getScene(LevelSelect.key)) {
       this.game.scene.add(LevelSelect.key, new LevelSelect())
-    } 
+    }
 
     this.scene.transition({ target: LevelSelect.key, duration: 0, remove: true })
   }
@@ -81,7 +81,7 @@ export default class MainMenu extends TowerDefenseScene {
   levelCreateCallback () {
     if (!this.game.scene.getScene(LevelCreate.key)) {
       this.game.scene.add(LevelCreate.key, new LevelCreate())
-    } 
+    }
 
     this.scene.transition({ target: LevelCreate.key, duration: 0, remove: true })
   }

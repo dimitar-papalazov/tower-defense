@@ -75,7 +75,8 @@ export default class LevelCreateGui extends Gui {
     const result = {
       path: this.pathCreator.points,
       enemies: this.enemyCreator.enemies,
-      specials: this.specials
+      specials: this.specials,
+      level: this.game.levels.length
     }
 
     this.game.levels.push(result)
