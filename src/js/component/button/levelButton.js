@@ -1,5 +1,5 @@
 import fontStyle from '../../enum/fontStyle';
-import TextButton from './TextButton';
+import TextButton from './textButton';
 
 let globalSuccess = null;
 let globalText = null;

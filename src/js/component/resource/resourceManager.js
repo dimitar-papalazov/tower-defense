@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import Resource from './Resource';
+import Resource from './resource';
 
 export default class ResourceManager extends Phaser.Events.EventEmitter {
   constructor (game, resources) {

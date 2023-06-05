@@ -1,7 +1,7 @@
 import events from '../../enum/events';
-import CannonTower from '../units/buildings/CannonTower';
-import MagicTower from '../units/buildings/MagicTower';
-import Tower from '../units/buildings/Tower';
+import CannonTower from '../units/buildings/cannonTower';
+import MagicTower from '../units/buildings/magicTower';
+import Tower from '../units/buildings/tower';
 
 export default class TowerService {
   constructor (scene, pathUI) {

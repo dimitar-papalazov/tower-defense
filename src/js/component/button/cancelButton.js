@@ -1,6 +1,6 @@
 import color from '../../enum/color';
 import events from '../../enum/events';
-import Button from './Button';
+import Button from './button';
 import Phaser from 'phaser';
 
 export default class CancelButton extends Button {

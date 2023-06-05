@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import color from '../../../enum/color';
 import enemy from '../../../enum/enemy';
 import fontStyle from '../../../enum/fontStyle';
-import TextButton from '../../button/TextButton';
+import TextButton from '../../button/textButton';
 
 export default class AddEnemy extends Phaser.GameObjects.Container {
   /**

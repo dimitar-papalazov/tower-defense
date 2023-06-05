@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 import color from '../../enum/color';
 import fontStyle from '../../enum/fontStyle';
-import Resource from './Resource';
-import ResourceManager from './ResourceManager';
+import Resource from './resource';
+import ResourceManager from './resourceManager';
 
 export default class ResourceUI extends Phaser.GameObjects.Container {
   /**

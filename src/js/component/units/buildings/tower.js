@@ -1,6 +1,6 @@
 import color from '../../../enum/color';
 import building from '../../../enum/building.js';
-import Building from './Building';
+import Building from './building';
 
 export default class Tower extends Building {
   static TYPE = building.TOWER.TYPE;

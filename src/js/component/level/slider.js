@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import LevelButton from '../button/LevelButton.js';
+import LevelButton from '../button/levelButton.js';
 
 export default class Slider extends Phaser.GameObjects.Container {
   /**

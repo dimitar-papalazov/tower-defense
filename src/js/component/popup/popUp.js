@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import color from '../../enum/color';
 import fontStyle from '../../enum/fontStyle';
-import TextButton from '../button/TextButton';
+import TextButton from '../button/textButton';
 import Level from '../../scene/level.js';
 
 export default class PopUp extends Phaser.GameObjects.Container {

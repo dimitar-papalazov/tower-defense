@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
 import events from '../../enum/events';
-import CancelButton from '../button/CancelButton';
-import CannonTower from '../units/buildings/CannonTower';
-import MagicTower from '../units/buildings/MagicTower';
-import Tower from '../units/buildings/Tower';
+import CancelButton from '../button/cancelButton';
+import CannonTower from '../units/buildings/cannonTower';
+import MagicTower from '../units/buildings/magicTower';
+import Tower from '../units/buildings/tower';
 import Level from '../../scene/level.js';
 import BuildingBackground from '../units/buildings/buildingBackground.js';
 

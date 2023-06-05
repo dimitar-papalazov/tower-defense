@@ -1,4 +1,4 @@
-import Button from './Button';
+import Button from './button';
 import Phaser from 'phaser';
 import fontStyle from '../../enum/fontStyle';
 import color from '../../enum/color';

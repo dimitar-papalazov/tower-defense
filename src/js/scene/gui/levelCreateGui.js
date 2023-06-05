@@ -1,9 +1,9 @@
-import TextButton from '../../component/button/TextButton';
+import TextButton from '../../component/button/textButton';
 import color from '../../enum/color';
 import Gui from './gui';
-import PathCreator from '../../component/creators/PathCreator';
-import EnemyCreator from '../../component/creators/enemy-creator/EnemyCreator';
-import ToggleButton from '../../component/button/ToggleButton';
+import PathCreator from '../../component/creators/pathCreator';
+import EnemyCreator from '../../component/creators/enemy-creator/enemyCreator';
+import ToggleButton from '../../component/button/toggleButton';
 import MainMenu from '../mainMenu';
 import LevelCreate from '../levelCreate.js';
 

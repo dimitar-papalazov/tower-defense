@@ -1,6 +1,6 @@
 import building from '../../../enum/building.js';
-import color from '../../../enum/color';
-import Building from './Building';
+import color from '../../../enum/color.js';
+import Building from './building.js';
 
 export default class MagicTower extends Building {
   static TYPE = building.MAGIC_TOWER.TYPE;

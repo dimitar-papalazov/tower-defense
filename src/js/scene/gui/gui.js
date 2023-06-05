@@ -1,4 +1,4 @@
-import TextButton from '../../component/button/TextButton';
+import TextButton from '../../component/button/textButton';
 import color from '../../enum/color';
 import MainMenu from '../mainMenu';
 import TowerDefenseScene from '../towerDefenseScene.js';

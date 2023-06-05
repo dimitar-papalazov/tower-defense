@@ -1,5 +1,5 @@
-import TextButton from '../component/button/TextButton';
-import LevelButton from '../component/button/LevelButton';
+import TextButton from '../component/button/textButton';
+import LevelButton from '../component/button/levelButton';
 import Slider from '../component/level/slider';
 import color from '../enum/color';
 import constants from '../enum/constants';

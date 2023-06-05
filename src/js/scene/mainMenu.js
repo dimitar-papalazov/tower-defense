@@ -1,4 +1,4 @@
-import TextButton from '../component/button/TextButton';
+import TextButton from '../component/button/textButton';
 import color from '../enum/color';
 import fontStyle from '../enum/fontStyle';
 import LevelCreate from './levelCreate';

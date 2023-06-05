@@ -1,4 +1,4 @@
-import PopUp from './PopUp';
+import PopUp from './popUp';
 import Phaser from 'phaser';
 
 export default class LevelFinishPopUp extends PopUp {

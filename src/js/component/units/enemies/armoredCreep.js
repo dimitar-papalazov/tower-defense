@@ -1,5 +1,5 @@
 import enemy from '../../../enum/enemy.js';
-import Enemy from './enemy';
+import Enemy from './enemy.js';
 import TowerDefenseScene from '../../../scene/towerDefenseScene.js';
 
 export default class ArmoredCreep extends Enemy {

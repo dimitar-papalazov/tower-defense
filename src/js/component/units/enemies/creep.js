@@ -1,10 +1,10 @@
 import enemy from '../../../enum/enemy.js';
-import Enemy from './enemy';
+import Enemy from './enemy.js';
 import TowerDefenseScene from '../../../scene/towerDefenseScene.js';
 
-export default class AbsorberCreep extends Enemy {
-  static TYPE = enemy.ABSORBER_CREEP.TYPE;
-  static COLOR = enemy.ABSORBER_CREEP.COLOR;
+export default class Creep extends Enemy {
+  static TYPE = enemy.CREEP.TYPE;
+  static COLOR = enemy.CREEP.COLOR;
 
   /**
    * @param {TowerDefenseScene} scene
@@ -13,8 +13,8 @@ export default class AbsorberCreep extends Enemy {
    */
   constructor (scene, x, y) {
     super(scene, x, y);
-    this.type = AbsorberCreep.TYPE;
-    this.color = AbsorberCreep.COLOR;
+    this.type = Creep.TYPE;
+    this.color = Creep.COLOR;
     this.setTint(this.color);
   }
 }

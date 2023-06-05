@@ -1,12 +1,12 @@
 import Phaser from 'phaser';
 import color from '../../../enum/color';
-import AddEnemy from './AddEnemy';
-import TextButton from '../../button/TextButton';
+import AddEnemy from './addEnemy';
+import TextButton from '../../button/textButton';
 import Creep from '../../units/enemies/creep';
 import ArmoredCreep from '../../units/enemies/armoredCreep';
 import AbsorberCreep from '../../units/enemies/absorberCreep';
 import enemy from '../../../enum/enemy';
-import EnemiesRow from './EnemiesRow';
+import EnemiesRow from './enemiesRow';
 
 export default class EnemyCreator extends Phaser.GameObjects.Container {
   constructor (scene) {

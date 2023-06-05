@@ -1,5 +1,5 @@
 import fontStyle from '../../enum/fontStyle';
-import Button from './Button';
+import Button from './button';
 
 export default class ToggleButton extends Button {
   /**

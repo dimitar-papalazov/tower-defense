@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import ResourceManager from '../component/resource/ResourceManager';
+import ResourceManager from '../component/resource/resourceManager';
 import MainMenu from '../scene/mainMenu';
 import resources from '../enum/resources';
 
