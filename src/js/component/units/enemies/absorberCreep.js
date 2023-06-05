@@ -1,10 +1,10 @@
-import enemy from '../../../enum/enemy.js';
+import enemyEnum from '../../../enum/enemy.js';
 import Enemy from './enemy.js';
 import TowerDefenseScene from '../../../scene/towerDefenseScene.js';
 
 export default class AbsorberCreep extends Enemy {
-  static TYPE = enemy.ABSORBER_CREEP.TYPE;
-  static COLOR = enemy.ABSORBER_CREEP.COLOR;
+  static TYPE = enemyEnum.ABSORBER_CREEP.TYPE;
+  static COLOR = enemyEnum.ABSORBER_CREEP.COLOR;
 
   /**
    * @param {TowerDefenseScene} scene

@@ -51,7 +51,7 @@ export default class EnemyService {
     this.enemiesKilled++;
     let toSplice = -1;
 
-    for (let i = 0; i < this.currentRow; i++) {
+    for (let i = 0; i < this.currentRow.length; i++) {
       if (this.currentRow[i].id === id) {
         toSplice = i;
         break;

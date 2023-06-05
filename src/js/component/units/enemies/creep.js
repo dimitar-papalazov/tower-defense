@@ -1,10 +1,10 @@
-import enemy from '../../../enum/enemy.js';
+import enemyEnum from '../../../enum/enemy.js';
 import Enemy from './enemy.js';
 import TowerDefenseScene from '../../../scene/towerDefenseScene.js';
 
 export default class Creep extends Enemy {
-  static TYPE = enemy.CREEP.TYPE;
-  static COLOR = enemy.CREEP.COLOR;
+  static TYPE = enemyEnum.CREEP.TYPE;
+  static COLOR = enemyEnum.CREEP.COLOR;
 
   /**
    * @param {TowerDefenseScene} scene

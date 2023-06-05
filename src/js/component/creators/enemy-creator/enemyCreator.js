@@ -58,7 +58,6 @@ export default class EnemyCreator extends Phaser.GameObjects.Container {
             type: AbsorberCreep.TYPE
           }];
         });
-        console.log(this.enemies);
 
         if (this.closeCallback && this.closeContext) this.closeCallback.apply(this.closeContext);
       },

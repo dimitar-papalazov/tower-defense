@@ -25,14 +25,24 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
     this.setupEvents();
     this.scene.add.existing(this);
   }
-
-  /**
-   * Sets up the events: HIDE_TOWER_PICKER & SHOW_TOWER_PICKER.
-   */
   setupEvents () {
     const emitter = this.scene.game.emitter;
     emitter.on(events.HIDE_TOWER_PICKER, this.hideBackgrounds, this);
     emitter.on(events.SHOW_TOWER_PICKER, this.showBackgrounds, this);
+    emitter.on(events.BUILDING_START_MOVING, this.hideBuildings, this);
+    emitter.on(events.BUILDING_PLACED, this.showBuildings, this);
+  }
+
+  hideBuildings () {
+    this.tower.setVisible(this.tower.moving);
+    this.magicTower.setVisible(this.magicTower.moving);
+    this.cannonTower.setVisible(this.cannonTower.moving);
+  }
+
+  showBuildings () {
+    this.tower.setVisible(true);
+    this.magicTower.setVisible(true);
+    this.cannonTower.setVisible(true);
   }
 
   /**
