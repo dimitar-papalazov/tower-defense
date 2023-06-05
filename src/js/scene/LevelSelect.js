@@ -1,53 +1,53 @@
-import TextButton from '../component/button/TextButton'
-import LevelButton from '../component/button/LevelButton'
-import Slider from '../component/level/slider'
-import color from '../enum/color'
-import constants from '../enum/constants'
-import fontStyle from '../enum/fontStyle'
-import MainMenu from './mainMenu'
-import Level from './level'
-import TowerDefenseScene from './towerDefenseScene.js'
+import TextButton from '../component/button/TextButton';
+import LevelButton from '../component/button/LevelButton';
+import Slider from '../component/level/slider';
+import color from '../enum/color';
+import constants from '../enum/constants';
+import fontStyle from '../enum/fontStyle';
+import MainMenu from './mainMenu';
+import Level from './level';
+import TowerDefenseScene from './towerDefenseScene.js';
 
 export default class LevelSelect extends TowerDefenseScene {
-  static key = 'LevelSelect'
+  static key = 'LevelSelect';
 
   /**
    * @override
    */
   constructor () {
-    super({ key: LevelSelect.key })
-    this.levels = []
+    super({ key: LevelSelect.key });
+    this.levels = [];
   }
 
   preload () {
-    this.load.image('heart', 'src/assets/images/resource/heart.png')
-    this.load.image('coin', 'src/assets/images/resource/coin.png')
+    this.load.image('heart', 'src/assets/images/resource/heart.png');
+    this.load.image('coin', 'src/assets/images/resource/coin.png');
 
     for (let i = 1; i <= constants.LEVELS_IN_JSONS; i++) {
-      this.load.json(`level${i}`, `src/assets/json/levels/level${i}.json`)
+      this.load.json(`level${i}`, `src/assets/json/levels/level${i}.json`);
     }
   }
 
   create () {
     for (let i = 1; i <= constants.LEVELS_IN_JSONS; i++) {
-      this.levels.push(this.cache.json.get(`level${i}`))
+      this.levels.push(this.cache.json.get(`level${i}`));
     }
 
-    this.levels.push(...this.game.levels)
-    this.createTitle()
-    this.createBackButton()
-    this.createSlider()
+    this.levels.push(...this.game.levels);
+    this.createTitle();
+    this.createBackButton();
+    this.createSlider();
   }
 
   /**
    * Creates the title property, that is Text, that represents this Scene's title.
    */
   createTitle () {
-    const x = this.game.scale.width * 0.5
-    const y = this.game.scale.height * 0.1
+    const x = this.game.scale.width * 0.5;
+    const y = this.game.scale.height * 0.1;
     this.title = this.add
       .text(x, y, 'Level Select', fontStyle.SMALL_TITLE)
-      .setOrigin(0.5)
+      .setOrigin(0.5);
   }
 
   /**
@@ -63,7 +63,7 @@ export default class LevelSelect extends TowerDefenseScene {
       text: 'Back',
       size: '32px',
       color: color.PRIMARY.NUMBER
-    })
+    });
   }
 
   /**
@@ -71,10 +71,10 @@ export default class LevelSelect extends TowerDefenseScene {
    */
   backButtonCallback () {
     if (!this.game.scene.getScene(MainMenu.key)) {
-      this.game.scene.add(MainMenu.key, new MainMenu())
+      this.game.scene.add(MainMenu.key, new MainMenu());
     }
 
-    this.scene.transition({ target: MainMenu.key, duration: 0, remove: true })
+    this.scene.transition({ target: MainMenu.key, duration: 0, remove: true });
   }
 
   /**
@@ -88,9 +88,9 @@ export default class LevelSelect extends TowerDefenseScene {
       spaceBetween: 100,
       x: this.game.scale.width * 0.2,
       y: this.game.scale.height * 0.2
-    })
+    });
 
-    this.addButtons()
+    this.addButtons();
   }
 
   /**
@@ -100,7 +100,7 @@ export default class LevelSelect extends TowerDefenseScene {
     /**
      * @type {LevelButton[]}
      */
-    const items = []
+    const items = [];
 
     for (let i = 1; i <= this.levels.length; i++) {
       items.push(new LevelButton({
@@ -114,10 +114,10 @@ export default class LevelSelect extends TowerDefenseScene {
         text: `Level ${i}`,
         x: 0,
         y: 0
-      }))
+      }));
     }
 
-    this.slider.addItems(items)
+    this.slider.addItems(items);
   }
 
   /**
@@ -126,8 +126,8 @@ export default class LevelSelect extends TowerDefenseScene {
    * @param {Number} index
    */
   levelButtonCallback (index) {
-    this.levels[index - 1].level = index
-    this.game.scene.add(Level.key, new Level(this.levels[index - 1]))
-    this.scene.transition({ target: Level.key, duration: 0, remove: true })
+    this.levels[index - 1].level = index;
+    this.game.scene.add(Level.key, new Level(this.levels[index - 1]));
+    this.scene.transition({ target: Level.key, duration: 0, remove: true });
   }
 }

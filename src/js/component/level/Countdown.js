@@ -1,6 +1,6 @@
-import Phaser from 'phaser'
-import fontStyle from '../../enum/fontStyle.js'
-import TowerDefenseScene from '../../scene/towerDefenseScene.js'
+import Phaser from 'phaser';
+import fontStyle from '../../enum/fontStyle.js';
+import TowerDefenseScene from '../../scene/towerDefenseScene.js';
 
 export default class Countdown extends Phaser.GameObjects.Text {
   /**
@@ -12,13 +12,13 @@ export default class Countdown extends Phaser.GameObjects.Text {
    * @param {number} startsIn - Time until the next enemy wave starts
    */
   constructor (scene, x, y, startsIn) {
-    super(scene, x, y, 'Wave starts in', fontStyle.COUNTDOWN)
-    this.startingValue = startsIn
-    this.startsIn = startsIn
-    this.animating = false
-    this.setOrigin(0.5)
-    this.setVisible(false)
-    this.scene.add.existing(this)
+    super(scene, x, y, 'Wave starts in', fontStyle.COUNTDOWN);
+    this.startingValue = startsIn;
+    this.startsIn = startsIn;
+    this.animating = false;
+    this.setOrigin(0.5);
+    this.setVisible(false);
+    this.scene.add.existing(this);
   }
 
   /**
@@ -28,20 +28,20 @@ export default class Countdown extends Phaser.GameObjects.Text {
    * @param {Object} onEndContext
    */
   start (onEnd, onEndContext) {
-    if (this.visible) return
-    this.onEnd = onEnd
-    this.onEndContext = onEndContext
-    this.setVisible(true)
-    this.startTween()
+    if (this.visible) return;
+    this.onEnd = onEnd;
+    this.onEndContext = onEndContext;
+    this.setVisible(true);
+    this.startTween();
   }
 
   /**
    * Creates the text with alpha 0 to 1 animation.
    */
   startTween () {
-    if (!this.scene) return
-    this.setAlpha(0)
-    this.animating = true
+    if (!this.scene) return;
+    this.setAlpha(0);
+    this.animating = true;
 
     this.scene.tweens.add({
       targets: [this],
@@ -50,7 +50,7 @@ export default class Countdown extends Phaser.GameObjects.Text {
       duration: 600,
       onComplete: this.onAlphaIn,
       onCompleteScope: this
-    })
+    });
   }
 
   /**
@@ -64,7 +64,7 @@ export default class Countdown extends Phaser.GameObjects.Text {
       duration: 400,
       onComplete: this.onAlphaOut,
       onCompleteScope: this
-    })
+    });
   }
 
   /**
@@ -73,17 +73,17 @@ export default class Countdown extends Phaser.GameObjects.Text {
    * Also checks if the animation is finished.
    */
   onAlphaOut () {
-    if (this.text === 'Wave starts in') this.setText(`${this.startsIn}`)
-    else this.setText(`${--this.startsIn}`)
+    if (this.text === 'Wave starts in') this.setText(`${this.startsIn}`);
+    else this.setText(`${--this.startsIn}`);
 
     if (this.startsIn >= 1) {
-      this.startTween()
+      this.startTween();
     } else {
-      if (this.onEnd && this.onEndContext) this.onEnd.apply(this.onEndContext)
-      this.setVisible(false)
-      this.text = 'Wave starts in'
-      this.startsIn = this.startingValue
-      this.animating = false
+      if (this.onEnd && this.onEndContext) this.onEnd.apply(this.onEndContext);
+      this.setVisible(false);
+      this.text = 'Wave starts in';
+      this.startsIn = this.startingValue;
+      this.animating = false;
     }
   }
 }

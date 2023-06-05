@@ -1,5 +1,5 @@
-import Phaser from 'phaser'
-import LevelButton from '../button/LevelButton.js'
+import Phaser from 'phaser';
+import LevelButton from '../button/LevelButton.js';
 
 export default class Slider extends Phaser.GameObjects.Container {
   /**
@@ -9,47 +9,47 @@ export default class Slider extends Phaser.GameObjects.Container {
    * @param {SliderConfig} config 
    */
   constructor (config) {
-    super(config.scene)
-    this.positionX = config.x
-    this.positionY = config.y
-    this.width = config.width
-    this.height = config.height
-    this.spaceBetween = config.spaceBetween
-    this.nextItemPosition = this.positionY
-    this.addMask()
-    this.on(Phaser.Input.Events.GAMEOBJECT_DRAG, this.onDrag, this)
-    this.scene.add.existing(this)
+    super(config.scene);
+    this.positionX = config.x;
+    this.positionY = config.y;
+    this.width = config.width;
+    this.height = config.height;
+    this.spaceBetween = config.spaceBetween;
+    this.nextItemPosition = this.positionY;
+    this.addMask();
+    this.on(Phaser.Input.Events.GAMEOBJECT_DRAG, this.onDrag, this);
+    this.scene.add.existing(this);
   }
 
   /**
    * Creates a mask for this GameObject, so when sliding, some of the items of this GameObject disappear.
    */
   addMask () {
-    const key = 'slider-mask'
-    if (this.scene.textures.exists(key)) this.scene.textures.remove(key)
-    const graphics = this.scene.make.graphics({})
-    graphics.fillStyle(0xffffff)
-    graphics.fillRect(0, 0, this.width, this.height)
-    graphics.generateTexture(key, this.width, this.height)
-    graphics.destroy()
-    if (this.imageMask && this.imageMask.active) this.imageMask.destroy()
+    const key = 'slider-mask';
+    if (this.scene.textures.exists(key)) this.scene.textures.remove(key);
+    const graphics = this.scene.make.graphics({});
+    graphics.fillStyle(0xffffff);
+    graphics.fillRect(0, 0, this.width, this.height);
+    graphics.generateTexture(key, this.width, this.height);
+    graphics.destroy();
+    if (this.imageMask && this.imageMask.active) this.imageMask.destroy();
     this.imageMask = this.scene.add
       .image(this.positionX, this.positionY, key)
       .setOrigin(0)
-      .setVisible(false)
-    this.setMask(this.imageMask.createBitmapMask())
+      .setVisible(false);
+    this.setMask(this.imageMask.createBitmapMask());
   }
 
   /**
    * Adds the dragging input on this GameObject.
    */
   addInput () {
-    const x = this.positionX + this.width / 2
-    const y = this.positionY + this.height / 2
-    this.setInteractive(new Phaser.Geom.Rectangle(x, y, this.width, this.height), Phaser.Geom.Rectangle.Contains)
-    this.scene.input.setDraggable(this)
-    this.dragMax = 0
-    this.dragMin = this.scene.game.scale.height - (this.positionY + this.height)
+    const x = this.positionX + this.width / 2;
+    const y = this.positionY + this.height / 2;
+    this.setInteractive(new Phaser.Geom.Rectangle(x, y, this.width, this.height), Phaser.Geom.Rectangle.Contains);
+    this.scene.input.setDraggable(this);
+    this.dragMax = 0;
+    this.dragMin = this.scene.game.scale.height - (this.positionY + this.height);
   }
 
   /**
@@ -59,9 +59,9 @@ export default class Slider extends Phaser.GameObjects.Container {
    * @param {Number} dragY The y coordinate where the Pointer is currently dragging the Game Object, in world space.
    */
   onDrag (pointer, dragX, dragY) {
-    if (dragY < this.dragMin) this.y = this.dragMin
-    else if (dragY > this.dragMax) this.y = this.dragMax
-    else this.y = dragY
+    if (dragY < this.dragMin) this.y = this.dragMin;
+    else if (dragY > this.dragMax) this.y = this.dragMax;
+    else this.y = dragY;
   }
 
   /**
@@ -69,8 +69,8 @@ export default class Slider extends Phaser.GameObjects.Container {
    * @param {LevelButton[]} items
    */
   addItems (items) {
-    items.forEach(i => { this.addItem(i) })
-    this.updateSize()
+    items.forEach(i => { this.addItem(i); });
+    this.updateSize();
   }
 
   /**
@@ -78,24 +78,24 @@ export default class Slider extends Phaser.GameObjects.Container {
    * @param {LevelButton} item
    */
   addItem (item) {
-    if (!item) throw new Error('Item not provided!')
-    if (isNaN(item.height)) throw new Error('Provided item has no height property!')
-    if (isNaN(item.x)) throw new Error('Provided item has no x property!')
-    if (isNaN(item.y)) throw new Error('Provided item has no y property!')
-    this.add(item)
-    item.x = this.positionX + this.width / 2
-    this.nextItemPosition += item.height / 2
-    item.y = this.nextItemPosition
-    this.nextItemPosition += this.spaceBetween
+    if (!item) throw new Error('Item not provided!');
+    if (isNaN(item.height)) throw new Error('Provided item has no height property!');
+    if (isNaN(item.x)) throw new Error('Provided item has no x property!');
+    if (isNaN(item.y)) throw new Error('Provided item has no y property!');
+    this.add(item);
+    item.x = this.positionX + this.width / 2;
+    this.nextItemPosition += item.height / 2;
+    item.y = this.nextItemPosition;
+    this.nextItemPosition += this.spaceBetween;
   }
 
   /**
    * Updates the size of this Slider. Also updates its input & mask.
    */
   updateSize () {
-    if (this.nextItemPosition - this.spaceBetween * 2 < this.height) return
-    this.height = this.nextItemPosition - this.spaceBetween * 2
-    this.addInput()
-    this.addMask()
+    if (this.nextItemPosition - this.spaceBetween * 2 < this.height) return;
+    this.height = this.nextItemPosition - this.spaceBetween * 2;
+    this.addInput();
+    this.addMask();
   }
 }

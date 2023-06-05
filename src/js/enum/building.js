@@ -11,4 +11,4 @@ export default {
     TYPE: 'CannonTower',
     TEXTURE: 'CannonTowerBuilding'
   }
-}
+};

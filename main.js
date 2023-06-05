@@ -1,3 +1,3 @@
-import TowerDefenseGame from './src/js/game/towerDefenseGame'
+import TowerDefenseGame from './src/js/game/towerDefenseGame';
 
-new TowerDefenseGame()
+new TowerDefenseGame();

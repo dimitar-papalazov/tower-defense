@@ -1,8 +1,8 @@
-import fontStyle from '../../enum/fontStyle'
-import TextButton from './TextButton'
+import fontStyle from '../../enum/fontStyle';
+import TextButton from './TextButton';
 
-let globalSuccess = null
-let globalText = null
+let globalSuccess = null;
+let globalText = null;
 
 export default class LevelButton extends TextButton {
   /**
@@ -20,35 +20,35 @@ export default class LevelButton extends TextButton {
    * @param {Number} config.success
    */
   constructor (config) {
-    globalSuccess = config.success
-    globalText = config.text
-    super(config)
+    globalSuccess = config.success;
+    globalText = config.text;
+    super(config);
   }
 
   addText (text, size) {
-    const style = fontStyle.BUTTON
-    style.fontSize = size
-    text += globalSuccess <= 0 ? '' : ` ${globalSuccess}/3`
+    const style = fontStyle.BUTTON;
+    style.fontSize = size;
+    text += globalSuccess <= 0 ? '' : ` ${globalSuccess}/3`;
     this.text = this.scene.add.text(this.positionX, this.positionY, text, style)
-      .setOrigin(0.5)
-    this.updateSize()
-    this.add(this.text)
-    globalText = null
-    globalSuccess = null
+      .setOrigin(0.5);
+    this.updateSize();
+    this.add(this.text);
+    globalText = null;
+    globalSuccess = null;
   }
 
   addBackground (color) {
-    this.key = `${globalText}-${globalSuccess}-level-button`
+    this.key = `${globalText}-${globalSuccess}-level-button`;
 
     if (!this.scene.textures.exists(this.key)) {
-      const graphics = this.scene.add.graphics()
-      graphics.fillStyle(color)
-      graphics.fillRoundedRect(0, 0, this.width, this.height)
-      graphics.generateTexture(this.key, this.width, this.height)
-      graphics.destroy()
+      const graphics = this.scene.add.graphics();
+      graphics.fillStyle(color);
+      graphics.fillRoundedRect(0, 0, this.width, this.height);
+      graphics.generateTexture(this.key, this.width, this.height);
+      graphics.destroy();
     }
 
-    const image = this.scene.add.image(this.positionX, this.positionY, this.key)
-    this.addAt(image, 0)
+    const image = this.scene.add.image(this.positionX, this.positionY, this.key);
+    this.addAt(image, 0);
   }
 }

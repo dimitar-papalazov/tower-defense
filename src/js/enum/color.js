@@ -1,12 +1,12 @@
 const orange = {
   NUMBER: 0xfd4900,
   STRING: '#fd4900'
-}
+};
 
 const blue = {
   NUMBER: 0x00b4fd,
   STRING: '#00b4fd'
-}
+};
 
 export default {
   PRIMARY: orange,
@@ -45,4 +45,4 @@ export default {
     NUMBER: 0xff453a,
     STRING: '#ff453a'
   }
-}
+};

@@ -1,7 +1,7 @@
-import color from './color'
-import Phaser from 'phaser'
+import color from './color';
+import Phaser from 'phaser';
 
-const FONT_FAMILY = 'Verdana'
+const FONT_FAMILY = 'Verdana';
 export default {
   /**
    * @type {Phaser.Types.GameObjects.Text.TextStyle}
@@ -84,4 +84,4 @@ export default {
     color: color.WHITE.STRING,
     align: 'center'
   }
-}
+};

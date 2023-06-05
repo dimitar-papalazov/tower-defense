@@ -1,35 +1,35 @@
-import TextButton from '../component/button/TextButton'
-import color from '../enum/color'
-import fontStyle from '../enum/fontStyle'
-import LevelCreate from './levelCreate'
-import LevelSelect from './levelSelect'
-import TowerDefenseScene from './towerDefenseScene'
+import TextButton from '../component/button/TextButton';
+import color from '../enum/color';
+import fontStyle from '../enum/fontStyle';
+import LevelCreate from './levelCreate';
+import LevelSelect from './levelSelect';
+import TowerDefenseScene from './towerDefenseScene';
 
 export default class MainMenu extends TowerDefenseScene {
-  static key = 'MainMenu'
+  static key = 'MainMenu';
 
   /**
    * @override
    */
   constructor () {
-    super({ key: MainMenu.key })
+    super({ key: MainMenu.key });
   }
 
   create () {
-    this.createTitle()
-    this.createLevelSelect()
-    this.createLevelCreate()
+    this.createTitle();
+    this.createLevelSelect();
+    this.createLevelCreate();
   }
 
   /**
    * Creates the title property, that is a Text game object, representing the game's title.
    */
   createTitle () {
-    const x = this.game.scale.width * 0.5
-    const y = this.game.scale.height * 0.25
+    const x = this.game.scale.width * 0.5;
+    const y = this.game.scale.height * 0.25;
     this.title = this.add
       .text(x, y, 'Tower Defense', fontStyle.TITLE)
-      .setOrigin(0.5)
+      .setOrigin(0.5);
   }
 
   /**
@@ -45,7 +45,7 @@ export default class MainMenu extends TowerDefenseScene {
       text: 'Level Select',
       size: '64px',
       color: color.PRIMARY.NUMBER
-    })
+    });
   }
 
   /**
@@ -53,10 +53,10 @@ export default class MainMenu extends TowerDefenseScene {
    */
   levelSelectCallback () {
     if (!this.game.scene.getScene(LevelSelect.key)) {
-      this.game.scene.add(LevelSelect.key, new LevelSelect())
+      this.game.scene.add(LevelSelect.key, new LevelSelect());
     }
 
-    this.scene.transition({ target: LevelSelect.key, duration: 0, remove: true })
+    this.scene.transition({ target: LevelSelect.key, duration: 0, remove: true });
   }
 
   /**
@@ -72,7 +72,7 @@ export default class MainMenu extends TowerDefenseScene {
       text: 'Level Create',
       size: '64px',
       color: color.PRIMARY.NUMBER
-    })
+    });
   }
 
   /**
@@ -80,9 +80,9 @@ export default class MainMenu extends TowerDefenseScene {
    */
   levelCreateCallback () {
     if (!this.game.scene.getScene(LevelCreate.key)) {
-      this.game.scene.add(LevelCreate.key, new LevelCreate())
+      this.game.scene.add(LevelCreate.key, new LevelCreate());
     }
 
-    this.scene.transition({ target: LevelCreate.key, duration: 0, remove: true })
+    this.scene.transition({ target: LevelCreate.key, duration: 0, remove: true });
   }
 }

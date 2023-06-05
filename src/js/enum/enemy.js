@@ -1,4 +1,4 @@
-import color from './color.js'
+import color from './color.js';
 
 export default {
   ENEMY: {
@@ -18,4 +18,4 @@ export default {
     TYPE: 'ArmoredCreep',
     COLOR: color.YELLOW.NUMBER
   }
-}
+};

@@ -1,21 +1,21 @@
-import TextButton from '../../component/button/TextButton'
-import color from '../../enum/color'
-import MainMenu from '../mainMenu'
-import TowerDefenseScene from '../towerDefenseScene.js'
+import TextButton from '../../component/button/TextButton';
+import color from '../../enum/color';
+import MainMenu from '../mainMenu';
+import TowerDefenseScene from '../towerDefenseScene.js';
 
 export default class Gui extends Phaser.GameObjects.Container {
   /**
    * @param {TowerDefenseScene} scene
    */
   constructor (scene) {
-    super(scene)
+    super(scene);
     /**
      * @type {TowerDefenseScene}
      */
-    this.scene
-    this.scene.add.existing(this)
-    this.game = this.scene.game
-    this.components = []
+    this.scene;
+    this.scene.add.existing(this);
+    this.game = this.scene.game;
+    this.components = [];
   }
 
   createBackButton () {
@@ -28,35 +28,35 @@ export default class Gui extends Phaser.GameObjects.Container {
       text: 'Back',
       size: '32px',
       color: color.PRIMARY.NUMBER
-    })
+    });
 
-    this.components.push(this.backButton)
+    this.components.push(this.backButton);
   }
 
   backButtonCallback () {
-    this.game.scene.add(MainMenu.key, new MainMenu())
-    this.scene.scene.transition({ target: MainMenu.key, duration: 0, remove: true })
+    this.game.scene.add(MainMenu.key, new MainMenu());
+    this.scene.scene.transition({ target: MainMenu.key, duration: 0, remove: true });
   }
 
   hideAllComponents () {
-    this.components.forEach(c => { if (c && c.setVisible) c.setVisible(false) })
+    this.components.forEach(c => { if (c && c.setVisible) c.setVisible(false); });
   }
 
   showAllComponents () {
-    this.components.forEach(c => { if (c && c.setVisible) c.setVisible(true) })
+    this.components.forEach(c => { if (c && c.setVisible) c.setVisible(true); });
   }
 
   /**
    * @param {string} name
    */
   hideComponent (name) {
-    if (this[name] && this[name].setVisible) this[name].setVisible(false)
+    if (this[name] && this[name].setVisible) this[name].setVisible(false);
   }
 
   /**
    * @param {string} name
    */
   showComponent (name) {
-    if (this[name] && this[name].setVisible) this[name].setVisible(true)
+    if (this[name] && this[name].setVisible) this[name].setVisible(true);
   }
 }

@@ -13,4 +13,4 @@ export default {
   ROW_START: 'rowstart',
   HIDE_TOWER_PICKER: 'hidetowerpicker',
   SHOW_TOWER_PICKER: 'showtowerpicker'
-}
+};
