@@ -1,7 +1,12 @@
 import Phaser from 'phaser';
 import Resource from './resource';
+import TowerDefenseGame from '../../game/towerDefenseGame';
 
 export default class ResourceManager extends Phaser.Events.EventEmitter {
+  /**
+   * @param {TowerDefenseGame} game
+   * @param {ResourceConfig[]} resources
+   */
   constructor (game, resources) {
     super();
     this.game = game;
@@ -13,17 +18,25 @@ export default class ResourceManager extends Phaser.Events.EventEmitter {
     this.addResources(resources);
   }
 
+  /**
+   * @param {string} value
+   * @returns {boolean}
+   */
   hasResource (value) {
-    let result;
-    if (typeof value === 'number') result = !!this.resources.find(r => r.id === value);
+    let result = false;
     const id = parseInt(value);
+
     if (isNaN(id)) result = !!this.resources.find(r => r.name === value);
     else result = !!this.resources.find(r => r.id === id);
 
     if (!result) console.log(`Resource searched by value: ${value}, not found!`);
+
     return result;
   }
 
+  /**
+   * @param {ResourceConfig} resourceConfig
+   */
   addResourceFromConfig (resourceConfig) {
     if (this.resources.find(resource => resource.id === resourceConfig.id)) {
       console.log(`Resource with id: ${resourceConfig.id}, already exists!`);
@@ -35,6 +48,9 @@ export default class ResourceManager extends Phaser.Events.EventEmitter {
     this.emit(this.events.SAVE_RESOURCE, resource.name, resource.value);
   }
 
+  /**
+   * @param {Resource} resource
+   */
   addResource (resource) {
     if (this.resources.find(r => r.id === resource.id)) {
       console.log(`Resource with id: ${resource.id}, already exists!`);
@@ -45,6 +61,9 @@ export default class ResourceManager extends Phaser.Events.EventEmitter {
     this.emit(this.events.SAVE_RESOURCE, resource.name, resource.value);
   }
 
+  /**
+   * @param {ResourceConfig[]} array
+   */
   addResources (array) {
     const arrayLength = array.length;
 
@@ -53,10 +72,14 @@ export default class ResourceManager extends Phaser.Events.EventEmitter {
     }
   }
 
+  /**
+   * @param {string} value
+   * @returns {Resource}
+   */
   getResource (value) {
     let resource = null;
-    if (typeof value === 'number') resource = this.resources.find(r => r.id === value);
     const id = parseInt(value);
+
     if (isNaN(id)) resource = this.resources.find(r => r.name === value);
     else resource = this.resources.find(r => r.id === id);
 
@@ -68,12 +91,20 @@ export default class ResourceManager extends Phaser.Events.EventEmitter {
     return resource;
   }
 
+  /**
+   * @param {string} value
+   */
   removeResource (value) {
     const resource = this.getResource(value);
     this.resources.splice(this.resources.indexOf(resource), 1);
     this.emit(this.events.SAVE_RESOURCE, resource.name, null);
   }
 
+  /**
+   * @param {string} value
+   * @param {number} amount
+   * @returns {ResourceResultConfig|Resource}
+   */
   updateResource (value, amount) {
     const resource = this.getResource(value);
     if (resource === null) return resource;
@@ -91,18 +122,13 @@ export default class ResourceManager extends Phaser.Events.EventEmitter {
     };
 
     this.emit(this.events.SAVE_RESOURCE, result);
-    if (resource.isTimeRelated) resource.startTimer();
     return result;
   }
 
-  updateResourceValues (resources) {
-    const keys = Object.keys(resources);
-
-    for (const key of keys) {
-      this.replaceResourceValue(key, resources[key]);
-    }
-  }
-
+  /**
+   * @param {string} key
+   * @param {number} value
+   */
   replaceResourceValue (key, value) {
     if (this.hasResource(key)) this.getResource(key).value = value;
   }

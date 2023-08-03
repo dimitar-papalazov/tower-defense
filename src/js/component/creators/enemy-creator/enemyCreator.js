@@ -7,12 +7,17 @@ import ArmoredCreep from '../../units/enemies/armoredCreep';
 import AbsorberCreep from '../../units/enemies/absorberCreep';
 import enemy from '../../../enum/enemy';
 import EnemiesRow from './enemiesRow';
+import TowerDefenseScene from '../../../scene/towerDefenseScene';
 
 export default class EnemyCreator extends Phaser.GameObjects.Container {
+  /**
+   * @param {TowerDefenseScene} scene 
+   */
   constructor (scene) {
     super(scene);
     this.enemies = [];
     this.rows = [];
+    this.enemyCreatorBackgroundKey = 'enemyCreatorBackground';
     this.createBackground();
     this.createSaveButton();
     this.createAddRowButton();
@@ -24,17 +29,35 @@ export default class EnemyCreator extends Phaser.GameObjects.Container {
   createBackground () {
     this.createBackgroundTexture();
 
-    this.background = this.scene.add.image(this.scene.game.scale.width * 0.5, this.scene.game.scale.height * 0.5, 'enemyCreatorBackground');
+    this.background = this.scene.add.image(
+      this.scene.game.scale.width * 0.5,
+      this.scene.game.scale.height * 0.5,
+      this.enemyCreatorBackgroundKey
+    );
+
     this.add(this.background);
   }
 
   createBackgroundTexture () {
-    if (this.scene.textures.exists('enemyCreatorBackground')) return;
+    if (this.scene.textures.exists(this.enemyCreatorBackgroundKey)) return;
 
     const graphics = this.scene.add.graphics();
+
     graphics.fillStyle(color.SECONDARY.NUMBER);
-    graphics.fillRect(0, 0, this.scene.game.scale.width, this.scene.game.scale.height);
-    graphics.generateTexture('enemyCreatorBackground', this.scene.game.scale.width, this.scene.game.scale.height);
+
+    graphics.fillRect(
+      0,
+      0,
+      this.scene.game.scale.width,
+      this.scene.game.scale.height
+    );
+
+    graphics.generateTexture(
+      this.enemyCreatorBackgroundKey,
+      this.scene.game.scale.width,
+      this.scene.game.scale.height
+    );
+
     graphics.destroy();
   }
 
@@ -43,24 +66,7 @@ export default class EnemyCreator extends Phaser.GameObjects.Container {
       scene: this.scene,
       x: this.scene.game.scale.width * 0.9,
       y: this.scene.game.scale.height * 0.9,
-      callback: () => {
-        this.enemies = this.rows.map(r => {
-          return [{
-            number: r.enemies[0],
-            type: Creep.TYPE
-          },
-          {
-            number: r.enemies[1],
-            type: ArmoredCreep.TYPE
-          },
-          {
-            number: r.enemies[2],
-            type: AbsorberCreep.TYPE
-          }];
-        });
-
-        if (this.closeCallback && this.closeContext) this.closeCallback.apply(this.closeContext);
-      },
+      callback: this.onSave,
       context: this,
       text: 'Save',
       size: '32px',
@@ -68,6 +74,20 @@ export default class EnemyCreator extends Phaser.GameObjects.Container {
     });
 
     this.add(this.saveButton);
+  }
+
+  onSave () {
+    this.enemies = this.rows.map(row => {
+      return [
+        { number: row.enemies[0], type: Creep.TYPE },
+        { number: row.enemies[1], type: ArmoredCreep.TYPE },
+        { number: row.enemies[2], type: AbsorberCreep.TYPE }
+      ];
+    });
+
+    if (this.closeCallback && this.closeContext) {
+      this.closeCallback.apply(this.closeContext);
+    }
   }
 
   addCloseCallback (callback, context) {

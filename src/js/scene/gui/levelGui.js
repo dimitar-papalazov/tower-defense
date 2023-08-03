@@ -64,8 +64,6 @@ export default class LevelGui extends Gui {
     if (this.levelFinishPopUp) return;
     this.levelFinishPopUp = new LevelFinishPopUp(this.scene, win, this.onPopUpClose, this);
     this.components.push(this.levelFinishPopUp);
-    // this.add(this.levelFinishPopUp)
-    this.scene.sys.pause();
   }
 
   onPopUpClose () {
@@ -100,8 +98,6 @@ export default class LevelGui extends Gui {
   exitButtonCallback () {
     const exitLevelPopUp = new ExitLevelPopUp(this.scene);
     this.components.push(exitLevelPopUp);
-    // this.add(exitLevelPopUp)
-    exitLevelPopUp.open();
   }
 
   createResourcesUI () {
@@ -110,10 +106,10 @@ export default class LevelGui extends Gui {
      */
     const resourceManager = this.game.resourceManager;
     const y = this.game.scale.height * 0.1;
-    const heartResource = resourceManager.getResource(resources.HEART.id);
+    const heartResource = resourceManager.getResource(`${resources.HEART.id}`);
     const heartX = this.game.scale.width * 0.2;
     this.heartsUI = new ResourceUI(this.scene, heartResource, heartX, y);
-    const coinResource = resourceManager.getResource(resources.COIN.id);
+    const coinResource = resourceManager.getResource(`${resources.COIN.id}`);
     const coinX = this.game.scale.width * 0.5;
     this.coinsUI = new ResourceUI(this.scene, coinResource, coinX, y);
     this.components.push(this.heartsUI, this.coinsUI);
@@ -121,6 +117,7 @@ export default class LevelGui extends Gui {
 
   destroy () {
     this.game.emitter.off(events.ROW_FINISHED, this.startRow, this);
+    this.game.emitter.off(events.LEVEL_FINISHED, this.onLevelFinished, this);
     super.destroy();
   }
 }

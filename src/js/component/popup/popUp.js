@@ -22,17 +22,13 @@ export default class PopUp extends Phaser.GameObjects.Container {
     this.createBackground();
     this.createBackButton();
     this.setVisible(false);
-    this.setInteractive();
     this.scene.add.existing(this);
   }
 
-  setInteractive () {
-    const x = this.gameWidth / 4;
-    const y = this.gameHeight / 4;
-    super.setInteractive(new Phaser.Geom.Rectangle(x, y, this.gameWidth, this.gameHeight), Phaser.Geom.Rectangle.Contains);
-    this.once(Phaser.Input.Events.POINTER_DOWN, this.tweenOut, this);
-  }
-
+  /**
+   * @param {Function} [callback]
+   * @param {any} [context]
+   */
   open (callback, context) {
     if (callback && context) callback.apply(context);
     if (this.visible) return;
@@ -47,25 +43,40 @@ export default class PopUp extends Phaser.GameObjects.Container {
     });
   }
 
+  /**
+   * @param {Function} [callback]
+   * @param {any} [context]
+   */
   close (callback, context) {
     if (!this.visible) return;
+
+    const onComplete = () => {
+      if (callback && context) callback.apply(context);
+      else if (callback) callback.call();
+      this.destroy();
+    };
 
     this.scene.tweens.add({
       targets: [this],
       alpha: 0,
       ease: Phaser.Math.Easing.Cubic.InOut,
       duration: 800,
-      onComplete: () => {
-        this.destroy();
-        if (callback && context) callback.apply(context);
-      },
-      onCompleteScope: this
+      onComplete
     });
   }
 
   createBackground () {
     this.createBackgroundTexture();
-    this.background = this.scene.add.image(this.gameCenterX, this.gameCenterY, this.key);
+
+    this.background = this.scene.add.image(
+      this.gameCenterX,
+      this.gameCenterY,
+      this.key
+    ).setInteractive(
+      new Phaser.Geom.Rectangle(0, 0, this.gameWidth, this.gameHeight),
+      Phaser.Geom.Rectangle.Contains
+    );
+
     this.add(this.background);
   }
 
@@ -78,10 +89,20 @@ export default class PopUp extends Phaser.GameObjects.Container {
     graphics.destroy();
   }
 
-  addItem (item) {
-    this.add(item);
+  /**
+   * @param {Phaser.GameObjects.GameObject} gameObject 
+   */
+  addItem (gameObject) {
+    this.add(gameObject);
   }
 
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {Function} callback
+   * @param {any} context
+   * @param {string} text
+   */
   addButton (x, y, callback, context, text) {
     this.addItem(new TextButton({
       scene: this.scene,
@@ -95,8 +116,14 @@ export default class PopUp extends Phaser.GameObjects.Container {
     }));
   }
 
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {string} text
+   */
   addText (x, y, text) {
-    this.addItem(this.scene.add.text(x, y, text, fontStyle.POP_UP_TEXT).setOrigin(0.5));
+    this.addItem(this.scene.add.text(x, y, text, fontStyle.POP_UP_TEXT)
+      .setOrigin(0.5));
   }
 
   createBackButton () {

@@ -31,7 +31,13 @@ export default class AddEnemy extends Phaser.GameObjects.Container {
 
   createBackground () {
     this.createBackgroundTexture();
-    this.background = this.scene.add.image(this.positionX, this.positionY, 'addEnemyBackground');
+
+    this.background = this.scene.add.image(
+      this.positionX,
+      this.positionY,
+      'addEnemyBackground'
+    );
+
     this.add(this.background);
   }
 
@@ -46,21 +52,32 @@ export default class AddEnemy extends Phaser.GameObjects.Container {
   }
 
   createEnemyImage () {
-    const texture = this.type === enemy.CREEP.TYPE ? enemy.CREEP.TEXTURE : this.type === enemy.ARMORED_CREEP.TYPE ? enemy.ARMORED_CREEP.TEXTURE : this.type === enemy.ABSORBER_CREEP.TYPE ? enemy.ABSORBER_CREEP.TEXTURE : '';
-    this.enemyImage = this.scene.add.image(this.positionX, this.positionY - this.height * 0.2, texture);
+    const texture = this.type === enemy.CREEP.TYPE ?
+      enemy.CREEP.TEXTURE : this.type === enemy.ARMORED_CREEP.TYPE ?
+        enemy.ARMORED_CREEP.TEXTURE : this.type === enemy.ABSORBER_CREEP.TYPE ?
+          enemy.ABSORBER_CREEP.TEXTURE : '';
+
+    this.enemyImage = this.scene.add.image(
+      this.positionX,
+      this.positionY - this.height * 0.2,
+      texture
+    );
+
     this.add(this.enemyImage);
   }
 
   createMinus () {
+    const callback = () => {
+      if (this.counter - 1 < 0) return;
+      this.counter -= 1;
+      this.countText.setText(`${this.counter}`);
+    };
+
     this.minus = new TextButton({
       scene: this.scene,
       x: this.positionX - this.width * 0.3,
       y: this.positionY + this.height * 0.3,
-      callback: () => {
-        if (this.counter - 1 < 0) return;
-        this.counter -= 1;
-        this.count.setText(this.counter);
-      },
+      callback,
       context: this,
       text: '-',
       size: '24px',
@@ -71,16 +88,18 @@ export default class AddEnemy extends Phaser.GameObjects.Container {
   }
 
   createPlus () {
+    const callback = () => {
+      if (this.counter + 1 > 100) return;
+
+      this.counter += 1;
+      this.countText.setText(`${this.counter}`);
+    };
+
     this.plus = new TextButton({
       scene: this.scene,
       x: this.positionX + this.width * 0.3,
       y: this.positionY + this.height * 0.3,
-      callback: () => {
-        if (this.counter + 1 > 100) return;
-
-        this.counter += 1;
-        this.count.setText(this.counter);
-      },
+      callback,
       context: this,
       text: '+',
       size: '24px',
@@ -91,15 +110,18 @@ export default class AddEnemy extends Phaser.GameObjects.Container {
   }
 
   createCount () {
-    /**
-     * @type {Phaser.GameObjects.Text}
-     */
-    this.count = this.scene.add.text(this.positionX, this.positionY + this.height * 0.3, this.counter, fontStyle.COUNT).setOrigin(0.5);
-    this.add(this.count);
+    this.countText = this.scene.add.text(
+      this.positionX,
+      this.positionY + this.height * 0.3,
+      `${this.counter}`,
+      fontStyle.COUNT
+    ).setOrigin(0.5);
+
+    this.add(this.countText);
   }
 
   reset () {
     this.counter = 0;
-    this.count.setText(this.counter);
+    this.countText.setText(`${this.counter}`);
   }
 }

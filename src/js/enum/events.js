@@ -9,6 +9,8 @@ export default {
   ENEMY_ATTACKED: 'enemyattacked',
   ENEMY_KILLED: 'enemykilled',
   ROW_FINISHED: 'rowfinished',
+  LEVEL_PAUSE: 'levelpause',
+  LEVEL_RESUME: 'levelresume',
   LEVEL_FINISHED: 'levelfinished',
   ROW_START: 'rowstart',
   HIDE_TOWER_PICKER: 'hidetowerpicker',

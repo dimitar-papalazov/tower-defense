@@ -53,6 +53,8 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
     const emitter = this.scene.game.emitter;
     emitter.off(events.HIDE_TOWER_PICKER, this.hideBackgrounds, this);
     emitter.off(events.SHOW_TOWER_PICKER, this.showBackgrounds, this);
+    emitter.off(events.BUILDING_START_MOVING, this.hideBuildings, this);
+    emitter.off(events.BUILDING_PLACED, this.showBuildings, this);
   }
 
   /**
