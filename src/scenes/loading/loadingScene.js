@@ -1,20 +1,65 @@
-import { TowerDefenseScene } from '../towerDefenseScene.js'
+import { Title } from '../../components/title/title.js';
+import { MainMenuScene } from '../main-menu/mainMenuScene.js';
+import { TowerDefenseScene } from '../towerDefenseScene.js';
 
 export class LoadingScene extends TowerDefenseScene {
-  static KEY = 'Loading'
+  static KEY = 'LoadingScene';
 
   /**
    * @param {string | Phaser.Types.Scenes.SettingsConfig} config
    */
   constructor (config) {
-    super(config);
+    super({ key: LoadingScene.KEY, ...config });
   }
 
   preload () {
-    this.load.bitmapFont('main', 'src/assets/fonts/pixelFJ8pt1_0.png', 'src/assets/fonts/pixelFJ8pt1.xml')
+    this.load.bitmapFont('main', 'src/assets/fonts/pixelFJ8pt1_0.png', 'src/assets/fonts/pixelFJ8pt1.xml');
   }
 
   create () {
+    this.addTitle();
+    this.addLoadListeners();
+
     this.load.start();
+  }
+
+  /**
+   * Adds listeners to LoaderPlugin's events, for animation purpose and 
+   * transitioning to MainMenuScene.
+   */
+  addLoadListeners () {
+    this.load.on(Phaser.Loader.Events.PROGRESS, () => {
+      this.dots++;
+
+      if (this.dots === 4) this.dots = 1;
+
+      let dotsText = '';
+
+      for (let i = 0; i < this.dots; i++) {
+        dotsText += '.';
+      }
+
+      this.title.setText(`Loading${dotsText}`);
+    });
+
+    this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+      this.scene.add(MainMenuScene.KEY, new MainMenuScene());
+
+      this.scene.transition({
+        target: MainMenuScene.KEY,
+        duration: 1000,
+        remove: true,
+        allowInput: false
+      });
+    });
+  }
+
+  /**
+   * Adds a Title GameObject.
+   * Initializes dots property.
+   */
+  addTitle () {
+    this.title = new Title(this, 500, 500, 'Loading');
+    this.dots = 0;
   }
 }
