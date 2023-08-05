@@ -12,10 +12,6 @@ export class LoadingScene extends TowerDefenseScene {
     super({ key: LoadingScene.KEY, ...config });
   }
 
-  preload () {
-    this.load.bitmapFont('main', 'src/assets/fonts/pixelFJ8pt1_0.png', 'src/assets/fonts/pixelFJ8pt1.xml');
-  }
-
   create () {
     this.addTitle();
     this.addLoadListeners();
@@ -47,7 +43,7 @@ export class LoadingScene extends TowerDefenseScene {
 
       this.scene.transition({
         target: MainMenuScene.KEY,
-        duration: 1000,
+        duration: 0,
         remove: true,
         allowInput: false
       });

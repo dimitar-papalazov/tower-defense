@@ -1,3 +1,4 @@
+import { ColorEnum } from '../colors/color.enum.js';
 import { TowerDefenseGame } from '../game/towerDefenseGame.js';
 
 export class TowerDefenseScene extends Phaser.Scene {
@@ -19,5 +20,9 @@ export class TowerDefenseScene extends Phaser.Scene {
      * @type {TowerDefenseGame} Type declared for IntelliSense purpose only.
      */
     this.game;
+  }
+
+  init () {
+    this.cameras.main.setBackgroundColor(ColorEnum.Dark.RGBA);
   }
 }
