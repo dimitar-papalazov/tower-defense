@@ -1,4 +1,4 @@
-import { Title } from '../../components/title/title.js';
+import { Title } from '../../components/titles/title.js';
 import { MainMenuScene } from '../main-menu/mainMenuScene.js';
 import { TowerDefenseScene } from '../towerDefenseScene.js';
 
@@ -8,11 +8,11 @@ export class LoadingScene extends TowerDefenseScene {
   /**
    * @param {string | Phaser.Types.Scenes.SettingsConfig} config
    */
-  constructor (config) {
+  constructor(config) {
     super({ key: LoadingScene.KEY, ...config });
   }
 
-  create () {
+  create() {
     this.addTitle();
     this.addLoadListeners();
 
@@ -23,7 +23,7 @@ export class LoadingScene extends TowerDefenseScene {
    * Adds listeners to LoaderPlugin's events, for animation purpose and 
    * transitioning to MainMenuScene.
    */
-  addLoadListeners () {
+  addLoadListeners() {
     this.load.on(Phaser.Loader.Events.PROGRESS, () => {
       this.dots++;
 
@@ -54,8 +54,8 @@ export class LoadingScene extends TowerDefenseScene {
    * Adds a Title GameObject.
    * Initializes dots property.
    */
-  addTitle () {
-    this.title = new Title(this, 500, 500, 'Loading');
+  addTitle() {
+    this.title = new Title({ scene: this, x: 500, y: 500, text: 'Loading' });
     this.dots = 0;
   }
 }
