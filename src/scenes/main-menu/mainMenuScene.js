@@ -10,6 +10,12 @@ export class MainMenuScene extends TowerDefenseScene {
   }
 
   create() {
-    this.title = new Title({ scene: this, x: 500, y: 250, text: 'Tower Defense', style: TextStyleEnum.NormalTitle });
+    this.title = new Title({
+      scene: this,
+      x: 500,
+      y: 250,
+      text: 'Tower Defense',
+      style: TextStyleEnum.NormalTitle,
+    });
   }
 }

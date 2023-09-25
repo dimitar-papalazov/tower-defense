@@ -1,8 +1,8 @@
-import { TextStyleEnum } from "../../textStyles/textStyle.enum.js";
+import { TextStyleEnum } from '../../textStyles/textStyle.enum.js';
 
 export class Title extends Phaser.GameObjects.Text {
   /**
-   * @param {import("./typedefs/typedefs.js").TitleConfig} config
+   * @param {import("./typedefs/typedefs.js").TitleConfig} config The title configuration settings.
    */
   constructor(config) {
     if (config.style === undefined) config.style = TextStyleEnum.SmallTitle;

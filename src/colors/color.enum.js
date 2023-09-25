@@ -16,5 +16,5 @@ export const ColorEnum = {
     RGB: 'rgb(0, 64, 221)',
     String: '#0040dd',
     Number: 0x0040dd,
-  }
+  },
 };

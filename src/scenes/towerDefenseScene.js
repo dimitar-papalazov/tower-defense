@@ -8,21 +8,20 @@ export class TowerDefenseScene extends Phaser.Scene {
   static KEY;
 
   /**
-   * @param {string | Phaser.Types.Scenes.SettingsConfig} config
+   * @param {string | Phaser.Types.Scenes.SettingsConfig} config The scene key or scene specific configuration settings.
    */
-  constructor (config) {
+  constructor(config) {
     super({ key: TowerDefenseScene.KEY, ...config });
     /**
      * A reference to the Phaser.Game instance.
-     * 
-     * This property will only be available if defined in the Scene Injection Map.
      *
+     * This property will only be available if defined in the Scene Injection Map.
      * @type {TowerDefenseGame} Type declared for IntelliSense purpose only.
      */
     this.game;
   }
 
-  init () {
+  init() {
     this.cameras.main.setBackgroundColor(ColorEnum.Dark.RGBA);
   }
 }

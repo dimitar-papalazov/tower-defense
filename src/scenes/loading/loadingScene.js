@@ -6,7 +6,7 @@ export class LoadingScene extends TowerDefenseScene {
   static KEY = 'LoadingScene';
 
   /**
-   * @param {string | Phaser.Types.Scenes.SettingsConfig} config
+   * @param {string | Phaser.Types.Scenes.SettingsConfig} config The scene key or scene specific configuration settings.
    */
   constructor(config) {
     super({ key: LoadingScene.KEY, ...config });
@@ -20,7 +20,7 @@ export class LoadingScene extends TowerDefenseScene {
   }
 
   /**
-   * Adds listeners to LoaderPlugin's events, for animation purpose and 
+   * Adds listeners to LoaderPlugin's events, for animation purpose and
    * transitioning to MainMenuScene.
    */
   addLoadListeners() {
@@ -45,7 +45,7 @@ export class LoadingScene extends TowerDefenseScene {
         target: MainMenuScene.KEY,
         duration: 0,
         remove: true,
-        allowInput: false
+        allowInput: false,
       });
     });
   }

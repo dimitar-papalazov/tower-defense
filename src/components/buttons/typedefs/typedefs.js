@@ -1,4 +1,4 @@
-import { TowerDefenseScene } from "../../../scenes/towerDefenseScene";
+import { TowerDefenseScene } from '../../../scenes/towerDefenseScene';
 
 /**
  * @typedef {object} TextButtonConfig

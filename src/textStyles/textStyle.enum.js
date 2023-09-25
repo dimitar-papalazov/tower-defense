@@ -29,7 +29,7 @@ export const TextStyleEnum = {
     fontSize: FontSize.SmallTitle,
     color: ColorEnum.Light.String,
     stroke: ColorEnum.Primary.String,
-    strokeThickness: Math.round(FontSize.SmallTitle * 0.1)
+    strokeThickness: Math.round(FontSize.SmallTitle * 0.1),
   },
   /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
   NormalTitle: {
@@ -37,7 +37,7 @@ export const TextStyleEnum = {
     fontSize: FontSize.NormalTitle,
     color: ColorEnum.Light.String,
     stroke: ColorEnum.Primary.String,
-    strokeThickness: Math.round(FontSize.NormalTitle * 0.1)
+    strokeThickness: Math.round(FontSize.NormalTitle * 0.1),
   },
   /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
   BigTitle: {
@@ -45,6 +45,6 @@ export const TextStyleEnum = {
     fontSize: FontSize.BigTitle,
     color: ColorEnum.Light.String,
     stroke: ColorEnum.Primary.String,
-    strokeThickness: Math.round(FontSize.BigTitle * 0.1)
+    strokeThickness: Math.round(FontSize.BigTitle * 0.1),
   },
 };
