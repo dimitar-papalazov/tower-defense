@@ -3,24 +3,23 @@ import { ColorEnum } from '../colors/color.enum.js';
 const fontFamily = 'Main';
 
 const FontSize = {
+  Small: 12,
   Normal: 20,
-  Big: 32,
-  SmallTitle: 52,
-  NormalTitle: 84,
-  BigTitle: 136,
+  SmallTitle: 51,
+  Title: 82,
 };
 
 export const TextStyleEnum = {
   /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
-  NormalText: {
+  SmallText: {
     fontFamily,
-    fontSize: FontSize.Normal,
+    fontSize: FontSize.Small,
     color: ColorEnum.Light.String,
   },
   /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
-  BigText: {
+  Text: {
     fontFamily,
-    fontSize: FontSize.Big,
+    fontSize: FontSize.Normal,
     color: ColorEnum.Light.String,
   },
   /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
@@ -29,22 +28,14 @@ export const TextStyleEnum = {
     fontSize: FontSize.SmallTitle,
     color: ColorEnum.Light.String,
     stroke: ColorEnum.Primary.String,
-    strokeThickness: Math.round(FontSize.SmallTitle * 0.1),
+    strokeThickness: Math.round(FontSize.SmallTitle * 0.09),
   },
   /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
-  NormalTitle: {
+  Title: {
     fontFamily,
-    fontSize: FontSize.NormalTitle,
+    fontSize: FontSize.Title,
     color: ColorEnum.Light.String,
     stroke: ColorEnum.Primary.String,
-    strokeThickness: Math.round(FontSize.NormalTitle * 0.1),
-  },
-  /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
-  BigTitle: {
-    fontFamily,
-    fontSize: FontSize.BigTitle,
-    color: ColorEnum.Light.String,
-    stroke: ColorEnum.Primary.String,
-    strokeThickness: Math.round(FontSize.BigTitle * 0.1),
+    strokeThickness: Math.round(FontSize.Title * 0.09),
   },
 };

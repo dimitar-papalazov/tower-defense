@@ -5,7 +5,7 @@ export class Title extends Phaser.GameObjects.Text {
    * @param {import("./typedefs/typedefs.js").TitleConfig} config The title configuration settings.
    */
   constructor(config) {
-    if (config.style === undefined) config.style = TextStyleEnum.SmallTitle;
+    if (config.style === undefined) config.style = TextStyleEnum.BigTitle;
 
     super(config.scene, config.x, config.y, config.text, config.style);
 
