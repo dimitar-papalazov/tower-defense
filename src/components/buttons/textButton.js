@@ -1,20 +1,18 @@
 import { ColorEnum } from '../../colors/color.enum';
 import { TextStyleEnum } from '../../textStyles/textStyle.enum';
 
-export class TextButton extends Phaser.GameObjects.RenderTexture {
+export class TextButton extends Phaser.GameObjects.Image {
   /**
-   * @param {import("./typedefs/typedefs").TextButtonConfig} config
+   * Creates a TextButton and adds it to the provided TowerDefenseScene.
+   * @param {import("./typedefs/typedefs").TextButtonConfig} config The text button configuration
    */
   constructor(config) {
     super(config.scene, config.x, config.y);
-
     this.callback = config.callback;
     this.context = config.context;
     this.params = config.params;
 
-    this.addText(config.text)
-      .drawBackground()
-      .drawText()
+    this.addTexture(config.text)
       .setInteractive()
       .on(Phaser.Input.Events.POINTER_DOWN, this.onPointerDown, this)
       .on(Phaser.Input.Events.POINTER_UP, this.onPointerUp, this)
@@ -23,45 +21,114 @@ export class TextButton extends Phaser.GameObjects.RenderTexture {
     this.scene.add.existing(this);
   }
 
-  drawBackground() {
-    const percent = this.width * 0.01;
+  /**
+   * Adds a DynamicTexture if not already existing, and sets it as texture of this TextButton
+   * @param {string} s The text that needs to be displayed
+   * @returns {this} Returns this object
+   */
+  addTexture(s) {
+    const key = `button-${s.toLowerCase().split(' ').join('-')}`;
 
-    const graphics = this.scene.add
-      .graphics()
-      .fillStyle(ColorEnum.Light.Number)
-      .fillRect(0, 0, this.width, this.height)
-      .fillStyle(ColorEnum.Dark.Number)
-      .fillRect(percent, percent, this.width, this.height)
-      .fillStyle(ColorEnum.Primary.Number)
-      .fillRect(percent * 3, percent * 3, this.width, this.height);
+    if (this.scene.textures.exists(key)) {
+      return this.setTexture(key);
+    }
 
-    this.draw(graphics);
-
-    graphics.destroy();
-
-    return this;
+    const text = this.makeText(s);
+    this.setSize(text.width * 1.618, text.height * 1.618);
+    const dynamicTexture = this.addDynamicTexture(key);
+    const images = this.makeImages();
+    this.drawTexture(dynamicTexture, images, text);
+    this.destroyGameObjectForTexture(images, text);
+    return this.setTexture(dynamicTexture);
   }
 
   /**
-   * @param {string} text
+   * Makes the Text that needs to be displayed
+   * @param {string} s The text that needs to be displayed
+   * @returns {Phaser.GameObjects.Text} The Text GameObject that was made
    */
-  addText(text) {
-    this.text = this.scene.add
-      .text(0, 0, text, TextStyleEnum.BigText)
-      .setOrigin(0.5);
-
-    return this.setSize(this.text.width * 1.618, this.text.height * 1.618);
+  makeText(s) {
+    return this.scene.make.text(
+      { x: 0, y: 0, text: s, style: TextStyleEnum.Button, origin: 0.5 },
+      false,
+    );
   }
 
-  drawText() {
-    this.draw(this.text, this.width * 0.5, this.height * 0.5);
-
-    this.text.destroy();
-    this.text = undefined;
-
-    return this;
+  /**
+   * Adds a DynamicTexture to the TextureManager
+   * @param {string} key The key of the DynamicTexture
+   * @returns {Phaser.Textures.DynamicTexture} The DynamicTexture that was added in the TextureManager.
+   * Null will not be returned due to prior check in addTexture().
+   */
+  addDynamicTexture(key) {
+    return this.scene.textures.addDynamicTexture(key, this.width, this.height);
   }
 
+  /**
+   * Makes 3 Images that will be drawn on the DynamicTexture
+   * @returns {Phaser.GameObjects.Image[]} The images that were made
+   */
+  makeImages() {
+    const image1 = this.scene.make
+      .image({ x: 0, y: 0, key: '__WHITE' }, false)
+      .setDisplaySize(this.width, this.height)
+      .setTint(ColorEnum.Light.Number);
+
+    const image2 = this.scene.make
+      .image({ x: 0, y: 0, key: '__WHITE' }, false)
+      .setDisplaySize(this.width, this.height)
+      .setTint(ColorEnum.Dark.Number);
+
+    const image3 = this.scene.make
+      .image({ x: 0, y: 0, key: '__WHITE' }, false)
+      .setDisplaySize(this.width, this.height)
+      .setTint(ColorEnum.Primary.Number);
+
+    return [image1, image2, image3];
+  }
+
+  /**
+   * Draws the Images and Text on the DynamicTexture
+   * @param {Phaser.Textures.DynamicTexture} dynamicTexture The DynamicTexture that will be drawn on
+   * @param {Phaser.GameObjects.Image[]} images Images that will be drawn on the DynamicTexture
+   * @param {Phaser.GameObjects.Text} text A text that will be drawn on the DynamicTexture
+   */
+  drawTexture(dynamicTexture, images, text) {
+    const percentX = this.width * 0.01;
+    const percentY = this.height * 0.01;
+
+    dynamicTexture
+      .beginDraw()
+      .batchDraw(images[0], this.width * 0.5, this.height * 0.5)
+      .batchDraw(
+        images[1],
+        this.width * 0.5 - percentX * 2,
+        this.height * 0.5 - percentY * 4,
+      )
+      .batchDraw(
+        images[2],
+        this.width * 0.5 - percentX * 4,
+        this.height * 0.5 - percentY * 8,
+      )
+      .batchDraw(text, this.width * 0.5, this.height * 0.5)
+      .endDraw();
+  }
+
+  /**
+   * Destroys the made GameObjects that were drawn on the DynamicTexture
+   * @param {Phaser.GameObjects.Image[]} images Image that were drawn on the DynamicTexture
+   * @param {Phaser.GameObjects.Text} text A text that was drawn on the DynamicTexture
+   */
+  destroyGameObjectForTexture(images, text) {
+    images[0].destroy();
+    images[1].destroy();
+    images[2].destroy();
+    text.destroy();
+  }
+
+  /**
+   * Animates the button, when pointing down on it.
+   */
   onPointerDown() {
     this.isDown = true;
 
@@ -73,8 +140,15 @@ export class TextButton extends Phaser.GameObjects.RenderTexture {
     });
   }
 
+  /**
+   * Animates the button, when pointing up on it, if the button is already pointed down.
+   * Fires the callback & context that were provided on creation.
+   * @returns {void}
+   */
   onPointerUp() {
-    if (!this.isDown) return;
+    if (!this.isDown) {
+      return;
+    }
 
     this.scene.tweens.add({
       targets: this,
@@ -89,7 +163,15 @@ export class TextButton extends Phaser.GameObjects.RenderTexture {
     this.isDown = false;
   }
 
+  /**
+   * Animates the button, when pointing out of it, if the button is already pointed down.
+   * @returns {void}
+   */
   onPointerOut() {
+    if (!this.isDown) {
+      return;
+    }
+
     this.scene.tweens.add({
       targets: this,
       scale: 1,

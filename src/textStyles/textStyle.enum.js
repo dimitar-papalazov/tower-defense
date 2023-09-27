@@ -3,9 +3,9 @@ import { ColorEnum } from '../colors/color.enum.js';
 const fontFamily = 'Main';
 
 const FontSize = {
-  Small: 12,
-  Normal: 20,
-  SmallTitle: 51,
+  Small: 20,
+  Normal: 51,
+  Button: 32,
   Title: 82,
 };
 
@@ -23,12 +23,10 @@ export const TextStyleEnum = {
     color: ColorEnum.Light.String,
   },
   /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
-  SmallTitle: {
+  Button: {
     fontFamily,
-    fontSize: FontSize.SmallTitle,
+    fontSize: FontSize.Button,
     color: ColorEnum.Light.String,
-    stroke: ColorEnum.Primary.String,
-    strokeThickness: Math.round(FontSize.SmallTitle * 0.09),
   },
   /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
   Title: {

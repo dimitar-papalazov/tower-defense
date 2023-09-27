@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import { LoadingScene } from '../scenes/loading/loadingScene.js';
 
 export class TowerDefenseGame extends Phaser.Game {
