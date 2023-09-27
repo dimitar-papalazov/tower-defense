@@ -15,7 +15,7 @@ export class MainMenuScene extends TowerDefenseScene {
       x: 500,
       y: 250,
       text: 'Tower Defense',
-      style: TextStyleEnum.NormalTitle,
+      style: TextStyleEnum.Title,
     });
   }
 }
