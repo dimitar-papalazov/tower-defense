@@ -1,5 +1,5 @@
 import Constants from "../constants/constants";
-import Color from "../enum/color";
+import Color from "../namespaces/color";
 import Loading from "../scenes/loading";
 
 export default class TowerDefenseGame extends Phaser.Game {

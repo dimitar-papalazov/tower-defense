@@ -1,15 +1,13 @@
 import Constants from "../constants/constants";
-import TextStyle from "../enum/textStyle";
-import TowerDefenseScene from "./TowerDefenseScene";
+import TextStyle from "../namespaces/textStyle";
+import TowerDefenseScene from "./towerDefenseScene";
 import MainMenu from "./mainMenu";
 
 export default class Loading extends TowerDefenseScene {
     static KEY = 'Loading';
 
     constructor() {
-        super({
-            key: Loading.KEY,
-        });
+        super({ key: Loading.KEY });
     }
 
     preload() {
