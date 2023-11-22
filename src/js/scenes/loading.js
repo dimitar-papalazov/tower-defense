@@ -1,13 +1,11 @@
 import Constants from "../constants/constants";
 import TextStyle from "../namespaces/textStyle";
 import TowerDefenseScene from "./towerDefenseScene";
-import MainMenu from "./mainMenu";
+import SceneKeys from "../namespaces/sceneKeys";
 
 export default class Loading extends TowerDefenseScene {
-    static KEY = 'Loading';
-
     constructor() {
-        super({ key: Loading.KEY });
+        super({ key: SceneKeys.Loading });
     }
 
     preload() {
@@ -17,12 +15,6 @@ export default class Loading extends TowerDefenseScene {
     }
 
     create() {
-        this.scene.add(MainMenu.KEY, new MainMenu());
-
-        this.scene.transition({
-            target: MainMenu.KEY,
-            duration: 1,
-            remove: true
-        });
+        this.scene.switch(SceneKeys.Menu);
     }
 }

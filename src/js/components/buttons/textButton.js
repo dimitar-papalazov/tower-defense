@@ -121,7 +121,7 @@ export default class TextButton extends Phaser.GameObjects.Container {
 
       this.scene.add.tween({
         targets: [this.background, this.text],
-        scale: 0.9,
+        scale: 0.95,
         ease: Phaser.Math.Easing.Expo.In,
         duration: 100,
       });
