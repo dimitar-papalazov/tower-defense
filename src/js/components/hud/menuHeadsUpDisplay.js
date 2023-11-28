@@ -34,7 +34,7 @@ export default class MenuHeadsUpDisplay extends HeadsUpDisplay {
         this.createButton = new TextButton({
             scene: this.scene,
             text: 'CREATE',
-            callback: () => this.scene.scene.switch(SceneKeys.Create),
+            callback: () => this.scene.game.switchToScene(SceneKeys.Create),
             x: Constants.WIDTH * 0.5,
             y: Constants.HEIGHT * 0.5 + this.playButton.height * 1.5,
             width: 105,

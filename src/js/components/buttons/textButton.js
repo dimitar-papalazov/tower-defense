@@ -7,7 +7,7 @@ export default class TextButton extends Phaser.GameObjects.Container {
     constructor (config) {
       super(config.scene, config.x, config.y);
 
-      this.callback = config.callback;
+      this.callback = config.callback ?? function() { };
       this.context = config.context;
       this.params = config.params;
       this.width = config.width ?? 0;
@@ -18,7 +18,7 @@ export default class TextButton extends Phaser.GameObjects.Container {
         .addText(config.text, config.textStyle)
         .generateKey(config.text, config.color)
         .generateTexture(config.color, config.lineWidth)
-        .addBackground(config.color)
+        .addBackground()
         .setInteractive(new Phaser.Geom.Rectangle(0, 0, this.width, this.height), Phaser.Geom.Rectangle.Contains)
         .on(Phaser.Input.Events.POINTER_DOWN, this.onPointerDown)
         .on(Phaser.Input.Events.POINTER_UP, this.onPointerUp)
@@ -75,15 +75,8 @@ export default class TextButton extends Phaser.GameObjects.Container {
 
       return this;
     }
-
-    /**
-     * @param {number} color
-     */
-    addBackground(color = Color.Number.BEIGE) {
-      if (!this.scene.textures.exists(this.key)) {
-        this.generateTexture(color);
-      } 
-
+    
+    addBackground() {
       this.background = this.scene.add.image(0, 0, this.key);
 
       return this.addAt(this.background, 0);
@@ -133,13 +126,7 @@ export default class TextButton extends Phaser.GameObjects.Container {
           return;
         }
 
-        if (this.context && this.params) {
-          this.callback.apply(this.context, this.params)
-        } else if (this.context) {
-          this.callback.apply(this.context)
-        } else {
-          this.callback();
-        }
+        this.callback.apply(this.context, this.params)
       };
 
       this.scene.add.tween({

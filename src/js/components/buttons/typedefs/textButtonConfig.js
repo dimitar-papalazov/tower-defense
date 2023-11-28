@@ -9,7 +9,7 @@
  * @property {Phaser.Types.GameObjects.Text.TextStyle} [textStyle]
  * @property {number} [color]
  * @property {number} [lineWidth]
- * @property {Function} callback
+ * @property {Function} [callback]
  * @property {object} [context]
  * @property {any[]} [params]
  */

@@ -15,6 +15,6 @@ export default class Loading extends TowerDefenseScene {
     }
 
     create() {
-        this.scene.switch(SceneKeys.Menu);
+        this.game.switchToScene(SceneKeys.Menu);
     }
 }

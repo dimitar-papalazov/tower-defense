@@ -14,12 +14,23 @@ export default class TowerDefenseGame extends Phaser.Game {
             backgroundColor: Color.Number.LIGHT,
         });
 
-        this.scene.add(SceneKeys.Loading, new Loading());
-        this.scene.add(SceneKeys.Menu, new Menu());
-        this.scene.add(SceneKeys.Create, new Create());
+        this.scene.add(SceneKeys.Loading, Loading);
+        this.scene.add(SceneKeys.Menu, Menu);
+        this.scene.add(SceneKeys.Create, Create);
 
         this.scene.start(SceneKeys.Loading);
 
         window.game = this;
+    }
+
+    /** @param {(typeof SceneKeys)[keyof typeof SceneKeys]} key */
+    switchToScene(key) {
+        const scenes = this.scene.scenes;
+
+        for (const scene of scenes) {
+            this.scene.stop(scene);
+        }
+
+        this.scene.start(key);
     }
 }

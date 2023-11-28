@@ -1,6 +1,8 @@
 /** @typedef {import('../../scenes/towerDefenseScene').default} TowerDefenseScene */
 
-export default class HeadsUpDisplay extends Phaser.GameObjects.Layer {
+import TextButton from '../buttons/textButton';
+
+export default class HeadsUpDisplay extends Phaser.GameObjects.Container {
     /** @param {TowerDefenseScene} scene */
     constructor(scene) {
         super(scene);
@@ -38,12 +40,26 @@ export default class HeadsUpDisplay extends Phaser.GameObjects.Layer {
         }
     }
 
+    /**
+     * @param {number} x
+     * @param {number} y
+     * @param {string} text
+     * @param {Function} callback
+     */
+    addTextButton(x, y, text, callback) {
+        const button = new TextButton({ scene: this.scene, x, y, text, callback, context: this });
+        
+        this.add(button);
+        
+        return button;
+    }
+
     /** @protected */
     onAddedToScene() {
         this.scene.children.bringToTop(this);
     }
 
-    /** @param {boolean} fromScene */
+    /** @param {boolean} [fromScene] */
     destroy(fromScene) {
         this.scene.events.off(Phaser.Scenes.Events.ADDED_TO_SCENE, this.onAddedToScene, this);
 
