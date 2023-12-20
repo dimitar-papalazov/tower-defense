@@ -1,12 +1,15 @@
 import Constants from "../../constants/constants";
 import SceneKeys from "../../namespaces/sceneKeys";
 import TextButton from "../buttons/textButton";
+import PathCreate from "../pathCreate/pathCreate";
 import HeadsUpDisplay from "./headsUpDisplay"
 
 export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
     /** @param {import('../../scenes/towerDefenseScene').default} scene */
     constructor(scene) {
         super(scene);
+
+        this.pathCreate = new PathCreate(this.scene);
 
         this.saveButton = this.addTextButton(Constants.WIDTH * 0.1, Constants.HEIGHT * 0.9, 'Save', this.saveCallback);
         this.pathButton = this.addTextButton(Constants.WIDTH * 0.3, Constants.HEIGHT * 0.9, 'Path', this.pathCallback);
@@ -37,12 +40,15 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
     pathCallback() {
         if (this.pathToggled) {
             this.pathToggled = false;
+            
             return this.showChildren();
         }
-
+        
         this.hideChildren(this.pathButton);
-
+        
         this.pathToggled = true;
+
+        this.pathCreate.enable();
     }
 
     specialsCallback() {

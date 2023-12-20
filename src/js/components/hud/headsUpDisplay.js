@@ -16,28 +16,31 @@ export default class HeadsUpDisplay extends Phaser.GameObjects.Container {
 
     /** @param {Phaser.GameObjects.GameObject|Phaser.GameObjects.GameObject[]} [except]  */
     hideChildren(except) {
-        this.changeVisibility(false, except);
+        this.changeVisibility(0, except);
     }
 
     /** @param {Phaser.GameObjects.GameObject|Phaser.GameObjects.GameObject[]} [except]  */
     showChildren(except) {
-        this.changeVisibility(true, except);
+        this.changeVisibility(1, except);
     }
 
     /**
-     * @param {boolean} visible 
+     * @param {number} alpha 
      * @param {Phaser.GameObjects.GameObject|Phaser.GameObjects.GameObject[]} [except]
      */
-    changeVisibility(visible, except) {
+    changeVisibility(alpha, except) {
         if (!Array.isArray(except)) {
             except = [except].filter(v => v);
         }
 
-        const children = this.getAll().filter(c => !except.includes(c));
+        const targets = this.getAll().filter(c => !except.includes(c));
 
-        for (const child of children) {
-            child.setVisible(visible);
-        }
+        this.scene.tweens.add({
+            targets,
+            alpha,
+            ease: Phaser.Math.Easing.Expo.In,
+            duration: 200
+        })
     }
 
     /**
