@@ -11,7 +11,11 @@ export default class PathCreate extends Phaser.GameObjects.Container {
         this.points = [];
         this.enabled = false;
         this.clicked = false;
+        this.tileSize = Constants.TILE_SIZE;
+        this.halfTileSize = Constants.TILE_SIZE * 0.5;
         this.pathTexture = 'path';
+
+        this.addGrass();
 
         this.scene.add.existing(this);
     }
@@ -46,14 +50,37 @@ export default class PathCreate extends Phaser.GameObjects.Container {
             return;
         }
 
-        const image = this.scene.add.image(pointer.x, pointer.y, this.pathTexture);
+        const x = Math.round((pointer.x - this.halfTileSize) / this.tileSize) * this.tileSize + this.halfTileSize;
+        const y = Math.round((pointer.y - this.halfTileSize) / this.tileSize) * this.tileSize + this.halfTileSize;
+
+        if (this.isLastTile(x, y)) {
+            this.clicked = true;
+
+            return;
+        }
+
+        const image = this.scene.add.image(x, y, this.pathTexture);
 
         this.pathImages.push(image);
 
         this.add(image);
-        
+
         this.clicked = true;
-    };
+    }
+
+    /**
+     * @param {number} x
+     * @param {number} y
+     */
+    isLastTile(x, y) {
+        if (this.pathImages.length === 0) {
+            return false;
+        }
+
+        const lastTile = this.pathImages[this.pathImages.length - 1];
+
+        return lastTile.x === x && lastTile.y === y
+    }
 
     reset() {
         this.points = [];
@@ -62,5 +89,21 @@ export default class PathCreate extends Phaser.GameObjects.Container {
         this.pathImages = [];
 
         this.disableInteractive();
+    }
+
+    addGrass() {
+        const maxX = Constants.WIDTH / Constants.TILE_SIZE;
+        const maxY = Constants.HEIGHT / Constants.TILE_SIZE;
+
+        for (let i = 0; i < maxX; i++) {
+            for (let j = 0; j < maxY; j++) {
+                const x = i * Constants.TILE_SIZE + this.halfTileSize;
+                const y = j * Constants.TILE_SIZE + this.halfTileSize;
+
+                const grass = this.scene.add.image(x, y, 'grass');
+
+                this.add(grass);
+            }
+        }
     }
 }

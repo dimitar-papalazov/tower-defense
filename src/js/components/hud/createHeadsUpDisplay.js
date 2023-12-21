@@ -27,25 +27,25 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
      */
     addTextButton(x, y, text, callback) {
         const button = new TextButton({ scene: this.scene, x, y, width: 123, text, callback, context: this });
-        
+
         this.add(button);
-        
+
         return button;
     }
 
     saveCallback() {
-        console.log('save clicked')
+        console.log('save clicked', this.pathCreate.points)
     }
-    
+
     pathCallback() {
         if (this.pathToggled) {
             this.pathToggled = false;
-            
+
             return this.showChildren();
         }
-        
+
         this.hideChildren(this.pathButton);
-        
+
         this.pathToggled = true;
 
         this.pathCreate.enable();

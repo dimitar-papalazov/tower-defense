@@ -11,6 +11,9 @@ export default class Loading extends TowerDefenseScene {
     preload() {
         this.add.text(Constants.WIDTH * 0.5, Constants.HEIGHT * 0.5, 'Loading', TextStyle.Loading)
             .setOrigin(0.5);
+
+        this.load.image('path', 'src/assets/images/path.png')
+        this.load.image('grass', 'src/assets/images/grass.png')
         // TODO: percent loading
     }
 
