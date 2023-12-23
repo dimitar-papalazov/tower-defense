@@ -3,6 +3,12 @@ import Constants from '../constants/constants';
 
 const TextStyle = {
     /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    ButtonSmall: {
+        fontSize: 20,
+        color: Color.String.DARK,
+        fontFamily: Constants.FONT_FAMILY,
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
     Button: {
         fontSize: 26,
         color: Color.String.DARK,

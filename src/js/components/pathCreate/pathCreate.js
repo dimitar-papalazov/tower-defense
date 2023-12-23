@@ -5,17 +5,26 @@ export default class PathCreate extends Phaser.GameObjects.Container {
     constructor(scene) {
         super(scene);
 
-        /** @type {Phaser.GameObjects.Image[]} */
+        /**
+         * @private 
+         * @type {Phaser.GameObjects.Image[]} 
+         */
         this.pathImages = [];
-        /** @type {Phaser.Geom.Point[]} */
+        /**
+         * @private 
+         * @type {Phaser.Geom.Point[]} 
+         */
         this.points = [];
+        /** @private */
         this.enabled = false;
+        /** @private */
         this.clicked = false;
+        /** @private */
         this.tileSize = Constants.TILE_SIZE;
+        /** @private */
         this.halfTileSize = Constants.TILE_SIZE * 0.5;
+        /** @private */
         this.pathTexture = 'path';
-
-        this.addGrass();
 
         this.scene.add.existing(this);
     }
@@ -35,12 +44,20 @@ export default class PathCreate extends Phaser.GameObjects.Container {
         this.points = this.pathImages.map(image => new Phaser.Geom.Point(image.x, image.y));
     }
 
+    getPoints() {
+        return this.points;
+    }
+
+    /** @private */
     init() {
         this.setInteractive(new Phaser.Geom.Rectangle(0, 0, Constants.WIDTH, Constants.HEIGHT), Phaser.Geom.Rectangle.Contains)
             .on(Phaser.Input.Events.POINTER_MOVE, this.onPointerMove, this);
     }
 
-    /** @param {Phaser.Input.Pointer} pointer */
+    /**
+     * @private
+     * @param {Phaser.Input.Pointer} pointer 
+     */
     onPointerMove(pointer) {
         if ((!pointer.isDown || !this.enabled) && this.clicked) {
             this.disable();
@@ -69,6 +86,7 @@ export default class PathCreate extends Phaser.GameObjects.Container {
     }
 
     /**
+     * @private
      * @param {number} x
      * @param {number} y
      */
@@ -82,6 +100,7 @@ export default class PathCreate extends Phaser.GameObjects.Container {
         return lastTile.x === x && lastTile.y === y
     }
 
+    /** @private */
     reset() {
         this.points = [];
 
@@ -89,21 +108,5 @@ export default class PathCreate extends Phaser.GameObjects.Container {
         this.pathImages = [];
 
         this.disableInteractive();
-    }
-
-    addGrass() {
-        const maxX = Constants.WIDTH / Constants.TILE_SIZE;
-        const maxY = Constants.HEIGHT / Constants.TILE_SIZE;
-
-        for (let i = 0; i < maxX; i++) {
-            for (let j = 0; j < maxY; j++) {
-                const x = i * Constants.TILE_SIZE + this.halfTileSize;
-                const y = j * Constants.TILE_SIZE + this.halfTileSize;
-
-                const grass = this.scene.add.image(x, y, 'grass');
-
-                this.add(grass);
-            }
-        }
     }
 }

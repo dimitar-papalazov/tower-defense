@@ -2,6 +2,7 @@ import Constants from "../../constants/constants";
 import SceneKeys from "../../namespaces/sceneKeys";
 import TextButton from "../buttons/textButton";
 import PathCreate from "../pathCreate/pathCreate";
+import SpecialsCreate from "../specialsCreate/specialsCreate";
 import HeadsUpDisplay from "./headsUpDisplay"
 
 export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
@@ -10,6 +11,7 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
         super(scene);
 
         this.pathCreate = new PathCreate(this.scene);
+        this.specialsCreate = new SpecialsCreate(scene).setVisible(false);
 
         this.saveButton = this.addTextButton(Constants.WIDTH * 0.1, Constants.HEIGHT * 0.9, 'Save', this.saveCallback);
         this.pathButton = this.addTextButton(Constants.WIDTH * 0.3, Constants.HEIGHT * 0.9, 'Path', this.pathCallback);
@@ -34,7 +36,7 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
     }
 
     saveCallback() {
-        console.log('save clicked', this.pathCreate.points)
+        console.log('save clicked', this.pathCreate.getPoints(), this.specialsCreate.getSpecials())
     }
 
     pathCallback() {
@@ -54,12 +56,17 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
     specialsCallback() {
         if (this.specialsToggled) {
             this.specialsToggled = false;
+
+            this.specialsCreate.setVisible(this.specialsToggled);
+
             return this.showChildren();
         }
 
         this.hideChildren(this.specialsButton);
 
         this.specialsToggled = true;
+
+        this.specialsCreate.setVisible(this.specialsToggled);
     }
 
     enemiesCallback() {
