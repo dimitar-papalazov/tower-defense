@@ -14,7 +14,7 @@ export default class PathCreate extends Phaser.GameObjects.Container {
          * @private 
          * @type {Phaser.Geom.Point[]} 
          */
-        this.points = [];
+        this.vectors = [];
         /** @private */
         this.enabled = false;
         /** @private */
@@ -25,6 +25,8 @@ export default class PathCreate extends Phaser.GameObjects.Container {
         this.halfTileSize = Constants.TILE_SIZE * 0.5;
         /** @private */
         this.pathTexture = 'path';
+
+        this.preview = this.scene.add.image(0, 0, this.pathTexture).setAlpha(0);
 
         this.scene.add.existing(this);
     }
@@ -40,12 +42,14 @@ export default class PathCreate extends Phaser.GameObjects.Container {
     disable() {
         this.enabled = false;
         this.clicked = false;
+        
+        this.preview.setAlpha(0);
 
-        this.points = this.pathImages.map(image => new Phaser.Geom.Point(image.x, image.y));
+        this.vectors = this.pathImages.map(image => new Phaser.Math.Vector2(image.x, image.y));
     }
 
-    getPoints() {
-        return this.points;
+    getVectors() {
+        return this.vectors;
     }
 
     /** @private */
@@ -63,12 +67,16 @@ export default class PathCreate extends Phaser.GameObjects.Container {
             this.disable();
         }
 
-        if (!pointer.isDown || !this.enabled) {
-            return;
-        }
-
         const x = Math.round((pointer.x - this.halfTileSize) / this.tileSize) * this.tileSize + this.halfTileSize;
         const y = Math.round((pointer.y - this.halfTileSize) / this.tileSize) * this.tileSize + this.halfTileSize;
+
+        if (!pointer.isDown || !this.enabled) {
+            this.preview
+                .setAlpha(0.5)
+                .setPosition(x, y);
+
+            return;
+        }
 
         if (this.isLastTile(x, y)) {
             this.clicked = true;
@@ -102,7 +110,7 @@ export default class PathCreate extends Phaser.GameObjects.Container {
 
     /** @private */
     reset() {
-        this.points = [];
+        this.vectors = [];
 
         this.pathImages.forEach(image => image.destroy());
         this.pathImages = [];

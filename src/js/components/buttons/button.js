@@ -1,4 +1,5 @@
 import Color from '../../namespaces/color.js';
+import GraphicsGenerator from '../graphicsGenerator/graphicsGenerator.js';
 import './typedefs/buttonConfig.js'
 
 export default class Button extends Phaser.GameObjects.Container {
@@ -87,20 +88,14 @@ export default class Button extends Phaser.GameObjects.Container {
       return this;
     }
 
-    const darker = Color.darken(color, 0.1, false);
-    const lighter = Color.lighten(color, 0.1, false);
-
-    this.scene.add.graphics()
-      .fillStyle(color)
-      .fillRect(0, 0, this.width, this.height)
-      .lineStyle(lineWidth, darker)
-      .lineBetween(0, 0, 0, this.height - lineWidth * 0.5)
-      .lineBetween(0, this.height, this.width, this.height)
-      .lineStyle(lineWidth, lighter)
-      .lineBetween(lineWidth * 0.5, 0, this.width, 0)
-      .lineBetween(this.width, 0, this.width, this.height)
-      .generateTexture(this.key, this.width, this.height)
-      .destroy();
+    new GraphicsGenerator({
+      color,
+      height: this.height,
+      key: this.key,
+      lineWidth,
+      scene: this.scene,
+      width: this.width
+    });
 
     return this;
   }

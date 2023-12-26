@@ -77,15 +77,11 @@ const Color = {
             return Color.toNumber(color);
         }
     },
-    /**
-     * @param {string} color 
-     */
+    /** @param {string} color */
     toNumber: (color) => {
         return parseInt(color.replace('#', '0x'));
     },
-    /**
-     * @param {number} color 
-     */
+    /** @param {number} color */
     toString: (color) => {
         return `#${color.toString(16)}`;
     }

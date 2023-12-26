@@ -1,6 +1,7 @@
 import Constants from "../../constants/constants";
 import SceneKeys from "../../namespaces/sceneKeys";
 import TextButton from "../buttons/textButton";
+import EnemiesCreate from "../enemiesCreate/enemiesCreate";
 import PathCreate from "../pathCreate/pathCreate";
 import SpecialsCreate from "../specialsCreate/specialsCreate";
 import HeadsUpDisplay from "./headsUpDisplay"
@@ -11,24 +12,24 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
         super(scene);
 
         this.pathCreate = new PathCreate(this.scene);
-        this.specialsCreate = new SpecialsCreate(scene).setVisible(false);
+        this.specialsCreate = new SpecialsCreate(scene);
+        this.enemiesCreate = new EnemiesCreate(scene);
 
-        this.saveButton = this.addTextButton(Constants.WIDTH * 0.1, Constants.HEIGHT * 0.9, 'Save', this.saveCallback);
-        this.pathButton = this.addTextButton(Constants.WIDTH * 0.3, Constants.HEIGHT * 0.9, 'Path', this.pathCallback);
-        this.specialsButton = this.addTextButton(Constants.WIDTH * 0.5, Constants.HEIGHT * 0.9, 'Specials', this.specialsCallback);
-        this.enemiesButton = this.addTextButton(Constants.WIDTH * 0.7, Constants.HEIGHT * 0.9, 'Enemies', this.enemiesCallback);
-        this.backButton = this.addTextButton(Constants.WIDTH * 0.9, Constants.HEIGHT * 0.9, 'Back', this.switchToMenu);
+        this.saveButton = this.addTextButton(Constants.WIDTH * 0.1, 'Save', this.saveCallback);
+        this.pathButton = this.addTextButton(Constants.WIDTH * 0.3, 'Path', this.pathCallback);
+        this.specialsButton = this.addTextButton(Constants.WIDTH * 0.5, 'Specials', this.specialsCallback);
+        this.enemiesButton = this.addTextButton(Constants.WIDTH * 0.7, 'Enemies', this.enemiesCallback);
+        this.backButton = this.addTextButton(Constants.WIDTH * 0.9, 'Back', this.switchToMenu);
     }
 
     /**
      * @override
      * @param {number} x
-     * @param {number} y
      * @param {string} text
      * @param {Function} callback
      */
-    addTextButton(x, y, text, callback) {
-        const button = new TextButton({ scene: this.scene, x, y, width: 123, text, callback, context: this });
+    addTextButton(x, text, callback) {
+        const button = new TextButton({ scene: this.scene, x, y: Constants.HEIGHT * 0.9, width: 123, text, callback, context: this });
 
         this.add(button);
 
@@ -36,7 +37,13 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
     }
 
     saveCallback() {
-        console.log('save clicked', this.pathCreate.getPoints(), this.specialsCreate.getSpecials())
+        const result = {
+            path: this.pathCreate.getVectors(),
+            specials: this.specialsCreate.getSpecials(),
+            enemies: this.enemiesCreate.getRows(),
+        };
+        
+        console.log('save clicked', JSON.stringify(result));
     }
 
     pathCallback() {
@@ -57,7 +64,7 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
         if (this.specialsToggled) {
             this.specialsToggled = false;
 
-            this.specialsCreate.setVisible(this.specialsToggled);
+            this.specialsCreate.hide();
 
             return this.showChildren();
         }
@@ -66,18 +73,23 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
 
         this.specialsToggled = true;
 
-        this.specialsCreate.setVisible(this.specialsToggled);
+        this.specialsCreate.show();
     }
 
     enemiesCallback() {
         if (this.enemiesToggled) {
             this.enemiesToggled = false;
+
+            this.enemiesCreate.hide();
+
             return this.showChildren();
         }
 
         this.hideChildren(this.enemiesButton);
 
         this.enemiesToggled = true;
+
+        this.enemiesCreate.show();
     }
 
     switchToMenu() {

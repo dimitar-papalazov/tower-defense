@@ -7,7 +7,8 @@ export default class SpecialsCreate extends Phaser.GameObjects.Container {
         super(scene);
 
         this.addFireButton()
-            .addIceButton();
+            .addIceButton()
+            .setAlpha(0);
 
         this.scene.add.existing(this);
     }
@@ -49,5 +50,23 @@ export default class SpecialsCreate extends Phaser.GameObjects.Container {
             fire: this.fireButton.toggled,
             ice: this.iceButton.toggled
         };
+    }
+
+    show() {
+        this.scene.tweens.add({
+            targets: this,
+            alpha: 1,
+            ease: Phaser.Math.Easing.Expo.In,
+            duration: 200
+        })
+    }
+
+    hide() {
+        this.scene.tweens.add({
+            targets: this,
+            alpha: 0,
+            ease: Phaser.Math.Easing.Expo.In,
+            duration: 200
+        })
     }
 }
