@@ -42,8 +42,12 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
             specials: this.specialsCreate.getSpecials(),
             enemies: this.enemiesCreate.getRows(),
         };
-        
-        console.log('save clicked', JSON.stringify(result));
+
+        if (this.scene.game.levels.length > 7) {
+            // popup
+        } else {
+            this.scene.game.levels.push(result);
+        }
     }
 
     pathCallback() {

@@ -2,8 +2,10 @@ import Constants from "../constants/constants";
 import Color from "../namespaces/color";
 import SceneKeys from "../namespaces/sceneKeys";
 import Create from "../scenes/create";
+import LevelSelect from "../scenes/levelSelect.js";
 import Loading from "../scenes/loading";
 import Menu from "../scenes/menu";
+import './typedefs/levelConfig.js'
 
 export default class TowerDefenseGame extends Phaser.Game {
     constructor() {
@@ -17,8 +19,12 @@ export default class TowerDefenseGame extends Phaser.Game {
         this.scene.add(SceneKeys.Loading, Loading);
         this.scene.add(SceneKeys.Menu, Menu);
         this.scene.add(SceneKeys.Create, Create);
+        this.scene.add(SceneKeys.LevelSelect, LevelSelect);
 
         this.scene.start(SceneKeys.Loading);
+
+        /** @type {LevelConfig[]} */
+        this.levels = [];
 
         window.game = this;
     }

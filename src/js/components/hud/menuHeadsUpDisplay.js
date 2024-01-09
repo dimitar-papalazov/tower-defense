@@ -24,7 +24,7 @@ export default class MenuHeadsUpDisplay extends HeadsUpDisplay {
         this.playButton = new TextButton({
             scene: this.scene,
             text: 'PLAY',
-            callback: () => { console.log('play clicked') },
+            callback: () => this.scene.game.switchToScene(SceneKeys.LevelSelect),
             x: Constants.WIDTH * 0.5,
             y: Constants.HEIGHT * 0.5,
             width: 105,
