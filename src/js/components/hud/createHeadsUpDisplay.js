@@ -43,11 +43,20 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
             enemies: this.enemiesCreate.getRows(),
         };
 
-        if (this.scene.game.levels.length > 7) {
-            // popup
-        } else {
-            this.scene.game.levels.push(result);
+        if (result.path.length === 0) {
+            this.scene.popupManager.addNotification('Path not set for the level!');
+            
+            return;
         }
+
+        if (result.enemies.length === 0) {
+            this.scene.popupManager.addNotification('Enemies not set for the level!');
+            
+            return;
+        }
+
+        this.scene.game.levels.push(result);
+        this.scene.game.switchToScene(SceneKeys.Menu);
     }
 
     pathCallback() {

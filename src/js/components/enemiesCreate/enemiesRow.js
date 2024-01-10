@@ -15,6 +15,7 @@ export default class EnemiesRow extends Phaser.GameObjects.Container {
 
         this.width = Constants.WIDTH * 0.8;
         this.height = Constants.HEIGHT * 0.16;
+        this.graphicsGenerator = new GraphicsGenerator(this.scene);
 
         this.addBackground()
             .addCreepType()
@@ -25,12 +26,11 @@ export default class EnemiesRow extends Phaser.GameObjects.Container {
     }
 
     addBackground() {
-        new GraphicsGenerator({
+        this.graphicsGenerator.generate({
             color: Color.Number.YELLOW,
             height: this.height,
             key: 'enemies-row-background',
             lineWidth: this.height * 0.12,
-            scene: this.scene, 
             width: this.width
         });
 

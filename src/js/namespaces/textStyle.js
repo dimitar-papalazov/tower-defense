@@ -15,6 +15,12 @@ const TextStyle = {
         fontFamily: Constants.FONT_FAMILY,
     },
     /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    Popup: {
+        fontSize: 34,
+        color: Color.String.DARK,
+        fontFamily: Constants.FONT_FAMILY,
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
     TitleSmall: {
         fontSize: 42,
         color: Color.String.DARK,

@@ -1,4 +1,5 @@
 import Constants from "../../constants/constants.js";
+import SceneKeys from "../../namespaces/sceneKeys.js";
 import TextStyle from "../../namespaces/textStyle.js";
 import TextButton from "../buttons/textButton.js";
 import HeadsUpDisplay from "./headsUpDisplay.js";
@@ -9,7 +10,8 @@ export default class LevelSelectHeadsUpDisplay extends HeadsUpDisplay {
         super(scene);
 
         this.addTitle()
-            .addButtons();
+            .addLevelButtons()
+            .addBackButton();
     }
 
     addTitle() {
@@ -19,7 +21,7 @@ export default class LevelSelectHeadsUpDisplay extends HeadsUpDisplay {
         return this.add(this.title);
     }
 
-    addButtons() {
+    addLevelButtons() {
         const scene = this.scene;
         const x = Constants.WIDTH * 0.5;
         const y = Constants.HEIGHT * 0.5;
@@ -43,5 +45,17 @@ export default class LevelSelectHeadsUpDisplay extends HeadsUpDisplay {
         }
 
         return this.add(this.levelButtons);
+    }
+
+    addBackButton() {
+        this.backButton = new TextButton({
+            scene: this.scene,
+            text: 'Back',
+            callback: () => this.scene.game.switchToScene(SceneKeys.Menu),
+            x: Constants.WIDTH * 0.9,
+            y: Constants.HEIGHT * 0.9,
+        });
+
+        return this.add(this.backButton);
     }
 }

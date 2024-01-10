@@ -1,3 +1,5 @@
+import PopupManager from '../components/popup/popupManager.js';
+
 export default class TowerDefenseScene extends Phaser.Scene {
     static KEY = 'TowerDefenseScene';
 
@@ -7,5 +9,9 @@ export default class TowerDefenseScene extends Phaser.Scene {
 
         /** @type {import('../game/towerDefenseGame.js'.default)} */
         this.game;
+    }
+
+    init() {
+        this.popupManager = new PopupManager(this);
     }
 }

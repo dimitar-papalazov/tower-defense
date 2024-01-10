@@ -14,6 +14,7 @@ export default class Button extends Phaser.GameObjects.Container {
     this.params = config.params;
     this.clicked = false;
     this.tweenTargets = [];
+    this.graphicsGenerator = new GraphicsGenerator(this.scene);
 
     this.scene.add.existing(this);
   }
@@ -88,12 +89,11 @@ export default class Button extends Phaser.GameObjects.Container {
       return this;
     }
 
-    new GraphicsGenerator({
+    this.graphicsGenerator.generate({
       color,
       height: this.height,
       key: this.key,
       lineWidth,
-      scene: this.scene,
       width: this.width
     });
 

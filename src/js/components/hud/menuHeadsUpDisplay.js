@@ -34,7 +34,8 @@ export default class MenuHeadsUpDisplay extends HeadsUpDisplay {
         this.createButton = new TextButton({
             scene: this.scene,
             text: 'CREATE',
-            callback: () => this.scene.game.switchToScene(SceneKeys.Create),
+            callback: this.createButtonCallback,
+            context: this,
             x: Constants.WIDTH * 0.5,
             y: Constants.HEIGHT * 0.5 + this.playButton.height * 1.5,
             width: 105,
@@ -42,5 +43,15 @@ export default class MenuHeadsUpDisplay extends HeadsUpDisplay {
         });
 
         return this.add([this.playButton, this.createButton]);
+    }
+
+    createButtonCallback() {
+        if (this.scene.game.levels.length === 7) {
+            this.scene.popupManager.addNotification('Maximum amount of levels reached!');
+
+            return;
+        }
+
+        this.scene.game.switchToScene(SceneKeys.Create);
     }
 }

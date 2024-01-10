@@ -19,6 +19,7 @@ export default class EnemyTypeCreate extends Phaser.GameObjects.Container {
         this.count = 0;
         this.width = Constants.WIDTH * 0.16;
         this.height = Constants.HEIGHT * 0.13;
+        this.graphicsGenerator = new GraphicsGenerator(this.scene);
 
         this.addBackground()
             .addPlusButton()
@@ -31,12 +32,11 @@ export default class EnemyTypeCreate extends Phaser.GameObjects.Container {
     }
 
     addBackground() {
-        new GraphicsGenerator({
+        this.graphicsGenerator.generate({
             color: Color.Number.ORANGE,
             height: this.height,
             key: 'enemy-type-create-background',
             lineWidth: this.height * 0.12,
-            scene: this.scene, 
             width: this.width
         });
 
