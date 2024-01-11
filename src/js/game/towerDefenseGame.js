@@ -2,6 +2,7 @@ import Constants from "../constants/constants";
 import Color from "../namespaces/color";
 import SceneKeys from "../namespaces/sceneKeys";
 import Create from "../scenes/create";
+import Level from "../scenes/level.js";
 import LevelSelect from "../scenes/levelSelect.js";
 import Loading from "../scenes/loading";
 import Menu from "../scenes/menu";
@@ -20,6 +21,7 @@ export default class TowerDefenseGame extends Phaser.Game {
         this.scene.add(SceneKeys.Menu, Menu);
         this.scene.add(SceneKeys.Create, Create);
         this.scene.add(SceneKeys.LevelSelect, LevelSelect);
+        this.scene.add(SceneKeys.Level, Level);
 
         this.scene.start(SceneKeys.Loading);
 
@@ -29,14 +31,17 @@ export default class TowerDefenseGame extends Phaser.Game {
         window.game = this;
     }
 
-    /** @param {(typeof SceneKeys)[keyof typeof SceneKeys]} key */
-    switchToScene(key) {
+    /** 
+     * @param {(typeof SceneKeys)[keyof typeof SceneKeys]} key
+     * @param {object} data
+     */
+    switchToScene(key, data) {
         const scenes = this.scene.scenes;
 
         for (const scene of scenes) {
             this.scene.stop(scene);
         }
 
-        this.scene.start(key);
+        this.scene.start(key, data);
     }
 }

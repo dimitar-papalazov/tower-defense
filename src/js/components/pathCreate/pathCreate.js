@@ -12,7 +12,7 @@ export default class PathCreate extends Phaser.GameObjects.Container {
         this.pathImages = [];
         /**
          * @private 
-         * @type {Phaser.Geom.Point[]} 
+         * @type {Phaser.Math.Vector2[]} 
          */
         this.vectors = [];
         /** @private */

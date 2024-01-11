@@ -36,7 +36,7 @@ export default class LevelSelectHeadsUpDisplay extends HeadsUpDisplay {
             this.levelButtons.push(new TextButton({
                 scene,
                 text: `Level ${i + 1}`,
-                callback: () => console.log(`Level ${i + 1}`),
+                callback: () => this.scene.game.switchToScene(SceneKeys.Level, { level: i }),
                 x,
                 y: y + offset * i,
                 width,
