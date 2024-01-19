@@ -3,6 +3,7 @@ import TextStyle from "../namespaces/textStyle";
 import TowerDefenseScene from "./towerDefenseScene";
 import SceneKeys from "../namespaces/sceneKeys";
 import Enemy from "../namespaces/enemy";
+import Tower from "../namespaces/tower.js";
 
 export default class Loading extends TowerDefenseScene {
     constructor() {
@@ -17,6 +18,10 @@ export default class Loading extends TowerDefenseScene {
         this.load.image('grass', 'src/assets/images/grass.png');
         this.load.image('ice', 'src/assets/images/ice.png');
         
+        this.load.image(Tower.NORMAL, 'src/assets/images/normal-tower.png');
+        this.load.image(Tower.CANNON, 'src/assets/images/cannon-tower.png');
+        this.load.image(Tower.MAGIC, 'src/assets/images/magic-tower.png');
+
         this.load.spritesheet('flame', 'src/assets/spritesheets/flame.png', { frameWidth: 20, frameHeight: 26 });
 
         this.load.spritesheet(`${Enemy.CREEP}Back`, 'src/assets/spritesheets/creep-back.png', { frameWidth: 15, frameHeight: 17 });

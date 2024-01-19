@@ -3,6 +3,9 @@ import SceneKeys from "../namespaces/sceneKeys";
 import TowerDefenseScene from "./towerDefenseScene";
 import '../game/typedefs/levelConfig.js'
 import EnemiesEmitter from "../components/enemiesEmitter/enemiesEmitter.js";
+import LevelHeadsUpDisplay from "../components/hud/levelHeadsUpDisplay.js";
+import AbstractTower from "../components/sprites/towers/abstractTower.js";
+import Tower from "../namespaces/tower.js";
 
 export default class Level extends TowerDefenseScene {
     constructor() {
@@ -14,14 +17,42 @@ export default class Level extends TowerDefenseScene {
      * @param {number} data.level
      */
     create(data) {
-        const levelInfo = this.game.levels[data.level];
+        const levelConfig = this.game.levels[data.level];
 
-        this.addGrass();
-        this.addPath(levelInfo.path);
+        this.addHud()
+            .addGrass()
+            .addPath(levelConfig.path)
+            .addEnemyEmitter(levelConfig);
 
-        this.enemies = new EnemiesEmitter(this, levelInfo.enemies, this.positions);
+        const tower = new AbstractTower({
+            scene: this,
+            x: 285,
+            y: 255,
+            type: Tower.NORMAL
+        });
+
+        this.enemies.on(EnemiesEmitter.Events.ENEMY_MOVED, () => {
+            const enemy = this.enemies.enemies.find(e => e.active && tower.isInRange(e));
+
+            if (enemy !== undefined) {
+                tower.fireAnimation(enemy)
+            }
+        });
+    }
+
+    addHud() {
+        this.hud = new LevelHeadsUpDisplay(this);
+
+        return this;
+    }
+
+    /** @param {LevelConfig} levelConfig */
+    addEnemyEmitter(levelConfig) {
+        this.enemies = new EnemiesEmitter(this, levelConfig.enemies, levelConfig.path);
 
         this.enemies.start();
+
+        return this;
     }
 
     addGrass() {
@@ -37,15 +68,18 @@ export default class Level extends TowerDefenseScene {
                 this.add.image(x, y, 'grass');
             }
         }
+
+        return this;
     }
 
     /** @param {Position[]} positions */
     addPath(positions) {
-        this.positions = positions;
         this.path = [];
 
-        for(const position of this.positions) {
+        for(const position of positions) {
             this.path.push(this.add.image(position.x, position.y, 'path'));
         }
+
+        return this;
     }
 }

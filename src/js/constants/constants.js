@@ -2,7 +2,11 @@ const Constants = {
     FONT_FAMILY: 'VT323-Regular',
     WIDTH: 900,
     HEIGHT: 900,
-    TILE_SIZE: 30
+    TILE_SIZE: 30,
+    ENEMY_MOVE_DURATION: 1000,
+    ROW_PAUSE_PERIOD: 1000,
+    MAX_FIRE_ANIMATION_DURATION: 500,
+    MIN_FIRE_ANIMATION_DURATION: 200
 };
 
 export default Constants;

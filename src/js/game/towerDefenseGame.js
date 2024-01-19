@@ -6,15 +6,19 @@ import Level from "../scenes/level.js";
 import LevelSelect from "../scenes/levelSelect.js";
 import Loading from "../scenes/loading";
 import Menu from "../scenes/menu";
-import './typedefs/levelConfig.js'
+import './typedefs/levelConfig.js';
 
 export default class TowerDefenseGame extends Phaser.Game {
     constructor() {
         super({
             width: Constants.WIDTH,
             height: Constants.HEIGHT,
-            autoCenter: Phaser.Scale.Center.CENTER_BOTH,
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            },
             backgroundColor: Color.Number.LIGHT,
+            pixelArt: true
         });
 
         this.scene.add(SceneKeys.Loading, Loading);
