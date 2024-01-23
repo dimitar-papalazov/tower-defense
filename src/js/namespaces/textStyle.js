@@ -19,6 +19,9 @@ const TextStyle = {
         fontSize: 34,
         color: Color.String.DARK,
         fontFamily: Constants.FONT_FAMILY,
+        wordWrap: {
+            width: Constants.WIDTH * 0.56
+        }
     },
     /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
     TitleSmall: {

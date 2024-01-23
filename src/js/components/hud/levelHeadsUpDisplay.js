@@ -1,6 +1,7 @@
 import Constants from "../../constants/constants.js";
 import SceneKeys from "../../namespaces/sceneKeys.js";
 import TextButton from "../buttons/textButton.js";
+import TowerPicker from "../towerPicker/towerPicker.js";
 import HeadsUpDisplay from "./headsUpDisplay.js";
 
 export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
@@ -8,7 +9,8 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
     constructor(scene) {
         super(scene);
 
-        this.addBackButton();
+        this.addBackButton()
+            .addTowerPicker();
     }
 
     addBackButton() {
@@ -21,5 +23,11 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
         });
 
         return this.add(this.backButton);
+    }
+
+    addTowerPicker() {
+        this.towerPicker = new TowerPicker(this.scene);
+
+        return this.add(this.towerPicker);
     }
 }

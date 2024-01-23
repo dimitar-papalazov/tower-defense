@@ -18,8 +18,8 @@ export default class Notification extends Popup {
 
     addBackground() {
         if (this.width === 0 || this.height === 0) {
-            this.width = Phaser.Math.Clamp(this.text.width * 1.6, 0, Constants.WIDTH * 0.9);
-            this.height = Phaser.Math.Clamp(this.text.height * 1.6, 0, Constants.HEIGHT * 0.9);
+            this.width = this.text.width * 1.6;
+            this.height = this.text.height * 1.6;
         }
 
         const key = `notification-background-${this.width}-${this.height}`;

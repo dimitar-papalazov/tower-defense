@@ -1,9 +1,9 @@
 import Constants from '../../constants/constants.js';
 import '../../game/typedefs/levelConfig.js';
-import AbsorberCreepEnemy from '../sprites/enemies/absorberCreepEnemy.js';
-import AbstractEnemy from '../sprites/enemies/abstractEnemy.js';
-import ArmoredCreepEnemy from '../sprites/enemies/armoredCreepEnemy.js';
-import CreepEnemy from '../sprites/enemies/creepEnemy.js';
+import AbsorberCreepEnemy from '../entities/enemies/absorberCreepEnemy.js';
+import AbstractEnemy from '../entities/enemies/abstractEnemy.js';
+import ArmoredCreepEnemy from '../entities/enemies/armoredCreepEnemy.js';
+import CreepEnemy from '../entities/enemies/creepEnemy.js';
 
 export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
     static Events = {
@@ -33,6 +33,8 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
             .on(EnemiesEmitter.Events.ROW_FINISH, this.onRowFinish, this)
             .on(EnemiesEmitter.Events.START_MOVING, this.onStartMoving, this)
             .on(EnemiesEmitter.Events.ENEMY_MOVED, this.onEnemyMoved, this);
+
+        this.scene.events.on(Phaser.Scenes.Events.DESTROY, this.destroy, this);
     }
 
     start() {

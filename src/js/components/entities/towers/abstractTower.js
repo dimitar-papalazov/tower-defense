@@ -7,7 +7,14 @@ export default class AbstractTower extends Phaser.GameObjects.Container {
         super(config.scene, config.x, config.y);
 
         this.addImage(config)
-            .addFireRadius();
+            .addFireRadius()
+            .setDepth(Constants.TOWER_DEPTH);
+
+        this.damage = {
+            physical: 0,
+            explosive: 0,
+            magic: 0,
+        };
 
         this.scene.add.existing(this);
     }
@@ -22,24 +29,30 @@ export default class AbstractTower extends Phaser.GameObjects.Container {
 
     addFireRadius() {
         this.fireRadius = new Phaser.Geom.Circle(this.x, this.y, Constants.TILE_SIZE * 3);
+
+        return this;
     }
 
     /** @param {import('../enemies/abstractEnemy.js').default} enemy */
-    fireAnimation(enemy) {
+    fire(enemy) {
         if (this.enemy) {
             return;
         }
-        
+
         this.enemy = enemy;
-        this.fire = this.scene.add.image(this.x, this.y, 'flame');
-        this.scene.children.moveBelow(this.fire, this);
+        this.ammunition = this.scene.add.image(this.x, this.y, 'ammunition')
+            .setDepth(Constants.AMMUNITION_DEPTH);
+
+        this.setAmmunitionTint();
+
+        this.scene.children.moveBelow(this.ammunition, this);
 
         const max = Constants.MAX_FIRE_ANIMATION_DURATION;
         const min = Constants.MIN_FIRE_ANIMATION_DURATION;
         const distance = Phaser.Math.Distance.BetweenPoints(this, this.enemy);
         const percent = distance / this.fireRadius.radius;
         const duration = Phaser.Math.Clamp(max * percent, min, max);
-        
+
         this.scene.tweens.addCounter({
             onUpdate: this.onFireAnimationUpdate,
             onComplete: this.onFireAnimationComplete,
@@ -47,11 +60,15 @@ export default class AbstractTower extends Phaser.GameObjects.Container {
             duration
         });
     }
-    
+
+    setAmmunitionTint() {
+        throw new Error('Abstract method');
+    }
+
     /** @param {import('../enemies/abstractEnemy.js').default} enemy */
     isInRange(enemy) {
         return Phaser.Geom.Circle.ContainsRect(this.fireRadius, enemy.getBounds())
-    } 
+    }
 
     /** @param {Phaser.Tweens.Tween} tween */
     onFireAnimationUpdate(tween) {
@@ -59,11 +76,13 @@ export default class AbstractTower extends Phaser.GameObjects.Container {
         const line = new Phaser.Geom.Line(this.x, this.y, this.enemy.x, this.enemy.y);
         const point = Phaser.Geom.Line.GetPoint(line, value);
 
-        this.fire.setPosition(point.x, point.y);
+        this.ammunition.setPosition(point.x, point.y);
     }
 
     onFireAnimationComplete() {
-        this.fire.destroy();
+        this.enemy.calculateDamage(this.damage);
+
+        this.ammunition.destroy();
         this.enemy = undefined;
     }
 }

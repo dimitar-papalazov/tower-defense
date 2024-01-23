@@ -17,6 +17,8 @@ export default class Loading extends TowerDefenseScene {
         this.load.image('path', 'src/assets/images/path.png');
         this.load.image('grass', 'src/assets/images/grass.png');
         this.load.image('ice', 'src/assets/images/ice.png');
+
+        this.load.image('ammunition', 'src/assets/images/ammunition.png');
         
         this.load.image(Tower.NORMAL, 'src/assets/images/normal-tower.png');
         this.load.image(Tower.CANNON, 'src/assets/images/cannon-tower.png');

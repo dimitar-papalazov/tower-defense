@@ -1,5 +1,6 @@
 /** @typedef {import('../../scenes/towerDefenseScene').default} TowerDefenseScene */
 
+import Constants from '../../constants/constants.js';
 import TextButton from '../buttons/textButton';
 
 export default class HeadsUpDisplay extends Phaser.GameObjects.Container {
@@ -8,6 +9,8 @@ export default class HeadsUpDisplay extends Phaser.GameObjects.Container {
         super(scene);
         /** @type {TowerDefenseScene} */
         this.scene;
+
+        this.setDepth(Constants.HUD_DEPTH);
 
         this.scene.events.on(Phaser.Scenes.Events.ADDED_TO_SCENE, this.onAddedToScene, this);
 

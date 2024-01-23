@@ -4,8 +4,9 @@ import TowerDefenseScene from "./towerDefenseScene";
 import '../game/typedefs/levelConfig.js'
 import EnemiesEmitter from "../components/enemiesEmitter/enemiesEmitter.js";
 import LevelHeadsUpDisplay from "../components/hud/levelHeadsUpDisplay.js";
-import AbstractTower from "../components/sprites/towers/abstractTower.js";
+import AbstractTower from "../components/entities/towers/abstractTower.js";
 import Tower from "../namespaces/tower.js";
+import TowersEmitter from "../components/towersEmitter/towersEmitter.js";
 
 export default class Level extends TowerDefenseScene {
     constructor() {
@@ -20,24 +21,10 @@ export default class Level extends TowerDefenseScene {
         const levelConfig = this.game.levels[data.level];
 
         this.addHud()
-            .addGrass()
+            .addGrass(levelConfig.path)
             .addPath(levelConfig.path)
-            .addEnemyEmitter(levelConfig);
-
-        const tower = new AbstractTower({
-            scene: this,
-            x: 285,
-            y: 255,
-            type: Tower.NORMAL
-        });
-
-        this.enemies.on(EnemiesEmitter.Events.ENEMY_MOVED, () => {
-            const enemy = this.enemies.enemies.find(e => e.active && tower.isInRange(e));
-
-            if (enemy !== undefined) {
-                tower.fireAnimation(enemy)
-            }
-        });
+            .addEnemyEmitter(levelConfig)
+            .addTowersEmitter();
     }
 
     addHud() {
@@ -55,7 +42,17 @@ export default class Level extends TowerDefenseScene {
         return this;
     }
 
+    addTowersEmitter() {
+        this.towers = new TowersEmitter(this, this.enemies, this.path);
+
+        this.enemies.on(EnemiesEmitter.Events.ENEMY_MOVED, this.towers.onEnemyMoved, this.towers);
+
+        return this;
+    }
+
     addGrass() {
+        /** @type {Phaser.GameObjects.Image[]} */
+        this.grass = [];
         const halfTileSize = Constants.TILE_SIZE * 0.5;
         const maxX = Constants.WIDTH / Constants.TILE_SIZE;
         const maxY = Constants.HEIGHT / Constants.TILE_SIZE;
@@ -65,7 +62,7 @@ export default class Level extends TowerDefenseScene {
                 const x = i * Constants.TILE_SIZE + halfTileSize;
                 const y = j * Constants.TILE_SIZE + halfTileSize;
 
-                this.add.image(x, y, 'grass');
+                this.grass.push(this.add.image(x, y, 'grass'));
             }
         }
 

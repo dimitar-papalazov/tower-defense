@@ -64,11 +64,6 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
         });
     }
 
-    /** @param {DamageInfo} damageInfo */
-    calculateDamage(damageInfo) {
-        throw new Error(`Abstract method called calculateDamage(${damageInfo})`);
-    }
-
     move(x, y) {
         if (x > this.x) {
             this.onMoveRight();
@@ -145,7 +140,7 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
         this.health -= damageInfo.physical * (1 - this.resistance) + damageInfo.explosive * (1 - this.armor) + damageInfo.magic * (1 - this.magicResistance);
 
         if (this.health === 0) {
-            this.emit(CreepEnemy.Events.KILLED);
+            this.emit(AbstractEnemy.Events.KILLED);
             this.destroy();
         }
     }
