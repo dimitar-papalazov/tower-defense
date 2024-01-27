@@ -6,7 +6,9 @@ export default class AbstractTower extends Phaser.GameObjects.Container {
     constructor(config) {
         super(config.scene, config.x, config.y);
 
-        this.addImage(config)
+        this.type = config.type;
+
+        this.addImage()
             .addFireRadius()
             .setDepth(Constants.TOWER_DEPTH);
 
@@ -19,9 +21,9 @@ export default class AbstractTower extends Phaser.GameObjects.Container {
         this.scene.add.existing(this);
     }
 
-    addImage(config) {
+    addImage() {
         this.image = this.scene.add
-            .image(0, 0, config.type)
+            .image(0, 0, this.type)
             .setOrigin(0.5, 0.75);
 
         return this.add(this.image);

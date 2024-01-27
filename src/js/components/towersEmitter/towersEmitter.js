@@ -1,3 +1,5 @@
+import Constants from '../../constants/constants.js';
+import Color from '../../namespaces/color.js';
 import Tower from '../../namespaces/tower.js';
 import AbstractTower from '../entities/towers/abstractTower.js';
 import CannonTower from '../entities/towers/cannonTower.js';
@@ -66,6 +68,8 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
         this.placeOnX = x;
         this.placeOnY = y;
 
+        this.markGrass();
+
         this.towerPicker.show();
     }
 
@@ -89,7 +93,27 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
 
         this.towers.push(tower);
 
+        this.destroyMark();
+        
         this.placeOnX = null;
         this.placeOnY = null;
+    }
+
+    markGrass() {
+        this.destroyMark();
+
+        this.mark = this.scene.add.rectangle(this.placeOnX, this.placeOnY, Constants.TILE_SIZE, Constants.TILE_SIZE, Color.Number.ORANGE, 0.5);
+
+        this.towerPicker.cancelButton.once(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, this.destroyMark, this);
+    }
+
+    destroyMark() {
+        if (!this.mark) {
+            return;
+        }
+
+        this.towerPicker.cancelButton.off(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, this.destroyMark, this, true);
+
+        this.mark.destroy();
     }
 }

@@ -4,6 +4,7 @@ import TowerDefenseScene from "./towerDefenseScene";
 import SceneKeys from "../namespaces/sceneKeys";
 import Enemy from "../namespaces/enemy";
 import Tower from "../namespaces/tower.js";
+import Resource from "../namespaces/resource.js";
 
 export default class Loading extends TowerDefenseScene {
     constructor() {
@@ -17,6 +18,8 @@ export default class Loading extends TowerDefenseScene {
         this.load.image('path', 'src/assets/images/path.png');
         this.load.image('grass', 'src/assets/images/grass.png');
         this.load.image('ice', 'src/assets/images/ice.png');
+        this.load.image(Resource.COIN, 'src/assets/images/coin.png');
+        this.load.image(Resource.HEART, 'src/assets/images/heart.png');
 
         this.load.image('ammunition', 'src/assets/images/ammunition.png');
         

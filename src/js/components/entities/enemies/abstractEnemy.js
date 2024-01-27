@@ -1,6 +1,8 @@
 import Constants from '../../../constants/constants.js';
 import './typedefs/abstractEnemyConfig.js';
 import '../towers/typedefs/damageInfo.js';
+import GraphicsGenerator from '../../graphicsGenerator/graphicsGenerator.js';
+import HealthBar from '../../healthBar/healthBar.js';
 
 export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
     static Events = {
@@ -24,6 +26,7 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
         this.type = config.type;
         this.health = 100;
         this.direction =  this.Directions.DOWN;
+        this.graphicsGenerator = new GraphicsGenerator(this.scene);
 
         this.Textures = {
             FRONT: `${this.type}Front`,
@@ -35,9 +38,17 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
         this.armor = 0;
         this.magicResistance = 0;
 
-        this.addAnimations();
+        this.addAnimations()
+            .addHealthBar()
+            .play(this.Textures.FRONT);
 
         this.scene.add.existing(this);
+    }
+
+    addHealthBar() {
+        this.healthBar = new HealthBar(this.scene, this);
+
+        return this;
     }
 
     /** @private */
@@ -62,6 +73,8 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
             frameRate: 3,
             repeat: -1
         });
+
+        return this;
     }
 
     move(x, y) {
@@ -139,9 +152,15 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
     calculateDamage(damageInfo) {
         this.health -= damageInfo.physical * (1 - this.resistance) + damageInfo.explosive * (1 - this.armor) + damageInfo.magic * (1 - this.magicResistance);
 
-        if (this.health === 0) {
+        this.healthBar.updateHealthBar(this.health);
+
+        if (this.health <= 0) {
             this.emit(AbstractEnemy.Events.KILLED);
             this.destroy();
+            
+            if (this.healthBar && this.healthBar.active) {
+                this.healthBar.destroy();
+            }
         }
     }
 }

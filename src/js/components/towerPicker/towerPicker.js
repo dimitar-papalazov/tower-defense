@@ -25,12 +25,12 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
 
         this.addBackground()
             .addTypes()
-            .addBackButton()
+            .addCancelButton()
             .setAlpha(0);
     }
 
-    addBackButton() {
-        this.backButton = new TextButton({
+    addCancelButton() {
+        this.cancelButton = new TextButton({
             scene: this.scene,
             text: 'Cancel',
             callback: this.hide,
@@ -40,7 +40,7 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
             textStyle: TextStyle.ButtonSmall
         }).setScale(0.75);
 
-        return this.add(this.backButton);
+        return this.add(this.cancelButton);
     }
 
     addBackground() {

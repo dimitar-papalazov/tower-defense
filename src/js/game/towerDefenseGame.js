@@ -18,7 +18,6 @@ export default class TowerDefenseGame extends Phaser.Game {
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
             backgroundColor: Color.Number.LIGHT,
-            pixelArt: true
         });
 
         this.scene.add(SceneKeys.Loading, Loading);

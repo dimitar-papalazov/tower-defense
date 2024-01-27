@@ -4,8 +4,6 @@ import TowerDefenseScene from "./towerDefenseScene";
 import '../game/typedefs/levelConfig.js'
 import EnemiesEmitter from "../components/enemiesEmitter/enemiesEmitter.js";
 import LevelHeadsUpDisplay from "../components/hud/levelHeadsUpDisplay.js";
-import AbstractTower from "../components/entities/towers/abstractTower.js";
-import Tower from "../namespaces/tower.js";
 import TowersEmitter from "../components/towersEmitter/towersEmitter.js";
 
 export default class Level extends TowerDefenseScene {
