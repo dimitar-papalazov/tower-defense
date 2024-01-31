@@ -7,9 +7,12 @@ const Constants = {
     ROW_PAUSE_PERIOD: 1000,
     MAX_FIRE_ANIMATION_DURATION: 1000,
     MIN_FIRE_ANIMATION_DURATION: 400,
+    POPUP_DEPTH: 4,
     HUD_DEPTH: 3,
     AMMUNITION_DEPTH: 2,
     TOWER_DEPTH: 1,
+    TOWER_COST: 100,
+    KILLED_ENEMY_REWARD: 10,
 };
 
 export default Constants;

@@ -28,10 +28,12 @@ export default class PopupManager extends Phaser.Events.EventEmitter {
 
         this.queue.push(notification);
 
-        notification.once(Phaser.GameObjects.Events.DESTROY, this.onPopupDestroy, this);
+        notification.once(Notification.Events.HIDE_FINISH, this.onPopupDestroy, this);
         notification.once(Phaser.GameObjects.Events.ADDED_TO_SCENE, this.onNotificationAdded, this);
 
         this.emit(this.Events.ADD_TO_QUEUE);
+
+        return notification;
     }
 
     onAddToQueue() {
@@ -54,7 +56,7 @@ export default class PopupManager extends Phaser.Events.EventEmitter {
     onNotificationAdded(notification) {
         notification.showAnimation();
     }
-
+    
     onPopupDestroy() {
         this.activePopup = false;
 

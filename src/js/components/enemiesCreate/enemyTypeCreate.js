@@ -14,6 +14,8 @@ export default class EnemyTypeCreate extends Phaser.GameObjects.Container {
      */
     constructor(scene, x, y, type) {
         super(scene, x, y);
+        /** @type {import('../../scenes/create').default} */
+        this.scene;
 
         this.enemyType = type;
         this.count = 0;
@@ -62,7 +64,9 @@ export default class EnemyTypeCreate extends Phaser.GameObjects.Container {
 
     plusButtonCallback() {
         if (this.count === 10) {
-            return; // TODO: notification
+            this.scene.popupManager.addNotification('Cannot add more than 10');
+
+            return;
         }
 
         this.count++;
@@ -87,7 +91,7 @@ export default class EnemyTypeCreate extends Phaser.GameObjects.Container {
 
     minusButtonCallback() {
         if (this.count === 0) {
-            return; // TODO: notification
+            return;
         }
 
         this.count--;

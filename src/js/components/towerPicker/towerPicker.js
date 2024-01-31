@@ -98,7 +98,7 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
 
     /** @param {string} type */
     onTypePointerDown(type) {
-        this.emit(TowerPicker.Events.TYPE_SELECT, type)
+        this.emit(TowerPicker.Events.TYPE_SELECT, type);
         this.hide();
     }
 

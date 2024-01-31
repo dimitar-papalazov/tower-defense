@@ -7,7 +7,8 @@ import HealthBar from '../../healthBar/healthBar.js';
 export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
     static Events = {
         ENEMY_MOVED: 'enemyMoved',
-        KILLED: 'killed'
+        KILLED: 'killed',
+        FINISH: 'finish'
     }
 
     /** @param {AbstractEnemyConfig} config */
@@ -162,5 +163,11 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
                 this.healthBar.destroy();
             }
         }
+    }
+
+    finishPath () {
+        this.emit(AbstractEnemy.Events.FINISH);
+
+        this.destroy();
     }
 }

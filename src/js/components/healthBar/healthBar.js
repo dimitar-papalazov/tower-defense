@@ -84,7 +84,19 @@ export default class HealthBar extends Phaser.GameObjects.Container {
             return;
         }
 
-        this.scene.tweens.add({
+        if (this.showTween && this.showTween.isPlaying()) {
+            this.showTween.stop();
+
+            this.showTween = null;
+        }
+
+        if (this.hideTween && this.hideTween.isPlaying()) {
+            this.hideTween.stop();
+
+            this.hideTween = null;
+        }
+
+        this.showTween = this.scene.tweens.add({
             targets: this,
             alpha: 1,
             ease: Phaser.Math.Easing.Expo.In,
@@ -100,7 +112,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
             return;
         }
 
-        this.scene.tweens.add({
+        this.hideTween = this.scene.tweens.add({
             targets: this,
             alpha: 0,
             ease: Phaser.Math.Easing.Expo.In,

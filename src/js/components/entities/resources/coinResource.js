@@ -1,5 +1,6 @@
 import AbstractResource from "./abstractResource.js";
 import Resource from '../../../namespaces/resource.js';
+import Constants from "../../../constants/constants.js";
 
 export default class CoinResource extends AbstractResource {
     /**
@@ -15,5 +16,9 @@ export default class CoinResource extends AbstractResource {
             type: Resource.COIN,
             value: 1000,
         });
+    }
+
+    canBuyTower() {
+        return this.value - Constants.TOWER_COST >= 0;
     }
 }

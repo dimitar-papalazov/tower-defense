@@ -43,7 +43,8 @@ export default class EnemiesCreate extends Phaser.GameObjects.Container {
 
     rowsButtonCallback() {
         if (this.rows.length === 3) {
-            return; // TODO: notification
+            this.scene.popupManager.addNotification('Cannot add more rows');
+            return;
         }
 
         const enemiesRow = new EnemiesRow(this.scene, Constants.WIDTH * 0.5, Constants.HEIGHT * 0.21 * (this.rows.length + 1));

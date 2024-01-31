@@ -20,6 +20,7 @@ export default class AbstractResource extends Phaser.GameObjects.Container {
             .addText();
     }
 
+    /** @private */
     addBackground() {
         const key = 'resource-background';
 
@@ -36,12 +37,14 @@ export default class AbstractResource extends Phaser.GameObjects.Container {
         return this.add(this.background);
     }
 
+    /** @private */
     addImage() {
         this.image = this.scene.add.image(-this.width * 0.25, 0, this.type);
 
         return this.add(this.image);
     }
 
+    /** @private */
     addText() {
         this.text = this.scene.add
             .text(this.width * 0.4, 0, this.value, TextStyle.Resource)
@@ -50,13 +53,35 @@ export default class AbstractResource extends Phaser.GameObjects.Container {
         return this.add(this.text);
     }
 
+    /** @private */
     updateValue(value) {
+        const startValue = this.value;
+
+        this.value = value;
+
         this.scene.tweens.addCounter({
             duration: 200,
-            from: this.value,
+            from: startValue,
             to: value,
-            onUpdate: tween => this.text.setText(tween.getValue()),
-            onComplete: () => this.value = value
+            onUpdate: tween => this.text.setText(tween.getValue().toFixed(0))
         })
+    }
+
+    /** @param {number} value */
+    decreaseValue(value) {
+        value = this.value - value;
+
+        if (value < 0) {
+            value = 0;
+        }
+
+        this.updateValue(value);
+    }
+
+    /** @param {number} value */
+    increaseValue(value) {
+        value = this.value + value;
+
+        this.updateValue(value);
     }
 }

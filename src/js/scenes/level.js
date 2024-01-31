@@ -5,6 +5,7 @@ import '../game/typedefs/levelConfig.js'
 import EnemiesEmitter from "../components/enemiesEmitter/enemiesEmitter.js";
 import LevelHeadsUpDisplay from "../components/hud/levelHeadsUpDisplay.js";
 import TowersEmitter from "../components/towersEmitter/towersEmitter.js";
+import Notification from "../components/popup/notification.js";
 
 export default class Level extends TowerDefenseScene {
     constructor() {
@@ -34,8 +35,6 @@ export default class Level extends TowerDefenseScene {
     /** @param {LevelConfig} levelConfig */
     addEnemyEmitter(levelConfig) {
         this.enemies = new EnemiesEmitter(this, levelConfig.enemies, levelConfig.path);
-
-        this.enemies.start();
 
         return this;
     }

@@ -3,6 +3,7 @@ import SceneKeys from "../../namespaces/sceneKeys.js";
 import TextButton from "../buttons/textButton.js";
 import CoinResource from "../entities/resources/coinResource.js";
 import HeartResource from "../entities/resources/heartResource.js";
+import Notification from "../popup/notification.js";
 import TowerPicker from "../towerPicker/towerPicker.js";
 import HeadsUpDisplay from "./headsUpDisplay.js";
 
@@ -35,9 +36,15 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
     }
 
     addResources() {
-        this.heartResource = new HeartResource(this.scene, Constants.WIDTH * 0.33, Constants.HEIGHT * 0.05);
+        this.heartResource = new HeartResource(this.scene, Constants.WIDTH * 0.33, Constants.HEIGHT * 0.05)
+            .once(HeartResource.Events.NO_HEARTS, this.onNoHearts, this);
         this.coinResource = new CoinResource(this.scene, Constants.WIDTH * 0.67, Constants.HEIGHT * 0.05);
 
         return this.add([this.heartResource, this.coinResource]);
+    }
+
+    onNoHearts() {
+        this.scene.popupManager.addNotification('You lost all your hearts!\nLevel failed!')
+            .once(Notification.Events.HIDE_FINISH, () => this.scene.game.switchToScene(SceneKeys.LevelSelect));
     }
 }

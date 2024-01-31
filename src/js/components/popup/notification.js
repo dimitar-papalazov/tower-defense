@@ -5,15 +5,20 @@ import Popup from './popup.js';
 import './typedefs/popupConfigs.js';
 
 export default class Notification extends Popup {
+    static Events = {
+        HIDE_FINISH: 'hideFinish',
+    }
+
     /** @param {NotificationConfig} config */
     constructor(config) {
         config.x = config.x ?? Constants.WIDTH * 0.5;
-        config.y = config.y ?? Constants.HEIGHT * 0.1;
+        config.y = config.y ?? Constants.HEIGHT * 0.2;
 
         super(config);
 
         this.addText(config.text)
-            .addBackground();
+            .addBackground()
+            .setDepth(Constants.POPUP_DEPTH);
     }
 
     addBackground() {
@@ -54,21 +59,34 @@ export default class Notification extends Popup {
             ease: Phaser.Math.Easing.Expo.In,
             alpha: 1,
             duration: 200,
-            onComplete: () => {
-                if (!this.active) {
-                    return;
-                }
-
-                this.scene.add.tween({
-                    targets: this,
-                    ease: Phaser.Math.Easing.Expo.In,
-                    alpha: 0,
-                    duration: 200,
-                    delay: 2000,
-                    onComplete: this.destroy,
-                    callbackScope: this,
-                });
-            }
+            onComplete: this.onAlphaInComplete,
+            callbackScope: this
         });
+    }
+
+    onAlphaInComplete() {
+        if (!this.active) {
+            return;
+        }
+
+        this.scene.add.tween({
+            targets: this,
+            ease: Phaser.Math.Easing.Expo.In,
+            alpha: 0,
+            duration: 200,
+            delay: 2000,
+            onComplete: this.onAlphaOutComplete,
+            callbackScope: this
+        });
+    }
+
+    onAlphaOutComplete() {
+        if (!this.active) {
+            return
+        }
+
+        this.emit(Notification.Events.HIDE_FINISH);
+
+        this.destroy();
     }
 }

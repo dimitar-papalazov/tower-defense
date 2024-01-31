@@ -29,7 +29,8 @@ const TextStyle = {
         fontFamily: Constants.FONT_FAMILY,
         wordWrap: {
             width: Constants.WIDTH * 0.56
-        }
+        },
+        align: 'center'
     },
     /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
     TitleSmall: {

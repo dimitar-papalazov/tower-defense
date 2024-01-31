@@ -65,6 +65,12 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
             }
         }
 
+        if (!this.scene.hud.coinResource.canBuyTower()) {
+            this.scene.popupManager.addNotification('Not enough coins!');
+
+            return;
+        }
+
         this.placeOnX = x;
         this.placeOnY = y;
 
@@ -97,6 +103,8 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
         
         this.placeOnX = null;
         this.placeOnY = null;
+
+        this.scene.hud.coinResource.decreaseValue(Constants.TOWER_COST);
     }
 
     markGrass() {

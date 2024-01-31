@@ -66,7 +66,9 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
         }
 
         for (const enemy of this.enemies) {
-            enemy.once(Phaser.GameObjects.Events.DESTROY, this.onEnemyKilled, this);
+            enemy.once(Phaser.GameObjects.Events.DESTROY, this.onEnemyDestroyed, this)
+                .once(AbstractEnemy.Events.KILLED, this.onEnemyKilled, this)
+                .once(AbstractEnemy.Events.FINISH, this.onEnemyFinish, this);
         }
 
         this.emit(EnemiesEmitter.Events.START_MOVING);
@@ -112,7 +114,7 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
             const { x, y } = this.getEndpointPosition(false);
 
             enemy.move(x, y)
-                .once(AbstractEnemy.Events.ENEMY_MOVED, () => enemy.destroy());
+                .once(AbstractEnemy.Events.ENEMY_MOVED, () => enemy.finishPath());
         } else {
             const { x, y } = this.path[index];
     
@@ -121,12 +123,20 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
         }
     }
 
-    onEnemyKilled() {
+    onEnemyDestroyed() {
         this.destroyedEnemies++;
 
         if (this.enemies.length === this.destroyedEnemies) {
             this.emit(EnemiesEmitter.Events.ROW_FINISH);
         }
+    }
+
+    onEnemyKilled() {
+        this.scene.hud.coinResource.increaseValue(Constants.KILLED_ENEMY_REWARD);
+    }
+
+    onEnemyFinish() {
+        this.scene.hud.heartResource.decrementValue();
     }
 
     onRowFinish() {
