@@ -33,6 +33,14 @@ const TextStyle = {
         align: 'center'
     },
     /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    RowCounter: {
+        fontSize: 109,
+        color: Color.String.DARK,
+        fontFamily: Constants.FONT_FAMILY,
+        stroke: Color.String.LIGHT,
+        strokeThickness: 6
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
     TitleSmall: {
         fontSize: 42,
         color: Color.String.DARK,

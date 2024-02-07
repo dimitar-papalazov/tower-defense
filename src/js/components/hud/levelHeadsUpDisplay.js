@@ -4,6 +4,7 @@ import TextButton from "../buttons/textButton.js";
 import CoinResource from "../entities/resources/coinResource.js";
 import HeartResource from "../entities/resources/heartResource.js";
 import Notification from "../popup/notification.js";
+import RowCounter from "../rowCounter/rowCounter.js";
 import TowerPicker from "../towerPicker/towerPicker.js";
 import HeadsUpDisplay from "./headsUpDisplay.js";
 
@@ -14,7 +15,8 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
 
         this.addBackButton()
             .addResources()
-            .addTowerPicker();
+            .addTowerPicker()
+            .addRowCounter();
     }
 
     addBackButton() {
@@ -46,5 +48,11 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
     onNoHearts() {
         this.scene.popupManager.addNotification('You lost all your hearts!\nLevel failed!')
             .once(Notification.Events.HIDE_FINISH, () => this.scene.game.switchToScene(SceneKeys.LevelSelect));
+    }
+
+    addRowCounter() {
+        this.rowCounter = new RowCounter(this.scene);
+
+        return this.add(this.rowCounter);
     }
 }

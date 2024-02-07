@@ -14,20 +14,26 @@ export default class GraphicsGenerator {
         }
 
         const graphics = this.scene.add.graphics();
+        const color = config.color;
+        const width = config.width;
+        const height = config.height;
+        const darker = Color.darken(color, 50, false);
+        let lineWidth; 
 
-        const darker = Color.darken(config.color, 0.1, false);
-        const lighten = Color.lighten(config.color, 0.1, false);
+        if (width > height) {
+            lineWidth = Math.floor(height * 0.05);
+        } else {
+            lineWidth = Math.floor(width * 0.05);
+        }
 
-        graphics.fillStyle(config.color)
-            .fillStyle(config.color)
-            .fillRect(0, 0, config.width, config.height)
-            .lineStyle(config.lineWidth, darker)
-            .lineBetween(0, 0, 0, config.height - config.lineWidth * 0.5)
-            .lineBetween(0, config.height, config.width, config.height)
-            .lineStyle(config.lineWidth, lighten)
-            .lineBetween(config.lineWidth * 0.5, 0, config.width, 0)
-            .lineBetween(config.width, 0, config.width, config.height)
-            .generateTexture(config.key, config.width, config.height)
+        lineWidth = Phaser.Math.Clamp(lineWidth, 1, 5);
+
+        graphics
+            .fillStyle(color)
+            .fillRect(0, 0, width, height)
+            .lineStyle(lineWidth, darker)
+            .strokeRect(0, 0, width, height)
+            .generateTexture(config.key, width, height)
             .destroy();
     }
 }

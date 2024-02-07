@@ -5,6 +5,8 @@ import SceneKeys from "../namespaces/sceneKeys";
 import Enemy from "../namespaces/enemy";
 import Tower from "../namespaces/tower.js";
 import Resource from "../namespaces/resource.js";
+import GraphicsGenerator from "../components/graphicsGenerator/graphicsGenerator.js";
+import Color from "../namespaces/color.js";
 
 export default class Loading extends TowerDefenseScene {
     constructor() {

@@ -24,6 +24,8 @@ export default class Level extends TowerDefenseScene {
             .addPath(levelConfig.path)
             .addEnemyEmitter(levelConfig)
             .addTowersEmitter();
+
+        this.hud.rowCounter.start();
     }
 
     addHud() {
@@ -35,6 +37,12 @@ export default class Level extends TowerDefenseScene {
     /** @param {LevelConfig} levelConfig */
     addEnemyEmitter(levelConfig) {
         this.enemies = new EnemiesEmitter(this, levelConfig.enemies, levelConfig.path);
+
+        const rowCounter = this.hud.rowCounter;
+
+        rowCounter.on(rowCounter.Events.END, this.enemies.start, this.enemies);
+
+        this.enemies.on(EnemiesEmitter.Events.ROWS_FINISH, this.onRowsFinish, this);
 
         return this;
     }
@@ -75,5 +83,10 @@ export default class Level extends TowerDefenseScene {
         }
 
         return this;
+    }
+
+    onRowsFinish() {
+        this.popupManager.addNotification('Level Completed')
+            .once(Notification.Events.HIDE_FINISH, () => this.game.switchToScene(SceneKeys.LevelSelect));
     }
 }

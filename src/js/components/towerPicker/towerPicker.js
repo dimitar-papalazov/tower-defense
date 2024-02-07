@@ -1,5 +1,6 @@
 import Constants from "../../constants/constants.js";
 import Color from "../../namespaces/color.js";
+import Resource from "../../namespaces/resource.js";
 import TextStyle from "../../namespaces/textStyle.js";
 import Tower from "../../namespaces/tower.js";
 import TextButton from "../buttons/textButton.js";
@@ -35,8 +36,8 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
             text: 'Cancel',
             callback: this.hide,
             context: this,
-            x: this.width * 0.43,
-            y: this.height * 0.34,
+            x: this.width * 0.44,
+            y: this.height * 0.38,
             textStyle: TextStyle.ButtonSmall
         }).setScale(0.75);
 
@@ -69,7 +70,7 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
         this.graphicsGenerator.generate({
             color: Color.Number.ORANGE,
             width: Constants.WIDTH * 0.08,
-            height: Constants.HEIGHT * 0.07,
+            height: Constants.HEIGHT * 0.11,
             lineWidth: this.height * 0.01,
             key: this.typeBackground,
         });
@@ -86,14 +87,17 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
     }
 
     addTower(x, type) {
-        const y = 0;
-        const background = this.scene.add.image(x, y, this.typeBackground);
-        const image = this.scene.add.image(x, y, type);
+        const background = this.scene.add.image(x, 0, this.typeBackground);
+        const image = this.scene.add.image(x, Constants.HEIGHT * -0.02, type);
+        const resourceValue = this.scene.add.text(x + Constants.WIDTH * 0.015, Constants.HEIGHT * 0.03, 100, TextStyle.Resource)
+            .setOrigin(0.5);
+        const resourceImage = this.scene.add.image(x - Constants.WIDTH * 0.015, Constants.HEIGHT * 0.03, Resource.COIN)
+            .setScale(0.75);
 
         background.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, this.onTypePointerDown.bind(this, type));
 
-        this.add([background, image]);
+        this.add([background, image, resourceValue, resourceImage]);
     }
 
     /** @param {string} type */
