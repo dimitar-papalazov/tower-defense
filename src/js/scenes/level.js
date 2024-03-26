@@ -25,7 +25,11 @@ export default class Level extends TowerDefenseScene {
             .addEnemyEmitter(levelConfig)
             .addTowersEmitter();
 
-        this.hud.rowCounter.start();
+        this.popupManager.addWalkthroughPopup();
+        
+        this.popupManager.once(this.popupManager.Events.QUEUE_END, () => {
+            this.hud.rowCounter.start();
+        });
     }
 
     addHud() {

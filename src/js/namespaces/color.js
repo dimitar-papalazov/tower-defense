@@ -5,6 +5,9 @@ const Color = {
         YELLOW: 0xf2ab37,
         ORANGE: 0xcd5f2a,
         BEIGE: 0xd8ae8b,
+        BLACK: 0x2d2f2a,
+        BLUE: 0x386d92,
+        GREEN: 0x748942
     },
     String: {
         LIGHT: '#faf5d8',
@@ -12,6 +15,9 @@ const Color = {
         YELLOW: '#f2ab37',
         ORANGE: '#cd5f2a',
         BEIGE: '#d8ae8b',
+        BLACK: '#2d2f2a',
+        BLUE: '#386d92',
+        GREEN: '#748942'
     },
     /**
      * @param {string|number} input

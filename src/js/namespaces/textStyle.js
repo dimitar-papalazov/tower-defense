@@ -33,6 +33,34 @@ const TextStyle = {
         align: 'center'
     },
     /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    WalkthroughPopup: {
+        fontSize: 26,
+        color: Color.String.LIGHT,
+        fontFamily: Constants.FONT_FAMILY,
+        align: 'center',
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    WalkthroughPopupGreen: {
+        fontSize: 26,
+        color: Color.String.GREEN,
+        fontFamily: Constants.FONT_FAMILY,
+        align: 'center',
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    WalkthroughPopupBlue: {
+        fontSize: 26,
+        color: Color.String.BLUE,
+        fontFamily: Constants.FONT_FAMILY,
+        align: 'center',
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    WalkthroughPopupBlack: {
+        fontSize: 26,
+        color: Color.String.BLACK,
+        fontFamily: Constants.FONT_FAMILY,
+        align: 'center',
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
     RowCounter: {
         fontSize: 109,
         color: Color.String.DARK,
