@@ -21,4 +21,10 @@
  * @property {string | Phaser.Textures.Texture} texture
  * 
  * @typedef {TextButtonConfig & ToggleButtonAddition} ToggleButtonConfig
+ * 
+ * @typedef TimerButtonAddition
+ * @property {number} [ms]
+ * @property {string | Phaser.Textures.Texture} texture
+ * 
+ * @typedef {TextButtonConfig & TimerButtonAddition} TimerButtonConfig
  */

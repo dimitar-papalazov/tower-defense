@@ -110,12 +110,7 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
      * @param {number} index
      */
     onEnemyMoved(enemy, index) {
-        if (this.frozen) {
-            const { x, y } = this.path[index];
-
-            return enemy.move(x, y)
-                .once(AbstractEnemy.Events.ENEMY_MOVED, () => this.emit(EnemiesEmitter.Events.ENEMY_MOVED, enemy, index));
-        }
+        this.currentMoveIndex = index;
 
         if (index === this.path.length) {
             const { x, y } = this.getEndpointPosition(false);
@@ -124,7 +119,7 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
                 .once(AbstractEnemy.Events.ENEMY_MOVED, () => enemy.finishPath());
         } else {
             const { x, y } = this.path[index];
-    
+
             enemy.move(x, y)
                 .once(AbstractEnemy.Events.ENEMY_MOVED, () => this.emit(EnemiesEmitter.Events.ENEMY_MOVED, enemy, index + 1));
         }
@@ -157,18 +152,38 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
     }
 
     freeze() {
+        if (!this.enemies) {
+            return
+        }
+
         this.frozen = true;
 
-        this.enemies.forEach(enemy => {
-            enemy.freeze();
-        });
+        this.enemies.forEach(enemy => enemy.freeze());
     }
 
     unfreeze() {
+        if (!this.enemies) {
+            return
+        }
+
         this.frozen = false;
 
-        this.enemies.forEach(enemy => {
-            enemy.unfreeze();
-        });
+        this.enemies.forEach(enemy => enemy.unfreeze());
+    }
+
+    startFire() {
+        if (!this.enemies) {
+            return
+        }
+
+        this.enemies.forEach(enemy => enemy.fireDamage());
+    }
+
+    stopFire() {
+        if (!this.enemies) {
+            return
+        }
+
+        this.enemies.forEach(enemy => enemy.removeFireEffect());
     }
 }

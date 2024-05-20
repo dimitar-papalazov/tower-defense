@@ -3,6 +3,7 @@ import './typedefs/abstractEnemyConfig.js';
 import '../towers/typedefs/damageInfo.js';
 import GraphicsGenerator from '../../graphicsGenerator/graphicsGenerator.js';
 import HealthBar from '../../healthBar/healthBar.js';
+import Color from '../../../namespaces/color.js';
 
 export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
     static Events = {
@@ -26,7 +27,7 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
 
         this.type = config.type;
         this.health = 100;
-        this.direction =  this.Directions.DOWN;
+        this.direction = this.Directions.DOWN;
         this.graphicsGenerator = new GraphicsGenerator(this.scene);
 
         this.Textures = {
@@ -61,7 +62,7 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
             frameRate: 3,
             repeat: -1
         });
-        
+
         this.anims.create({
             key: this.Textures.BACK,
             frames: this.anims.generateFrameNumbers(this.Textures.BACK),
@@ -159,7 +160,7 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
         if (this.health <= 0) {
             this.emit(AbstractEnemy.Events.KILLED);
             this.destroy();
-            
+
             if (this.healthBar && this.healthBar.active) {
                 this.healthBar.destroy();
             }
@@ -167,6 +168,8 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
     }
 
     fireDamage() {
+        this.addFireEffect();
+
         this.health -= 5;
 
         this.healthBar.updateHealthBar(this.health);
@@ -174,19 +177,53 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
         if (this.health <= 0) {
             this.emit(AbstractEnemy.Events.KILLED);
             this.destroy();
-            
+
             if (this.healthBar && this.healthBar.active) {
                 this.healthBar.destroy();
             }
         }
     }
-    
+
+    addFireEffect() {
+        if (!this.active) {
+            return;
+        }
+
+        if (this.fireEffect) {
+            return;
+        }
+
+        this.fireEffect = this.preFX.addGradient(Color.Number.RED, Color.Number.RED, 0.6);
+    }
+
+    removeFireEffect() {
+        if (!this.active || !this.fireEffect) {
+            return;
+        }
+
+        this.fireEffect.destroy();
+        this.fireEffect = null;
+    }
+
     freeze() {
+        if (!this.active) {
+            return;
+        }
+
         this.stop();
-        this.frozenEffect = this.preFX.addGradient(0x0000ff, 0x40E0D0, 0.6);
+
+        this.frozenEffect = this.preFX.addGradient(0x0000ff, 0x0000ff, 0.6);
+
+        const tweens = this.scene.tweens.getTweensOf(this);
+
+        tweens.forEach(tween => tween.pause());
     }
 
     unfreeze() {
+        if (!this.active || !this.frozenEffect) {
+            return;
+        }
+
         this.frozenEffect.destroy();
 
         if (this.direction === this.Directions.DOWN) {
@@ -196,9 +233,13 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
         } else {
             this.play(this.Textures.SIDE);
         }
+
+        const tweens = this.scene.tweens.getTweensOf(this);
+
+        tweens.forEach(tween => tween.resume());
     }
 
-    finishPath () {
+    finishPath() {
         this.emit(AbstractEnemy.Events.FINISH);
 
         this.destroy();

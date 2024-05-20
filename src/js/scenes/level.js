@@ -6,6 +6,7 @@ import EnemiesEmitter from "../components/enemiesEmitter/enemiesEmitter.js";
 import LevelHeadsUpDisplay from "../components/hud/levelHeadsUpDisplay.js";
 import TowersEmitter from "../components/towersEmitter/towersEmitter.js";
 import Notification from "../components/popup/notification.js";
+import SpecialsEmitter from "../components/specialsEmitter/specialsEmitter.js";
 
 export default class Level extends TowerDefenseScene {
     constructor() {
@@ -23,6 +24,7 @@ export default class Level extends TowerDefenseScene {
             .addGrass(levelConfig.path)
             .addPath(levelConfig.path)
             .addEnemyEmitter(levelConfig)
+            .addSpecialsEmitter(levelConfig.specials)
             .addTowersEmitter();
 
         this.popupManager.addWalkthroughPopup();
@@ -51,10 +53,17 @@ export default class Level extends TowerDefenseScene {
         return this;
     }
 
+    /** @type {SpecialsConfig} */
+    addSpecialsEmitter(specialsConfig) {
+        this.specials = new SpecialsEmitter(this, this.enemies, specialsConfig);
+
+        return this;
+    }
+
     addTowersEmitter() {
         this.towers = new TowersEmitter(this, this.enemies, this.path);
 
-        this.enemies.on(EnemiesEmitter.Events.ENEMY_MOVED, this.towers.onEnemyMoved, this.towers);
+        this.towers.start();
 
         return this;
     }

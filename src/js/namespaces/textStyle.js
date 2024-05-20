@@ -23,6 +23,12 @@ const TextStyle = {
         fontFamily: Constants.FONT_FAMILY,
     },
     /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    ButtonTimer: {
+        fontSize: 34,
+        color: Color.String.LIGHT,
+        fontFamily: Constants.FONT_FAMILY,
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
     Button: {
         fontSize: 26,
         color: Color.String.DARK,

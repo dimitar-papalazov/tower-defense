@@ -36,12 +36,20 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
         }
 
         this.towerPicker.on(this.towerPicker.Events.TYPE_SELECT, this.onTowerPickerTypeSelect, this);
-
     }
 
-    onEnemyMoved() {
+    start() {
+        this.scene.time.addEvent({
+            delay: Constants.ENEMY_MOVE_DURATION,
+            loop: true,
+            callback: this.fire,
+            callbackScope: this
+        })
+    }
+
+    fire() {
         for (const tower of this.towers) {
-            const enemy = this.enemies.enemies.find(e => e.active && tower.isInRange(e));
+            const enemy = this.enemies.enemies?.find(e => e.active && tower.isInRange(e));
     
             if (enemy) {
                 tower.fire(enemy);
