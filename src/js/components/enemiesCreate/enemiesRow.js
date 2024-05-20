@@ -30,7 +30,6 @@ export default class EnemiesRow extends Phaser.GameObjects.Container {
             color: Color.Number.YELLOW,
             height: this.height,
             key: 'enemies-row-background',
-            lineWidth: this.height * 0.12,
             width: this.width
         });
 

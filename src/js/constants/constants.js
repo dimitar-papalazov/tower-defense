@@ -13,6 +13,7 @@ const Constants = {
     TOWER_DEPTH: 1,
     TOWER_COST: 100,
     KILLED_ENEMY_REWARD: 10,
+    LINE_WIDTH: 5
 };
 
 export default Constants;

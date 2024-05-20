@@ -80,11 +80,8 @@ export default class Button extends Phaser.GameObjects.Container {
     return this;
   }
 
-  /** 
-   * @param {number} color 
-   * @param {number} lineWidth 
-   */
-  generateTexture(color, lineWidth) {
+  /** @param {number} color */
+  generateTexture(color) {
     if (this.scene.textures.exists(this.key)) {
       return this;
     }
@@ -93,7 +90,6 @@ export default class Button extends Phaser.GameObjects.Container {
       color,
       height: this.height,
       key: this.key,
-      lineWidth,
       width: this.width
     });
 
@@ -111,10 +107,6 @@ export default class Button extends Phaser.GameObjects.Container {
    */
   setupDefaults(config) {
     config.color = Color.Number.BEIGE;
-
-    if (config.lineWidth === undefined && this.height !== 0) {
-      config.lineWidth = Math.round(this.height * 0.12);
-    }
 
     return this;
   }

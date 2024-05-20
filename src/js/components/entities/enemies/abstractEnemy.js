@@ -39,7 +39,8 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
         this.armor = 0;
         this.magicResistance = 0;
 
-        this.addAnimations()
+        this.setScale(1.5)
+            .addAnimations()
             .addHealthBar()
             .play(this.Textures.FRONT);
 
@@ -162,6 +163,38 @@ export default class AbstractEnemy extends Phaser.GameObjects.Sprite {
             if (this.healthBar && this.healthBar.active) {
                 this.healthBar.destroy();
             }
+        }
+    }
+
+    fireDamage() {
+        this.health -= 5;
+
+        this.healthBar.updateHealthBar(this.health);
+
+        if (this.health <= 0) {
+            this.emit(AbstractEnemy.Events.KILLED);
+            this.destroy();
+            
+            if (this.healthBar && this.healthBar.active) {
+                this.healthBar.destroy();
+            }
+        }
+    }
+    
+    freeze() {
+        this.stop();
+        this.frozenEffect = this.preFX.addGradient(0x0000ff, 0x40E0D0, 0.6);
+    }
+
+    unfreeze() {
+        this.frozenEffect.destroy();
+
+        if (this.direction === this.Directions.DOWN) {
+            this.play(this.Textures.FRONT);
+        } else if (this.direction === this.Directions.UP) {
+            this.play(this.Textures.BACK);
+        } else {
+            this.play(this.Textures.SIDE);
         }
     }
 

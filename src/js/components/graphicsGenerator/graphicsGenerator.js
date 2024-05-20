@@ -1,3 +1,4 @@
+import Constants from '../../constants/constants.js';
 import Color from '../../namespaces/color.js';
 import './typedefs/graphicsGeneratorConfig.js'
 
@@ -18,21 +19,19 @@ export default class GraphicsGenerator {
         const width = config.width;
         const height = config.height;
         const darker = Color.darken(color, 50, false);
-        let lineWidth; 
-
-        if (width > height) {
-            lineWidth = Math.floor(height * 0.05);
-        } else {
-            lineWidth = Math.floor(width * 0.05);
-        }
-
-        lineWidth = Phaser.Math.Clamp(lineWidth, 1, 5);
+        const hasBorder = config.hasBorder ?? true;
 
         graphics
             .fillStyle(color)
-            .fillRect(0, 0, width, height)
-            .lineStyle(lineWidth, darker)
-            .strokeRect(0, 0, width, height)
+            .fillRect(0, 0, width, height);
+
+        if (hasBorder) {
+            graphics
+                .lineStyle(Constants.LINE_WIDTH, darker)
+                .strokeRect(0, 0, width, height);
+        }
+            
+        graphics
             .generateTexture(config.key, width, height)
             .destroy();
     }

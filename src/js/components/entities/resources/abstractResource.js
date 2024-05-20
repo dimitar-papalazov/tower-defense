@@ -28,7 +28,6 @@ export default class AbstractResource extends Phaser.GameObjects.Container {
             color: Color.Number.LIGHT,
             height: this.height,
             key,
-            lineWidth: this.height * 0.12,
             width: this.width
         });
 

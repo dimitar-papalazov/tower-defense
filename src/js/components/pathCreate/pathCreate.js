@@ -63,10 +63,10 @@ export default class PathCreate extends Phaser.GameObjects.Container {
      * @param {Phaser.Input.Pointer} pointer 
      */
     onPointerMove(pointer) {
-        if ((!pointer.isDown || !this.enabled) && this.clicked) {
-            this.disable();
+        if (!this.enabled) {
+            return;
         }
-
+        
         const x = Math.round((pointer.x - this.halfTileSize) / this.tileSize) * this.tileSize + this.halfTileSize;
         const y = Math.round((pointer.y - this.halfTileSize) / this.tileSize) * this.tileSize + this.halfTileSize;
 

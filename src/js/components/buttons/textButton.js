@@ -11,7 +11,7 @@ export default class TextButton extends Button {
       this.setupDefaults(config)
         .addText(config.text, config.textStyle)
         .generateKey(config.text, config.color)
-        .generateTexture(config.color, config.lineWidth)
+        .generateTexture(config.color)
         .addBackground()
         .setInteractivity();
 
@@ -23,19 +23,14 @@ export default class TextButton extends Button {
      * @param {TextButtonConfig} config
      */
     setupDefaults(config) {
-      config.textStyle = TextStyle.Button;
       config.color = Color.Number.BEIGE;
+
+      if (!config.textStyle) {
+        config.textStyle = TextStyle.Button;
+      }
       
       if (typeof config.textStyle.fontSize === 'string') {
         config.textStyle.fontSize = parseInt(config.textStyle.fontSize.replace('px', ''));
-      }
-      
-      if (config.lineWidth === undefined) {
-        if (this.height === 0) {
-          config.lineWidth = Math.round(config.textStyle.fontSize * 0.2);
-        } else {
-          config.lineWidth = Math.round(this.height * 0.12);
-        }
       }
 
       return this;
@@ -50,11 +45,11 @@ export default class TextButton extends Button {
         .setOrigin(0.5);
 
       if (this.width === 0) {
-        this.width = Math.round(this.text.width * 1.618);
+        this.width = Math.round(this.text.width * 1.6);
       }
 
       if (this.height === 0) {
-        this.height = Math.round(this.text.height * 1.618);
+        this.height = Math.round(this.text.height * 1.6);
       }
 
       return this.add(this.text);

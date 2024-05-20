@@ -39,7 +39,7 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
             x: this.width * 0.44,
             y: this.height * 0.38,
             textStyle: TextStyle.ButtonSmall
-        }).setScale(0.75);
+        });
 
         return this.add(this.cancelButton);
     }
@@ -54,8 +54,7 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
             color: Color.Number.YELLOW,
             width: this.width,
             height: this.height,
-            lineWidth: this.height * 0.12,
-            key,
+            key
         });
 
         this.background = this.scene.add.image(0, 0, key)
@@ -71,7 +70,6 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
             color: Color.Number.ORANGE,
             width: Constants.WIDTH * 0.08,
             height: Constants.HEIGHT * 0.11,
-            lineWidth: this.height * 0.01,
             key: this.typeBackground,
         });
 

@@ -17,6 +17,7 @@ export default class WalkthroughPopup extends Popup {
 
         this.addTransparentInteractivity()
             .addBackground()
+            .addTapToContinue()
             .addText()
             .setDepth(Constants.POPUP_DEPTH);
     }
@@ -24,7 +25,7 @@ export default class WalkthroughPopup extends Popup {
     addTransparentInteractivity() {
         this.transparentInteractivity = this.scene.add.image(0, 0, '__WHITE')
             .setDisplaySize(Constants.WIDTH, Constants.HEIGHT)
-            .setAlpha(0.2)
+            .setAlpha(0.3)
             .setTint(0x000000)
             .setInteractive()
             .on(Phaser.Input.Events.POINTER_DOWN, this.onPointerDown, this)
@@ -40,7 +41,6 @@ export default class WalkthroughPopup extends Popup {
             color: Color.Number.YELLOW,
             height: this.height,
             width: this.width,
-            lineWidth: this.height * 0.12,
             key
         });
 
@@ -51,31 +51,31 @@ export default class WalkthroughPopup extends Popup {
 
     addText() {
         this.text = this.scene.add
-            .text(0, 0, 'best for battling\nideal for defeating\nperfect against', TextStyle.WalkthroughPopup)
+            .text(0, 0, 'Green Tower best for battling Creep Enemies\nBlack Tower ideal for defeating Armored Enemies\nBlue Tower perfect against Absorber Enemies', TextStyle.WalkthroughPopup)
             .setOrigin(0.5);
 
         this.greenTowerText = this.scene.add
-            .text(-151, -26, 'Green Tower', TextStyle.WalkthroughPopupGreen)
+            .text(-166, -26, 'Green Tower', TextStyle.WalkthroughPopupGreen)
             .setOrigin(0.5);
 
         this.greenEnemiesText = this.scene.add
-            .text(162, -26, 'Green Enemies', TextStyle.WalkthroughPopupGreen)
+            .text(157, -26, 'Creep Enemies', TextStyle.WalkthroughPopupGreen)
             .setOrigin(0.5);
 
         this.blackTowerText = this.scene.add
-            .text(-160, 0, 'Black Tower', TextStyle.WalkthroughPopupBlack)
+            .text(-187, 0, 'Black Tower', TextStyle.WalkthroughPopupBlack)
             .setOrigin(0.5);
 
         this.blackEnemiesText = this.scene.add
-            .text(171, 0, 'Black Enemies', TextStyle.WalkthroughPopupBlack)
+            .text(167, 0, 'Armored Enemies', TextStyle.WalkthroughPopupBlack)
             .setOrigin(0.5);
 
         this.blueTowerText = this.scene.add
-            .text(-135, 26, 'Blue Tower', TextStyle.WalkthroughPopupBlue)
+            .text(-171, 26, 'Blue Tower', TextStyle.WalkthroughPopupBlue)
             .setOrigin(0.5);
 
         this.blueEnemiesText = this.scene.add
-            .text(145, 26, 'Blue Enemies', TextStyle.WalkthroughPopupBlue)
+            .text(141, 26, 'Absorber Enemies', TextStyle.WalkthroughPopupBlue)
             .setOrigin(0.5);
 
         return this.add([
@@ -87,6 +87,14 @@ export default class WalkthroughPopup extends Popup {
             this.blueTowerText,
             this.blueEnemiesText
         ]);
+    }
+
+    addTapToContinue() {
+        this.tapToContinueText = this.scene.add
+            .text(0, this.height, 'Tap Anywhere To Continue', TextStyle.WalkthroughPopup)
+            .setOrigin(0.5);
+
+        return this.add(this.tapToContinueText);
     }
 
     /** @override */

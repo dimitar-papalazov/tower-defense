@@ -63,6 +63,8 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
         if (this.pathToggled) {
             this.pathToggled = false;
 
+            this.pathCreate.disable();
+
             return this.showChildren();
         }
 

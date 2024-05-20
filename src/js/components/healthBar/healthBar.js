@@ -14,7 +14,6 @@ export default class HealthBar extends Phaser.GameObjects.Container {
         this.fillKey = 'health-bar-fill';
         this.height = 10;
         this.width = 30;
-        this.lineWidth = 0
 
         this.generateGraphics()
             .addBorder()
@@ -31,16 +30,15 @@ export default class HealthBar extends Phaser.GameObjects.Container {
             height: this.height * 0.5,
             key: this.borderKey,
             width: this.width,
-            lineWidth: this.lineWidth,
+            hasBorder: false
         });
 
-
         graphicsGenerator.generate({
-            color: Color.Number.LIGHT,
-            height: this.height * 0.4,
+            color: Color.Number.WHITE,
+            height: this.height * 0.45,
             key: this.fillKey,
             width: this.width * 0.9,
-            lineWidth: this.lineWidth,
+            hasBorder: false
         });
 
         return this;
@@ -67,11 +65,11 @@ export default class HealthBar extends Phaser.GameObjects.Container {
         }
 
         if (health > 67) {
-            this.fill.setTint(Color.Number.LIGHT);
+            this.fill.setTint(Color.Number.GREEN);
         } else if (health > 33) {
             this.fill.setTint(Color.Number.ORANGE);
         } else {
-            this.fill.setTint(Color.Number.DARK);
+            this.fill.setTint(Color.Number.RED);
         }
 
         this.fill.setCrop(0, 0, health / 100 * this.width, this.height);

@@ -110,6 +110,13 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
      * @param {number} index
      */
     onEnemyMoved(enemy, index) {
+        if (this.frozen) {
+            const { x, y } = this.path[index];
+
+            return enemy.move(x, y)
+                .once(AbstractEnemy.Events.ENEMY_MOVED, () => this.emit(EnemiesEmitter.Events.ENEMY_MOVED, enemy, index));
+        }
+
         if (index === this.path.length) {
             const { x, y } = this.getEndpointPosition(false);
 
@@ -147,5 +154,21 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
         } else {
             this.scene.time.delayedCall(Constants.ROW_PAUSE_PERIOD, () => this.emit(EnemiesEmitter.Events.ROW_START, row));
         }
+    }
+
+    freeze() {
+        this.frozen = true;
+
+        this.enemies.forEach(enemy => {
+            enemy.freeze();
+        });
+    }
+
+    unfreeze() {
+        this.frozen = false;
+
+        this.enemies.forEach(enemy => {
+            enemy.unfreeze();
+        });
     }
 }

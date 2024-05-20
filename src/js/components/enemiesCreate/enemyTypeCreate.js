@@ -38,7 +38,6 @@ export default class EnemyTypeCreate extends Phaser.GameObjects.Container {
             color: Color.Number.ORANGE,
             height: this.height,
             key: 'enemy-type-create-background',
-            lineWidth: this.height * 0.12,
             width: this.width
         });
 

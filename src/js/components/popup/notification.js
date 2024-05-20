@@ -29,8 +29,7 @@ export default class Notification extends Popup {
             color: Color.Number.YELLOW,
             width: this.width,
             height: this.height,
-            lineWidth: this.height * 0.12,
-            key,
+            key
         });
 
         this.background = this.scene.add.image(0, 0, key);

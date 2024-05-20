@@ -9,7 +9,6 @@
  * @property {object} [context]
  * @property {any[]} [params]
  * @property {number} [color]
- * @property {number} [lineWidth]
  * 
  * @typedef TextButtonAddition
  * @property {string} text

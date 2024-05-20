@@ -11,6 +11,12 @@ const TextStyle = {
         align: 'center'
     },
     /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    ButtonCancel: {
+        fontSize: 15,
+        color: Color.String.DARK,
+        fontFamily: Constants.FONT_FAMILY,
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
     ButtonSmall: {
         fontSize: 20,
         color: Color.String.DARK,

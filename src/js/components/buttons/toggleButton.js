@@ -12,7 +12,7 @@ export default class ToggleButton extends Button {
 
     this.setupDefaults(config)
       .generateKey(config.text, config.color)
-      .generateTexture(config.color, config.lineWidth)
+      .generateTexture(config.color)
       .addBackground()
       .addText(config.text, config.textStyle)
       .addImage(config.texture)
@@ -39,14 +39,6 @@ export default class ToggleButton extends Button {
 
     if (typeof config.textStyle.fontSize === 'string') {
       config.textStyle.fontSize = parseInt(config.textStyle.fontSize.replace('px', ''));
-    }
-
-    if (config.lineWidth === undefined) {
-      if (this.height === 0) {
-        config.lineWidth = Math.round(config.textStyle.fontSize * 0.2);
-      } else {
-        config.lineWidth = Math.round(this.height * 0.12);
-      }
     }
 
     return this;
