@@ -24,6 +24,9 @@ export default class PopupManager extends Phaser.Events.EventEmitter {
 
     /** @param {string} text */
     addNotification(text) {
+        if (this.queue.some(popup => popup instanceof Notification && popup.text === text)) {
+            return;
+        }
         const notification = new Notification({ scene: this.scene, text });
 
         this.queue.push(notification);
