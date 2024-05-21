@@ -25,6 +25,7 @@
  * @typedef TimerButtonAddition
  * @property {number} [ms]
  * @property {string | Phaser.Textures.Texture} texture
+ * @property {boolean} enabled
  * 
  * @typedef {TextButtonConfig & TimerButtonAddition} TimerButtonConfig
  */

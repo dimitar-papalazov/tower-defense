@@ -1,3 +1,4 @@
+import Constants from "../../constants/constants.js";
 import Color from "../../namespaces/color.js";
 import TextStyle from "../../namespaces/textStyle.js";
 import Button from "./button.js";
@@ -8,7 +9,8 @@ export default class TimerButton extends Button {
     constructor(config) {
         super(config);
 
-        this.ms = config.ms ?? 60000;
+        this.ms = config.ms ?? Constants.TIMER_BUTTON_MS;
+        this.enabled = config.enabled;
 
         this.setupDefaults(config)
             .generateKey(config.text, config.color)
@@ -86,7 +88,7 @@ export default class TimerButton extends Button {
 
     /** @override */
     onPointerUpComplete() {
-        if (!this.clicked || this.timer) {
+        if (!this.clicked || this.timer || !this.enabled) {
             return;
         }
 
@@ -117,6 +119,7 @@ export default class TimerButton extends Button {
         }
 
         this.timer.destroy();
+        this.timer = null;
 
         this.overlay.setAlpha(0);
 

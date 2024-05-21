@@ -58,9 +58,9 @@ export default class EnemiesRow extends Phaser.GameObjects.Container {
 
     getRow() {
         return {
-            creep: this.creepType.count,    
-            armoredCreep: this.creepType.count,    
-            absorberCreep: this.creepType.count,    
+            creep: this.creepType.count,
+            armoredCreep: this.armoredCreepType.count,
+            absorberCreep: this.absorberCreepType.count,
         }
     }
 }

@@ -7,12 +7,13 @@ export default class RowCounter extends Phaser.GameObjects.Text {
         END: 'end'
     }
 
+    /** @param {import('../../scenes/level.js').default} scene  */
     constructor(scene) {
-        const count = 5;
+        super(scene, Constants.WIDTH * 0.5, Constants.HEIGHT * 0.5, Constants.ROW_COUNTER_COUNT, TextStyle.RowCounter);
+        /** @type {import('../../scenes/level.js').default} */
+        this.scene;
 
-        super(scene, Constants.WIDTH * 0.5, Constants.HEIGHT * 0.5, count, TextStyle.RowCounter);
-
-        this.counter = count;
+        this.counter = Constants.ROW_COUNTER_COUNT;
 
         this.Events = RowCounter.Events;
 

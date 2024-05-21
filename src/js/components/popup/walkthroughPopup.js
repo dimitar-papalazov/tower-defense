@@ -51,7 +51,7 @@ export default class WalkthroughPopup extends Popup {
 
     addText() {
         this.text = this.scene.add
-            .text(0, 0, 'Green Tower best for battling Creep Enemies\nBlack Tower ideal for defeating Armored Enemies\nBlue Tower perfect against Absorber Enemies', TextStyle.WalkthroughPopup)
+            .text(0, 0, 'Green Tower best for battling Creep Enemies\nBlue Tower ideal for defeating Armored Enemies\nBlack Tower perfect against Absorber Enemies', TextStyle.WalkthroughPopup)
             .setOrigin(0.5);
 
         this.greenTowerText = this.scene.add
@@ -62,20 +62,20 @@ export default class WalkthroughPopup extends Popup {
             .text(157, -26, 'Creep Enemies', TextStyle.WalkthroughPopupGreen)
             .setOrigin(0.5);
 
-        this.blackTowerText = this.scene.add
-            .text(-187, 0, 'Black Tower', TextStyle.WalkthroughPopupBlack)
+        this.blueTowerText = this.scene.add
+            .text(-187, 0, 'Blue Tower', TextStyle.WalkthroughPopupBlue)
             .setOrigin(0.5);
 
         this.blackEnemiesText = this.scene.add
-            .text(167, 0, 'Armored Enemies', TextStyle.WalkthroughPopupBlack)
+            .text(162, 0, 'Armored Enemies', TextStyle.WalkthroughPopupBlack)
             .setOrigin(0.5);
 
-        this.blueTowerText = this.scene.add
-            .text(-171, 26, 'Blue Tower', TextStyle.WalkthroughPopupBlue)
+        this.blackTowerText = this.scene.add
+            .text(-171, 26, 'Black Tower', TextStyle.WalkthroughPopupBlack)
             .setOrigin(0.5);
 
         this.blueEnemiesText = this.scene.add
-            .text(141, 26, 'Absorber Enemies', TextStyle.WalkthroughPopupBlue)
+            .text(146, 26, 'Absorber Enemies', TextStyle.WalkthroughPopupBlue)
             .setOrigin(0.5);
 
         return this.add([

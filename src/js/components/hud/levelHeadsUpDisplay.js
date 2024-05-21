@@ -8,17 +8,20 @@ import Notification from "../popup/notification.js";
 import RowCounter from "../rowCounter/rowCounter.js";
 import TowerPicker from "../towerPicker/towerPicker.js";
 import HeadsUpDisplay from "./headsUpDisplay.js";
+import '../../game/typedefs/levelConfig.js';
 
 export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
-    /** @param {import('../../scenes/level.js').default} scene */
-    constructor(scene) {
+    /** 
+     * @param {import('../../scenes/level.js').default} scene 
+     * @param {SpecialsConfig} specialsConfig 
+     */
+    constructor(scene, specialsConfig) {
         super(scene);
         /** @type {import('../../scenes/level.js').default} */
         this.scene;
 
         this.addBackButton()
-            .addSpecialsButton()
-            .addSpecialsButtons()
+            .addSpecialsButtons(specialsConfig)
             .addResources()
             .addTowerPicker()
             .addRowCounter();
@@ -36,7 +39,8 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
         return this.add(this.backButton);
     }
 
-    addSpecialsButton() {
+    /** @param {SpecialsConfig} specialsConfig */
+    addSpecialsButtons(specialsConfig) {
         this.specialsButton = new TextButton({
             scene: this.scene,
             text: 'Specials',
@@ -46,10 +50,10 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
             y: Constants.HEIGHT * 0.9,
         });
 
-        return this.add(this.specialsButton);
-    }
+        if (!specialsConfig.fire && !specialsConfig.ice) {
+            this.specialsButton.setVisible(false);
+        }
 
-    addSpecialsButtons() {
         this.fireButton = new TimerButton({
             scene: this.scene,
             text: 'Fire',
@@ -59,6 +63,7 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
             x: Constants.WIDTH * 0.45,
             y: Constants.HEIGHT * 0.9,
             callback: () => this.scene.specials.startFire(),
+            enabled: specialsConfig.fire
         }).setAlpha(0);
 
         this.iceButton = new TimerButton({
@@ -70,11 +75,12 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
             callback: () => this.scene.specials.startIce(),
             x: Constants.WIDTH * 0.55,
             y: Constants.HEIGHT * 0.9,
+            enabled: specialsConfig.ice
         }).setAlpha(0);
 
         this.specialsButtonsVisible = false;
 
-        return this.add([this.fireButton, this.iceButton]);
+        return this.add([this.specialsButton, this.fireButton, this.iceButton]);
     }
 
     toggleSpecials() {
@@ -86,9 +92,20 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
                 onComplete: () => this.specialsButtonsVisible = false
             });
         } else {
+            const buttons = [this.fireButton, this.iceButton];
+            const enabled = buttons.filter(button => button.enabled);
+            const disabled = buttons.filter(button => !button.enabled);
+
             this.scene.tweens.add({
-                targets: [this.fireButton, this.iceButton],
+                targets: enabled,
                 alpha: 1,
+                duration: 200,
+                onComplete: () => this.specialsButtonsVisible = true
+            });
+
+            this.scene.tweens.add({
+                targets: disabled,
+                alpha: 0.5,
                 duration: 200,
                 onComplete: () => this.specialsButtonsVisible = true
             });
@@ -115,8 +132,23 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
     }
 
     addRowCounter() {
-        this.rowCounter = new RowCounter(this.scene);
+        this.rowCounter = new RowCounter(this.scene)
+            .once(RowCounter.Events.START, this.onRowCounterStart, this)
+            .once(RowCounter.Events.END, this.onRowCounterEnd, this);
 
         return this.add(this.rowCounter);
+    }
+
+    onRowCounterStart() {
+        this.fireButton.ms = Constants.ROW_ANIMATION_PERIOD * Constants.ROW_COUNTER_COUNT * 2;
+        this.iceButton.ms = Constants.ROW_ANIMATION_PERIOD * Constants.ROW_COUNTER_COUNT * 2;
+
+        this.fireButton.startTimer();
+        this.iceButton.startTimer();
+    }
+
+    onRowCounterEnd() {
+        this.fireButton.ms = Constants.TIMER_BUTTON_MS;
+        this.iceButton.ms = Constants.TIMER_BUTTON_MS;
     }
 }

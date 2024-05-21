@@ -50,7 +50,7 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
     fire() {
         for (const tower of this.towers) {
             const enemy = this.enemies.enemies?.find(e => e.active && tower.isInRange(e));
-    
+
             if (enemy) {
                 tower.fire(enemy);
             }
@@ -108,7 +108,7 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
         this.towers.push(tower);
 
         this.destroyMark();
-        
+
         this.placeOnX = null;
         this.placeOnY = null;
 

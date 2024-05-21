@@ -110,7 +110,14 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
             alpha: 1,
             ease: Phaser.Math.Easing.Expo.In,
             duration: 200,
-            onComplete: () => this.scene.hud.backButton.setAlpha(0)
+            onComplete: () => {
+                this.scene.hud.backButton.setAlpha(0)
+                this.scene.hud.specialsButton.setAlpha(0)
+
+                if (this.scene.hud.specialsButtonsVisible) {
+                    this.scene.hud.toggleSpecials();
+                }
+            }
         })
     }
 
@@ -120,7 +127,10 @@ export default class TowerPicker extends Phaser.GameObjects.Container {
             alpha: 0,
             ease: Phaser.Math.Easing.Expo.In,
             duration: 200,
-            onComplete: () => this.scene.hud.backButton.setAlpha(1)
+            onComplete: () => {
+                this.scene.hud.backButton.setAlpha(1)
+                this.scene.hud.specialsButton.setAlpha(1)
+            }
         })
     }
 }

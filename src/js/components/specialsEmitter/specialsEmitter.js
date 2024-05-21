@@ -62,7 +62,7 @@ export default class SpecialsEmitter extends Phaser.Events.EventEmitter {
 
         this.scene.time.delayedCall(5000, () => {
             this.iceStarted = false;
-            
+
             this.enemies.unfreeze();
         });
     }

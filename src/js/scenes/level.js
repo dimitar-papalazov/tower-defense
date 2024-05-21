@@ -20,7 +20,7 @@ export default class Level extends TowerDefenseScene {
     create(data) {
         const levelConfig = this.game.levels[data.level];
 
-        this.addHud()
+        this.addHud(levelConfig.specials)
             .addGrass(levelConfig.path)
             .addPath(levelConfig.path)
             .addEnemyEmitter(levelConfig)
@@ -28,14 +28,15 @@ export default class Level extends TowerDefenseScene {
             .addTowersEmitter();
 
         this.popupManager.addWalkthroughPopup();
-        
+
         this.popupManager.once(this.popupManager.Events.QUEUE_END, () => {
             this.hud.rowCounter.start();
         });
     }
 
-    addHud() {
-        this.hud = new LevelHeadsUpDisplay(this);
+    /** @param {SpecialsConfig} specialsConfig */
+    addHud(specialsConfig) {
+        this.hud = new LevelHeadsUpDisplay(this, specialsConfig);
 
         return this;
     }
@@ -53,7 +54,7 @@ export default class Level extends TowerDefenseScene {
         return this;
     }
 
-    /** @type {SpecialsConfig} */
+    /** @param {SpecialsConfig} specialsConfig */
     addSpecialsEmitter(specialsConfig) {
         this.specials = new SpecialsEmitter(this, this.enemies, specialsConfig);
 
@@ -91,7 +92,7 @@ export default class Level extends TowerDefenseScene {
     addPath(positions) {
         this.path = [];
 
-        for(const position of positions) {
+        for (const position of positions) {
             this.path.push(this.add.image(position.x, position.y, 'path'));
         }
 
