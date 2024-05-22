@@ -98,10 +98,16 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
     }
 
     onStartMoving() {
+        /** @type {Phaser.Time.TimerEvent[]} */
+        this.delayedCalls = [];
+
         for (let i = 0; i < this.enemies.length; i++) {
             const enemy = this.enemies[i];
+            const delay = Constants.ENEMY_MOVE_DURATION * i;
+            const callback = () => this.emit(EnemiesEmitter.Events.ENEMY_MOVED, enemy, 0);
+            const delayedCall = this.scene.time.delayedCall(delay, callback);
 
-            this.scene.time.delayedCall(Constants.ENEMY_MOVE_DURATION * i, () => this.emit(EnemiesEmitter.Events.ENEMY_MOVED, enemy, 0));
+            this.delayedCalls.push(delayedCall);
         }
     }
 
@@ -156,6 +162,12 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
             return
         }
 
+        this.delayedCalls.forEach(delayedCall => {
+            if (!delayedCall.hasDispatched) {
+                delayedCall.paused = true;
+            }
+        })
+
         this.frozen = true;
 
         this.enemies.forEach(enemy => enemy.freeze());
@@ -165,6 +177,12 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
         if (!this.enemies) {
             return
         }
+
+        this.delayedCalls.forEach(delayedCall => {
+            if (!delayedCall.hasDispatched) {
+                delayedCall.paused = false;
+            }
+        })
 
         this.frozen = false;
 
