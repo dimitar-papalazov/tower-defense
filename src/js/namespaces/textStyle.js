@@ -11,6 +11,16 @@ const TextStyle = {
         align: 'center'
     },
     /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    ResourceReward: {
+        fontSize: 20,
+        color: Color.String.DARK,
+        fontFamily: Constants.FONT_FAMILY,
+        fontStyle: 'bolder',
+        align: 'center',
+        stroke: Color.String.WHITE,
+        strokeThickness: 2
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
     ButtonCancel: {
         fontSize: 15,
         color: Color.String.DARK,
