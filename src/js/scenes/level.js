@@ -18,6 +18,8 @@ export default class Level extends TowerDefenseScene {
      * @param {number} data.level
      */
     create(data) {
+        this.sound.playMainTheme();
+
         const levelConfig = this.game.levels[data.level];
 
         this.addHud(levelConfig.specials)
@@ -100,6 +102,8 @@ export default class Level extends TowerDefenseScene {
     }
 
     onRowsFinish() {
+        this.sound.playWinSound();
+
         this.popupManager.addNotification('Level Completed')
             .once(Notification.Events.HIDE_FINISH, () => this.game.switchToScene(SceneKeys.LevelSelect));
     }

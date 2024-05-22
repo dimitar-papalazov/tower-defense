@@ -9,6 +9,8 @@ export default class Create extends TowerDefenseScene {
     }
 
     create() {
+        this.sound.playMainTheme();
+
         this.addGrass();
 
         this.hud = new CreateHeadsUpDisplay(this);

@@ -24,6 +24,8 @@ export default class RowCounter extends Phaser.GameObjects.Text {
     start() {
         this.emit(this.Events.START);
 
+        this.scene.sound.playTicking();
+
         this.scene.tweens.add({
             targets: this,
             alpha: 1,
@@ -89,6 +91,8 @@ export default class RowCounter extends Phaser.GameObjects.Text {
 
     /** @private */
     end() {
+        this.scene.sound.stopTicking();
+
         this.emit(this.Events.END);
 
         this.destroy();

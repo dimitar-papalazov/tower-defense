@@ -30,6 +30,8 @@ export default class CoinResource extends AbstractResource {
     increaseValue(value) {
         super.increaseValue(value);
 
+        this.scene.sound.playCoinsReward();
+
         const text = this.scene.add
             .text(0, 60, `+${value} coins`, TextStyle.ResourceReward)
             .setOrigin(0.5);

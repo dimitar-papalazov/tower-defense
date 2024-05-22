@@ -49,6 +49,8 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
     }
 
     fire() {
+        let hasFired = false;
+
         for (const tower of this.towers) {
             const enemiesInRange = this.enemies.enemies?.filter(e => e.active && tower.isInRange(e));
 
@@ -67,13 +69,20 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
             }
 
             if (enemy) {
+                hasFired = true;
                 tower.fire(enemy);
             }
+        }
+
+        if (hasFired) {
+            this.scene.sound.playFireSound();
         }
     }
 
     /** @param {Phaser.GameObjects.Image} grass */
     onGrassPointerDown(grass) {
+        this.scene.sound.playTap();
+
         const { x, y } = grass;
 
         for (const tower of this.towers) {
@@ -89,6 +98,8 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
         }
 
         if (!this.scene.hud.coinResource.canBuyTower()) {
+            this.scene.sound.playError();
+
             this.scene.popupManager.addNotification('Not enough coins!');
 
             return;

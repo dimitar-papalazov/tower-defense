@@ -23,7 +23,7 @@ export default class EnemiesCreate extends Phaser.GameObjects.Container {
         this.background = this.scene.add
             .rectangle(Constants.WIDTH * 0.5, Constants.HEIGHT * 0.5, Constants.WIDTH, Constants.HEIGHT, Color.Number.LIGHT)
             .setInteractive();
-        
+
         return this.add(this.background);
     }
 
@@ -43,7 +43,9 @@ export default class EnemiesCreate extends Phaser.GameObjects.Container {
 
     rowsButtonCallback() {
         if (this.rows.length === 3) {
+            this.scene.sound.playError();
             this.scene.popupManager.addNotification('Cannot add more rows');
+
             return;
         }
 

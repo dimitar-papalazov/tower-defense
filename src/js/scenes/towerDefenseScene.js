@@ -6,9 +6,10 @@ export default class TowerDefenseScene extends Phaser.Scene {
     /** @param {Phaser.Types.Scenes.SettingsConfig} config */
     constructor(config) {
         super(config);
-
         /** @type {import('../game/towerDefenseGame.js'.default)} */
         this.game;
+        /** @type {import('../components/sound/towerDefenseSoundManager.js'.default)} */
+        this.sound;
     }
 
     init() {

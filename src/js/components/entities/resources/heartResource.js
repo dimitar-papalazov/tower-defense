@@ -21,6 +21,8 @@ export default class HeartResource extends AbstractResource {
     }
 
     decrementValue() {
+        this.scene.sound.playLoseHeart();
+
         let value = this.value - 1;
 
         if (value <= 0) {

@@ -47,6 +47,8 @@ export default class MenuHeadsUpDisplay extends HeadsUpDisplay {
 
     createButtonCallback() {
         if (this.scene.game.levels.length === 7) {
+            this.scene.sound.playError();
+
             this.scene.popupManager.addNotification('Maximum amount of levels reached!');
 
             return;

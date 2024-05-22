@@ -127,6 +127,8 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
     }
 
     onNoHearts() {
+        this.scene.sound.playLoseLevel();
+
         this.scene.popupManager.addNotification('You lost all your hearts!\nLevel failed!')
             .once(Notification.Events.HIDE_FINISH, () => this.scene.game.switchToScene(SceneKeys.LevelSelect));
     }
@@ -150,5 +152,14 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
     onRowCounterEnd() {
         this.fireButton.ms = Constants.TIMER_BUTTON_MS;
         this.iceButton.ms = Constants.TIMER_BUTTON_MS;
+    }
+
+    destroy(fromScene) {
+        this.scene.sound.stopFire();
+        this.scene.sound.stopIce();
+        this.scene.sound.stopTicking();
+        this.scene.sound.stopMarch();
+
+        super.destroy(fromScene);
     }
 }

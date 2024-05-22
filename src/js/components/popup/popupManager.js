@@ -15,7 +15,7 @@ export default class PopupManager extends Phaser.Events.EventEmitter {
         /** @type {import('./popup.js').default[]} */
         this.queue = [];
         this.Events = PopupManager.Events;
-        this.activePopup = false;
+        this.activePopup = null;
 
         this.on(this.Events.ADD_TO_QUEUE, this.onAddToQueue, this);
 
@@ -24,9 +24,10 @@ export default class PopupManager extends Phaser.Events.EventEmitter {
 
     /** @param {string} text */
     addNotification(text) {
-        if (this.queue.some(popup => popup instanceof Notification && popup.text === text)) {
+        if (this.isSameNotification(text)) {
             return;
         }
+
         const notification = new Notification({ scene: this.scene, text });
 
         this.queue.push(notification);
@@ -37,6 +38,14 @@ export default class PopupManager extends Phaser.Events.EventEmitter {
         this.emit(this.Events.ADD_TO_QUEUE);
 
         return notification;
+    }
+
+    isSameNotification(text) {
+        if (this.activePopup instanceof Notification && this.activePopup.text.text === text) {
+            return true;
+        }
+
+        return this.queue.some(popup => popup instanceof Notification && popup.text.text === text);
     }
 
     addWalkthroughPopup() {
@@ -56,15 +65,15 @@ export default class PopupManager extends Phaser.Events.EventEmitter {
         if (this.activePopup) {
             return;
         }
-        
+
         const popup = this.queue.shift();
-        
+
         if (popup === undefined) {
             this.emit(this.Events.QUEUE_END);
             return;
         }
 
-        this.activePopup = true;
+        this.activePopup = popup;
 
         this.scene.add.existing(popup);
     }
@@ -73,9 +82,9 @@ export default class PopupManager extends Phaser.Events.EventEmitter {
     onPopupAdded(popup) {
         popup.showAnimation();
     }
-    
+
     onPopupDestroy() {
-        this.activePopup = false;
+        this.activePopup = null;
 
         this.emit(this.Events.ADD_TO_QUEUE);
     }

@@ -8,6 +8,8 @@ export default class AbstractResource extends Phaser.GameObjects.Container {
     /** @param {AbstractResourceConfig} config */
     constructor(config) {
         super(config.scene, config.x, config.y);
+        /** @type {import('../../../scenes/level.js').default} */
+        this.scene;
 
         this.type = config.type;
         this.value = config.value;

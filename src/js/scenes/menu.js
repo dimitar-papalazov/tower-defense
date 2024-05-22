@@ -8,6 +8,8 @@ export default class Menu extends TowerDefenseScene {
     }
 
     create() {
+        this.sound.playMainTheme();
+
         this.hud = new MenuHeadsUpDisplay(this);
     }
 }

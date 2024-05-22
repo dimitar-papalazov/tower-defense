@@ -11,6 +11,8 @@ export default class WalkthroughPopup extends Popup {
         config.y = Constants.HEIGHT * 0.5;
 
         super(config);
+        /** @type {import('../../scenes/level.js').default} */
+        this.scene;
 
         this.width = Constants.WIDTH * 0.6;
         this.height = Constants.HEIGHT * 0.25;
@@ -101,6 +103,8 @@ export default class WalkthroughPopup extends Popup {
     showAnimation() {
         this.setAlpha(0);
 
+        this.scene.sound.playPopUp();
+
         this.scene.add.tween({
             targets: this,
             ease: Phaser.Math.Easing.Expo.In,
@@ -124,6 +128,8 @@ export default class WalkthroughPopup extends Popup {
         if (!this.active) {
             return;
         }
+
+        this.scene.sound.playTap();
 
         this.scene.add.tween({
             targets: this,

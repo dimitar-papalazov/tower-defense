@@ -44,12 +44,14 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
         };
 
         if (result.path.length === 0) {
+            this.scene.sound.playError();
             this.scene.popupManager.addNotification('Path not set for the level!');
 
             return;
         }
 
         if (result.enemies.length === 0) {
+            this.scene.sound.playError();
             this.scene.popupManager.addNotification('Enemies not set for the level!');
 
             return;
@@ -57,6 +59,7 @@ export default class CreateHeadsUpDisplay extends HeadsUpDisplay {
 
         for (const row of result.enemies) {
             if (row.creep === 0 && row.armoredCreep === 0 && row.absorberCreep === 0) {
+                this.scene.sound.playError();
                 this.scene.popupManager.addNotification('Enemies not set for the level!');
 
                 return;

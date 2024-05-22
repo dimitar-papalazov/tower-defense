@@ -31,6 +31,8 @@ export default class Button extends Phaser.GameObjects.Container {
   }
 
   onPointerUp() {
+    this.scene.sound.playTap();
+
     this.scene.add.tween({
       targets: this.tweenTargets,
       scale: 1,

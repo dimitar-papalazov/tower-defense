@@ -1,3 +1,4 @@
+import TowerDefenseSoundManager from "../components/sound/towerDefenseSoundManager.js";
 import Constants from "../constants/constants";
 import Color from "../namespaces/color";
 import SceneKeys from "../namespaces/sceneKeys";
@@ -34,6 +35,8 @@ export default class TowerDefenseGame extends Phaser.Game {
         /** @type {LevelConfig[]} */
         this.levels = [];
 
+        this.sound = new TowerDefenseSoundManager(this);
+
         window.game = this;
     }
 
@@ -49,5 +52,7 @@ export default class TowerDefenseGame extends Phaser.Game {
         }
 
         this.scene.start(key, data);
+
+        this.sound.playTransition();
     }
 }

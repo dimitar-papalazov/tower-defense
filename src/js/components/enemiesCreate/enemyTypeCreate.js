@@ -63,6 +63,7 @@ export default class EnemyTypeCreate extends Phaser.GameObjects.Container {
 
     plusButtonCallback() {
         if (this.count === 10) {
+            this.scene.sound.playError();
             this.scene.popupManager.addNotification('Cannot add more than 10');
 
             return;

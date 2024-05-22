@@ -28,6 +28,8 @@ export default class SpecialsEmitter extends Phaser.Events.EventEmitter {
             return;
         }
 
+        this.scene.sound.playFire();
+
         this.fireStarted = true;
         this.fireDamages = 10;
 
@@ -46,6 +48,8 @@ export default class SpecialsEmitter extends Phaser.Events.EventEmitter {
             this.fireStarted = false;
 
             this.enemies.stopFire();
+
+            this.scene.sound.stopFire();
         } else {
             this.enemies.startFire();
         }
@@ -56,12 +60,16 @@ export default class SpecialsEmitter extends Phaser.Events.EventEmitter {
             return;
         }
 
+        this.scene.sound.playIce();
+
         this.iceStarted = true;
 
         this.enemies.freeze()
 
         this.scene.time.delayedCall(5000, () => {
             this.iceStarted = false;
+
+            this.scene.sound.stopIce();
 
             this.enemies.unfreeze();
         });

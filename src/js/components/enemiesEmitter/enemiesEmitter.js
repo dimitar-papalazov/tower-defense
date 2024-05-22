@@ -100,6 +100,8 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
     }
 
     onStartMoving() {
+        this.scene.sound.playMarch();
+
         /** @type {Phaser.Time.TimerEvent[]} */
         this.delayedCalls = [];
 
@@ -142,6 +144,7 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
     }
 
     onEnemyKilled() {
+        this.scene.sound.playEnemyKilled();
         this.scene.hud.coinResource.increaseValue(Constants.KILLED_ENEMY_REWARD);
     }
 
@@ -150,6 +153,8 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
     }
 
     onRowFinish() {
+        this.scene.sound.stopMarch();
+
         const row = this.rows.shift();
 
         if (row === undefined) {
