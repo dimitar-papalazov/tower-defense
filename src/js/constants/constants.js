@@ -14,7 +14,7 @@ const Constants = {
     TOWER_COST: 100,
     KILLED_ENEMY_REWARD: 10,
     LINE_WIDTH: 5,
-    TIMER_BUTTON_MS: 60000,
+    TIMER_BUTTON_MS: 100000,
     ROW_COUNTER_COUNT: 5,
 };
 
