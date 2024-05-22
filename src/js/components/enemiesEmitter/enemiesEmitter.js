@@ -65,6 +65,8 @@ export default class EnemiesEmitter extends Phaser.Events.EventEmitter {
             this.enemies.push(new AbsorberCreepEnemy(this.scene, x, y));
         }
 
+        Phaser.Utils.Array.Shuffle(this.enemies);
+
         for (const enemy of this.enemies) {
             enemy.once(Phaser.GameObjects.Events.DESTROY, this.onEnemyDestroyed, this)
                 .once(AbstractEnemy.Events.KILLED, this.onEnemyKilled, this)
