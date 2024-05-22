@@ -15,8 +15,8 @@ export default class AbsorberCreepEnemy extends AbstractEnemy {
             type: Enemy.ABSORBER_CREEP
         });
 
-        this.resistance = 0.5;
-        this.armor = 0.3;
-        this.magicResistance = 1;
+        this.resistance = 0.2;
+        this.armor = 0;
+        this.magicResistance = 0.5;
     }
 }

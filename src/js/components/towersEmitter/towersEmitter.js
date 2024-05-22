@@ -1,5 +1,6 @@
 import Constants from '../../constants/constants.js';
 import Color from '../../namespaces/color.js';
+import Enemy from '../../namespaces/enemy.js';
 import Tower from '../../namespaces/tower.js';
 import AbstractTower from '../entities/towers/abstractTower.js';
 import CannonTower from '../entities/towers/cannonTower.js';
@@ -49,7 +50,21 @@ export default class TowersEmitter extends Phaser.Events.EventEmitter {
 
     fire() {
         for (const tower of this.towers) {
-            const enemy = this.enemies.enemies?.find(e => e.active && tower.isInRange(e));
+            const enemiesInRange = this.enemies.enemies?.filter(e => e.active && tower.isInRange(e));
+
+            let enemy;
+
+            if (tower.type === Tower.CANNON) {
+                enemy = enemiesInRange?.find(e => e.type === Enemy.ABSORBER_CREEP);
+            } else if (tower.type === Tower.MAGIC) {
+                enemy = enemiesInRange?.find(e => e.type === Enemy.ARMORED_CREEP);
+            } else if (tower.type === Tower.NORMAL) {
+                enemy = enemiesInRange?.find(e => e.type === Enemy.CREEP);
+            }
+
+            if (!enemy) {
+                enemy = enemiesInRange?.[0];
+            }
 
             if (enemy) {
                 tower.fire(enemy);

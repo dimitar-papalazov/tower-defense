@@ -15,8 +15,8 @@ export default class ArmoredCreepEnemy extends AbstractEnemy {
             type: Enemy.ARMORED_CREEP
         });
 
-        this.resistance = 0.5;
-        this.armor = 1;
-        this.magicResistance = 0.3;
+        this.resistance = 0.2;
+        this.armor = 0.5;
+        this.magicResistance = 0;
     }
 }
