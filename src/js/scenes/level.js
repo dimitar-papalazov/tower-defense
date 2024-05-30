@@ -7,6 +7,7 @@ import LevelHeadsUpDisplay from "../components/hud/levelHeadsUpDisplay.js";
 import TowersEmitter from "../components/towersEmitter/towersEmitter.js";
 import Notification from "../components/popup/notification.js";
 import SpecialsEmitter from "../components/specialsEmitter/specialsEmitter.js";
+import PathWalkthrough from "../components/pathWalkthrough/pathWalkthrough.js";
 
 export default class Level extends TowerDefenseScene {
     constructor() {
@@ -27,13 +28,21 @@ export default class Level extends TowerDefenseScene {
             .addPath(levelConfig.path)
             .addEnemyEmitter(levelConfig)
             .addSpecialsEmitter(levelConfig.specials)
-            .addTowersEmitter();
+            .addTowersEmitter()
+            .addPathWalkthrough(levelConfig.path);
 
         this.popupManager.addWalkthroughPopup();
 
         this.popupManager.once(this.popupManager.Events.QUEUE_END, () => {
             this.hud.rowCounter.start();
         });
+    }
+
+    /** @param {Position[]} path */
+    addPathWalkthrough(path) {
+        this.pathWalkthrough = new PathWalkthrough(this, path).startTween();
+
+        return this;
     }
 
     /** @param {SpecialsConfig} specialsConfig */

@@ -152,6 +152,8 @@ export default class LevelHeadsUpDisplay extends HeadsUpDisplay {
     onRowCounterEnd() {
         this.fireButton.ms = Constants.TIMER_BUTTON_MS;
         this.iceButton.ms = Constants.TIMER_BUTTON_MS;
+
+        this.scene.pathWalkthrough.stopTween();
     }
 
     destroy(fromScene) {

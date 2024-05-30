@@ -103,7 +103,15 @@ const TextStyle = {
         fontFamily: Constants.FONT_FAMILY,
         stroke: Color.String.BEIGE,
         strokeThickness: 3
-    }
+    },
+    /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+    PathWalkthrough: {
+        fontSize: 30,
+        color: Color.String.RED,
+        fontFamily: Constants.FONT_FAMILY,
+        stroke: Color.String.DARK,
+        strokeThickness: 4
+    },
 }
 
 export default TextStyle
