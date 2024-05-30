@@ -42,7 +42,7 @@ export default class PathCreate extends Phaser.GameObjects.Container {
     disable() {
         this.enabled = false;
         this.clicked = false;
-        
+
         this.preview.setAlpha(0);
 
         this.vectors = this.pathImages.map(image => new Phaser.Math.Vector2(image.x, image.y));
@@ -66,7 +66,7 @@ export default class PathCreate extends Phaser.GameObjects.Container {
         if (!this.enabled) {
             return;
         }
-        
+
         const x = Math.round((pointer.x - this.halfTileSize) / this.tileSize) * this.tileSize + this.halfTileSize;
         const y = Math.round((pointer.y - this.halfTileSize) / this.tileSize) * this.tileSize + this.halfTileSize;
 
@@ -90,7 +90,57 @@ export default class PathCreate extends Phaser.GameObjects.Container {
 
         this.add(image);
 
+        this.checkAdjecency();
+
         this.clicked = true;
+    }
+
+    /** @private */
+    checkAdjecency() {
+        if (this.pathImages.length < 2) {
+            return;
+        }
+
+        const lastTile = this.pathImages[this.pathImages.length - 1];
+        const secondLastTile = this.pathImages[this.pathImages.length - 2];
+
+        const x = Math.abs(lastTile.x - secondLastTile.x);
+        const y = Math.abs(lastTile.y - secondLastTile.y);
+
+        if (x < Constants.TILE_SIZE || y < Constants.TILE_SIZE) {
+            return;
+        }
+
+        this.addAdjecentTile(lastTile, secondLastTile);
+    }
+
+
+    /** 
+     * @private 
+     * @param {Phaser.GameObjects.Image} lastTile
+     * @param {Phaser.GameObjects.Image} secondLastTile
+     */
+    addAdjecentTile(lastTile, secondLastTile) {
+        const horizontalDifference = lastTile.x - secondLastTile.x;
+
+        let x;
+        let y;
+
+        if (horizontalDifference > 0) {
+            x = lastTile.x;
+            y = secondLastTile.y;
+        } else if (horizontalDifference < 0) {
+            x = secondLastTile.x;
+            y = lastTile.y;
+        }
+
+        const image = this.scene.add.image(x, y, this.pathTexture);
+
+        this.pathImages.pop();
+        this.pathImages.push(image);
+        this.pathImages.push(lastTile);
+
+        this.addAt(image, this.pathImages.length - 2);
     }
 
     /**
