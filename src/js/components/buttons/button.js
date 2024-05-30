@@ -31,6 +31,10 @@ export default class Button extends Phaser.GameObjects.Container {
   }
 
   onPointerUp() {
+    if (!this.clicked) {
+      return;
+    }
+
     this.scene.sound.playTap();
 
     this.scene.add.tween({
@@ -44,10 +48,6 @@ export default class Button extends Phaser.GameObjects.Container {
   }
 
   onPointerUpComplete() {
-    if (!this.clicked) {
-      return;
-    }
-
     this.callback.apply(this.context, this.params)
   }
 
