@@ -43,8 +43,9 @@ export default class TowerDefenseGame extends Phaser.Game {
     /** 
      * @param {(typeof SceneKeys)[keyof typeof SceneKeys]} key
      * @param {object} data
+     * @param {boolean} playSound
      */
-    switchToScene(key, data) {
+    switchToScene(key, data, playSound = true) {
         const scenes = this.scene.scenes;
 
         for (const scene of scenes) {
@@ -53,6 +54,8 @@ export default class TowerDefenseGame extends Phaser.Game {
 
         this.scene.start(key, data);
 
-        this.sound.playTransition();
+        if (playSound) {
+            this.sound.playTransition();
+        }
     }
 }

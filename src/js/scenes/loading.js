@@ -73,6 +73,6 @@ export default class Loading extends TowerDefenseScene {
         this.game.levels.push(this.cache.json.get('level2'));
         this.game.levels.push(this.cache.json.get('level3'));
 
-        this.game.switchToScene(SceneKeys.Menu);
+        this.game.switchToScene(SceneKeys.Menu, {}, false);
     }
 }

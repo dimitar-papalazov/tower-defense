@@ -4,9 +4,9 @@ import TowerDefenseScene from "./towerDefenseScene";
 import '../game/typedefs/levelConfig.js'
 import EnemiesEmitter from "../components/enemiesEmitter/enemiesEmitter.js";
 import LevelHeadsUpDisplay from "../components/hud/levelHeadsUpDisplay.js";
-import TowersEmitter from "../components/towersEmitter/towersEmitter.js";
+import TowersManager from "../components/towersManager/towersManager.js";
 import Notification from "../components/popup/notification.js";
-import SpecialsEmitter from "../components/specialsEmitter/specialsEmitter.js";
+import SpecialsManager from "../components/specialsManager/specialsManager.js";
 import PathWalkthrough from "../components/pathWalkthrough/pathWalkthrough.js";
 
 export default class Level extends TowerDefenseScene {
@@ -67,13 +67,13 @@ export default class Level extends TowerDefenseScene {
 
     /** @param {SpecialsConfig} specialsConfig */
     addSpecialsEmitter(specialsConfig) {
-        this.specials = new SpecialsEmitter(this, this.enemies, specialsConfig);
+        this.specials = new SpecialsManager(this, this.enemies, specialsConfig);
 
         return this;
     }
 
     addTowersEmitter() {
-        this.towers = new TowersEmitter(this, this.enemies, this.path);
+        this.towers = new TowersManager(this, this.enemies, this.path);
 
         this.towers.start();
 
