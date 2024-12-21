@@ -23,7 +23,6 @@ export default class TowersManager {
         this.placeOnX = null;
         this.placeOnY = null;
         this.setupEvents();
-        this.scene.events.on(Phaser.Scenes.Events.DESTROY, this.destroy, this);
     }
 
     setupEvents() {
