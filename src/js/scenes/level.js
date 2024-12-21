@@ -27,8 +27,8 @@ export default class Level extends TowerDefenseScene {
             .addGrass(levelConfig.path)
             .addPath(levelConfig.path)
             .addEnemyEmitter(levelConfig)
-            .addSpecialsEmitter(levelConfig.specials)
-            .addTowersEmitter()
+            .addSpecialsManager(levelConfig.specials)
+            .addTowersManager()
             .addPathWalkthrough(levelConfig.path);
 
         this.popupManager.addWalkthroughPopup();
@@ -66,13 +66,13 @@ export default class Level extends TowerDefenseScene {
     }
 
     /** @param {SpecialsConfig} specialsConfig */
-    addSpecialsEmitter(specialsConfig) {
+    addSpecialsManager(specialsConfig) {
         this.specials = new SpecialsManager(this, this.enemies, specialsConfig);
 
         return this;
     }
 
-    addTowersEmitter() {
+    addTowersManager() {
         this.towers = new TowersManager(this, this.enemies, this.path);
 
         this.towers.start();
