@@ -13,6 +13,6 @@
   },
   "dependencies": {
     "fs-extra": "^11.2.0",
-    "phaser": "^3.60.0"
+    "phaser": "3.80.1"
   }
 }
